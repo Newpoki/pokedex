@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import { useFetchPokemon } from "../../pokemon/hooks/useFetchPokemon";
 import { PokemonTypeName } from "../../pokemon/typings";
 import { theme } from "../../theme";
+import { TypeChip } from "../../type/components/type-chip";
 import { PokemonListItem } from "../typings";
 
 type PokemonItemProps = {
@@ -24,14 +25,14 @@ export const PokemonItem = ({ className, pokemon }: PokemonItemProps) => {
   }
 
   return (
-    <Root className={className} type={pokemonFirstType}>
+    <Root className={className} typeName={pokemonFirstType}>
       <Id># {data.id}</Id>
 
       <Name>{data.name}</Name>
 
       <TypeList>
         {data.types.map((type) => {
-          return <Type key={type.slot}>{type.type.name}</Type>;
+          return <StyledTypeChip key={type.slot} type={type.type} />;
         })}
       </TypeList>
 
@@ -40,10 +41,10 @@ export const PokemonItem = ({ className, pokemon }: PokemonItemProps) => {
   );
 };
 
-const Root = styled.li<{ type: PokemonTypeName | undefined }>`
+const Root = styled.li<{ typeName: PokemonTypeName | undefined }>`
   border-radius: 10px;
-  background-color: ${({ type }) =>
-    type ? theme.colors.types.background[type] : theme.colors.common.grey};
+  background-color: ${({ typeName }) =>
+    typeName ? theme.colors.types.background[typeName] : theme.colors.common.grey};
   padding: 8px;
   position: relative;
 `;
@@ -65,11 +66,8 @@ const TypeList = styled.ul`
   align-items: center;
 `;
 
-const Type = styled.li`
-  border-radius: 2px;
-  background-color: red;
-  color: white;
-  margin-right: 4px;
+const StyledTypeChip = styled(TypeChip)`
+  margin-right: ${theme.spacings.s}px;
 `;
 
 const Sprite = styled.img`

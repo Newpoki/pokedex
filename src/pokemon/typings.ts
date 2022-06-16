@@ -29,7 +29,7 @@ export type PokemonTypeName =
   | "flying"
   | "steel";
 
-type PokemonType = {
+export type PokemonType = {
   slot: number;
   type: {
     name: PokemonTypeName;
