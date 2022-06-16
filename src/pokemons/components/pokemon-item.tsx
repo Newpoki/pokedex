@@ -1,23 +1,30 @@
 import styled from "@emotion/styled";
+import { useMemo } from "react";
 import { useFetchPokemon } from "../../pokemon/hooks/useFetchPokemon";
+import { PokemonTypeName } from "../../pokemon/typings";
+import { theme } from "../../theme";
 import { PokemonListItem } from "../typings";
 
-type PokemonItem = {
+type PokemonItemProps = {
   className?: string;
   pokemon: PokemonListItem;
 };
 
-export const PokemonItem = ({ className, pokemon }: PokemonItem) => {
+export const PokemonItem = ({ className, pokemon }: PokemonItemProps) => {
   const { data } = useFetchPokemon(pokemon.url);
+
+  const pokemonFirstType = useMemo(() => {
+    // It looks like the first one is always the first in array,
+    // but as it's not our API, we must ensure by ourselves.
+    return data?.types.find((type) => type.slot === 1)?.type.name;
+  }, [data?.types]);
 
   if (!data) {
     return <p>loading</p>;
   }
 
-  console.log({ data });
-
   return (
-    <Root className={className}>
+    <Root className={className} type={pokemonFirstType}>
       <Id># {data.id}</Id>
 
       <Name>{data.name}</Name>
@@ -33,9 +40,10 @@ export const PokemonItem = ({ className, pokemon }: PokemonItem) => {
   );
 };
 
-const Root = styled.li`
-  border-radius: 4px;
-  background-color: grey;
+const Root = styled.li<{ type: PokemonTypeName | undefined }>`
+  border-radius: 10px;
+  background-color: ${({ type }) =>
+    type ? theme.colors.types.background[type] : theme.colors.common.grey};
   padding: 8px;
   position: relative;
 `;

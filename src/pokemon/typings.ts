@@ -9,10 +9,30 @@ type PokemonSprites = {
   front_shiny_female: string;
 };
 
+export type PokemonTypeName =
+  | "normal"
+  | "grass"
+  | "poison"
+  | "bug"
+  | "fire"
+  | "water"
+  | "ice"
+  | "psychic"
+  | "ghost"
+  | "electric"
+  | "rock"
+  | "fighting"
+  | "ground"
+  | "dragon"
+  | "fairy"
+  | "dark"
+  | "flying"
+  | "steel";
+
 type PokemonType = {
   slot: number;
   type: {
-    name: string;
+    name: PokemonTypeName;
     url: string;
   };
 };
