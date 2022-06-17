@@ -7,6 +7,8 @@ import { TypeChip } from "../../type/components/type-chip";
 import { PokemonListItem } from "../typings";
 import { ReactComponent as PokeballLowOpacityIcon } from "../../icons/pokeball-low-opacity.svg";
 import { ReactComponent as PointsIcon } from "../../icons/points.svg";
+import { POKEMONS_ITEM_BORDER_RADIUS } from "../pokemons-constants";
+import { PokemonItemLoading } from "./pokemon-item-loading";
 
 type PokemonItemProps = {
   className?: string;
@@ -23,7 +25,7 @@ export const PokemonItem = ({ className, pokemon }: PokemonItemProps) => {
   }, [data?.types]);
 
   if (!data) {
-    return <p>loading</p>;
+    return <PokemonItemLoading />;
   }
 
   return (
@@ -49,7 +51,7 @@ export const PokemonItem = ({ className, pokemon }: PokemonItemProps) => {
 };
 
 const Root = styled.li<{ typeName: PokemonTypeName | undefined }>`
-  border-radius: 10px;
+  border-radius: ${POKEMONS_ITEM_BORDER_RADIUS}px;
   background-color: ${({ typeName }) =>
     typeName ? theme.colors.types.background[typeName] : theme.colors.common.grey};
   padding: ${theme.spacings.l}px;

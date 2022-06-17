@@ -3,9 +3,12 @@ import { useFetchPokemons } from "../hooks/useFetchPokemons";
 import { PokemonItem } from "./pokemon-item";
 import InfiniteScroll from "react-infinite-scroller";
 import { theme } from "../../theme";
+import times from "lodash.times";
+import { PokemonItemLoading } from "./pokemon-item-loading";
+import { POKEMONS_INFINITE_SCROLL_ID } from "../pokemons-constants";
 
 export const Pokemons = () => {
-  const { data, fetchNextPage } = useFetchPokemons();
+  const { data, fetchNextPage, isLoading, hasNextPage } = useFetchPokemons();
 
   const handleFetchNextPage = () => {
     fetchNextPage();
@@ -20,14 +23,15 @@ export const Pokemons = () => {
       <InfiniteScroll
         pageStart={0}
         loadMore={handleFetchNextPage}
-        hasMore={true || false}
-        loader={
-          <div className="loader" key={0}>
-            Loading ...
-          </div>
-        }
+        hasMore={hasNextPage}
+        loader={<PokemonItemLoading key={POKEMONS_INFINITE_SCROLL_ID} />}
       >
         <List>
+          {isLoading &&
+            times(10).map((index) => {
+              return <PokemonItemLoading key={index} />;
+            })}
+
           {data?.pages.map((page) => {
             return page.results.map((pokemon) => {
               return <StyledPokemonItem key={pokemon.name} pokemon={pokemon} />;
