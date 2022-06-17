@@ -84,10 +84,10 @@ const StyledTypeChip = styled(TypeChip)`
 
 const StyledPointsIcon = styled(PointsIcon)`
   position: absolute;
-  top: -28px;
+  top: 0px;
   left: 36%;
-  width: 90px;
-  height: 90px;
+  width: 70px;
+  height: 70px;
 `;
 
 const SpriteWrapper = styled.div`
