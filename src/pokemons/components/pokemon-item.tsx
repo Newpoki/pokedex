@@ -9,6 +9,7 @@ import { ReactComponent as PokeballLowOpacityIcon } from "../../icons/pokeball-l
 import { ReactComponent as PointsIcon } from "../../icons/points.svg";
 import { POKEMONS_ITEM_BORDER_RADIUS } from "../pokemons-constants";
 import { PokemonItemLoading } from "./pokemon-item-loading";
+import { NavLink } from "react-router-dom";
 
 type PokemonItemProps = {
   className?: string;
@@ -16,7 +17,7 @@ type PokemonItemProps = {
 };
 
 export const PokemonItem = ({ className, pokemon }: PokemonItemProps) => {
-  const { data } = useFetchPokemon(pokemon.url);
+  const { data } = useFetchPokemon(pokemon.name);
 
   const pokemonFirstType = useMemo(() => {
     // It looks like the first one is always the first in array,
@@ -29,7 +30,7 @@ export const PokemonItem = ({ className, pokemon }: PokemonItemProps) => {
   }
 
   return (
-    <Root className={className} typeName={pokemonFirstType}>
+    <Root className={className} to={`/pokemon/${pokemon.name}`} typeName={pokemonFirstType}>
       <Id># {data.id}</Id>
 
       <Name>{data.name}</Name>
@@ -50,12 +51,14 @@ export const PokemonItem = ({ className, pokemon }: PokemonItemProps) => {
   );
 };
 
-const Root = styled.li<{ typeName: PokemonTypeName | undefined }>`
+const Root = styled(NavLink)<{ typeName: PokemonTypeName | undefined }>`
   border-radius: ${POKEMONS_ITEM_BORDER_RADIUS}px;
   background-color: ${({ typeName }) =>
     typeName ? theme.colors.types.background[typeName] : theme.colors.common.grey};
   padding: ${theme.spacings.l}px;
   position: relative;
+  display: block;
+  text-decoration: none;
 `;
 
 const Id = styled.span`

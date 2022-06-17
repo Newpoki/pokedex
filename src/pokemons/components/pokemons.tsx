@@ -6,13 +6,14 @@ import { theme } from "../../theme";
 import times from "lodash.times";
 import { PokemonItemLoading } from "./pokemon-item-loading";
 import { POKEMONS_INFINITE_SCROLL_ID } from "../pokemons-constants";
+import { useCallback } from "react";
 
 export const Pokemons = () => {
   const { data, fetchNextPage, isLoading, hasNextPage } = useFetchPokemons();
 
-  const handleFetchNextPage = () => {
+  const handleFetchNextPage = useCallback(() => {
     fetchNextPage();
-  };
+  }, [fetchNextPage]);
 
   return (
     <Root>

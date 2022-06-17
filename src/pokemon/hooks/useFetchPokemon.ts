@@ -1,12 +1,21 @@
 import { useQuery } from "react-query";
 import { pokemonQueryKeys } from "../pokemon-constants";
 import { Pokemon } from "../typings";
+import { getFetchPokemonUrl } from "../utils/getFetchPokemonUrl";
 
-export const useFetchPokemon = (pokemonAPIUrl: string) => {
-  return useQuery<Pokemon>(pokemonQueryKeys.pokemon(pokemonAPIUrl), async () => {
-    const response = await fetch(pokemonAPIUrl);
-    const data = await response.json();
+export const useFetchPokemon = (pokemonName: string | undefined) => {
+  return useQuery<Pokemon>(
+    pokemonQueryKeys.pokemon(pokemonName),
+    async () => {
+      // It's safe to cast as string as we're in the query ONLY if there is a pokemon name thanks to the enabled condition
+      const url = getFetchPokemonUrl(pokemonName as string);
+      const response = await fetch(url);
+      const data = await response.json();
 
-    return data;
-  });
+      return data;
+    },
+    {
+      enabled: Boolean(pokemonName),
+    }
+  );
 };

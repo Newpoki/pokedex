@@ -1,4 +1,4 @@
 export const pokemonQueryKeys = {
   base: ["pokemon"],
-  pokemon: (pokemonAPIUrl: string) => [...pokemonQueryKeys.base, pokemonAPIUrl],
+  pokemon: (pokemonName: string | undefined) => [...pokemonQueryKeys.base, pokemonName],
 };

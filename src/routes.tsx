@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes as RouterRoutes } from "react-router-dom";
+import { Pokemon } from "./pokemon/components/Pokemon";
 import { Pokemons } from "./pokemons/components/pokemons";
 
 export const Routes = () => {
@@ -6,6 +7,7 @@ export const Routes = () => {
     <BrowserRouter>
       <RouterRoutes>
         <Route path="/" element={<Pokemons />} />
+        <Route path="/pokemon/:idOrName" element={<Pokemon />} />
       </RouterRoutes>
     </BrowserRouter>
   );
