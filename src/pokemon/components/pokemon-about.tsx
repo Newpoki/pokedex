@@ -34,6 +34,7 @@ export const PokemonAbout = ({ pokemon }: PokemonAboutProps) => {
       ?.description;
   }, [growthRate?.descriptions]);
 
+  console.log({ pokemonSpecies });
   return (
     <>
       <Flavor>{flavor?.flavor_text}</Flavor>

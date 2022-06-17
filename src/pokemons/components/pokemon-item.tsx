@@ -73,7 +73,7 @@ const Id = styled.span`
 
 const Name = styled.h3`
   font-size: 22px;
-  color: ${theme.colors.common.white};
+  color: ${theme.colors.common.white[900]};
   margin: 0 0 ${theme.spacings.s}px;
   text-transform: capitalize;
 `;
