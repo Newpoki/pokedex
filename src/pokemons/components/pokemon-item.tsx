@@ -3,13 +3,13 @@ import { useMemo } from "react";
 import { useFetchPokemon } from "../../pokemon/hooks/useFetchPokemon";
 import { PokemonTypeName } from "../../pokemon/typings";
 import { theme } from "../../theme";
-import { TypeChip } from "../../type/components/type-chip";
 import { PokemonListItem } from "../typings";
 import { ReactComponent as PokeballLowOpacityIcon } from "../../icons/pokeball-low-opacity.svg";
 import { ReactComponent as PointsIcon } from "../../icons/points.svg";
 import { POKEMONS_ITEMS_HEIGHT, POKEMONS_ITEM_BORDER_RADIUS } from "../pokemons-constants";
 import { PokemonItemLoading } from "./pokemon-item-loading";
 import { NavLink } from "react-router-dom";
+import { TypeChips } from "../../type/components/type-chips";
 
 type PokemonItemProps = {
   className?: string;
@@ -35,17 +35,17 @@ export const PokemonItem = ({ className, pokemon }: PokemonItemProps) => {
 
       <Name>{data.name}</Name>
 
-      <TypeList>
-        {data.types.map((type) => {
-          return <StyledTypeChip key={type.slot} type={type.type} />;
-        })}
-      </TypeList>
+      <TypeChips types={data.types} />
 
       <StyledPointsIcon />
 
       <SpriteWrapper>
         <PokeballLowOpacityIcon />
-        <Sprite src={data.sprites.front_default} alt={`${data.name} front sprite`} />
+        <Sprite
+          src={data.sprites.other["official-artwork"].front_default}
+          alt={`${data.name} front sprite`}
+        />
+        {/* <Sprite src={data.sprites.front_default} alt={`${data.name} front sprite`} /> */}
       </SpriteWrapper>
     </Root>
   );
@@ -78,17 +78,6 @@ const Name = styled.h3`
   text-transform: capitalize;
 `;
 
-const TypeList = styled.ul`
-  list-style-type: none;
-  padding: 0;
-  display: flex;
-  align-items: center;
-`;
-
-const StyledTypeChip = styled(TypeChip)`
-  margin-right: ${theme.spacings.s}px;
-`;
-
 const StyledPointsIcon = styled(PointsIcon)`
   position: absolute;
   top: 0px;
@@ -107,4 +96,5 @@ const SpriteWrapper = styled.div`
 const Sprite = styled.img`
   position: absolute;
   right: 10px;
+  width: 90px;
 `;

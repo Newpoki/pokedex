@@ -42,8 +42,6 @@ export const Pokemons = () => {
   );
 };
 
-const LIST_GAP = 40;
-
 const Root = styled.div`
   padding: ${theme.spacings.l}px;
 `;
@@ -64,13 +62,6 @@ const List = styled.ul`
   padding: 0;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  grid-gap: ${LIST_GAP}px;
+  grid-gap: 40px;
   margin-top: ${theme.spacings.xxxl}px;
-`;
-
-const InfiniteScrollList = styled(List)`
-  /* As we're not in the original List, we do not have the grid-gap, so we must 
-    use a margin top to simulate the grid-gap for the first line
-  */
-  margin-top: ${LIST_GAP}px;
 `;

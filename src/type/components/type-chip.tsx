@@ -21,7 +21,7 @@ export const TypeChip = memo(({ className, type }: PokemonTypeProps) => {
   );
 });
 
-const Root = styled.div<{ typeName: PokemonTypeName }>`
+const Root = styled.li<{ typeName: PokemonTypeName }>`
   background-color: ${({ typeName }) => theme.colors.types[typeName]};
   padding: ${theme.spacings.xs}px;
   display: flex;

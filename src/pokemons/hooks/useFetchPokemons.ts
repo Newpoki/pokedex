@@ -1,9 +1,10 @@
 import { useInfiniteQuery } from "react-query";
+import { pokemonsQueryKeys } from "../pokemons-constants";
 import { PokemonList } from "../typings";
 
 export const useFetchPokemons = () => {
   return useInfiniteQuery<PokemonList>(
-    "pokemons",
+    pokemonsQueryKeys.list(),
     async ({ pageParam }) => {
       const url = pageParam ?? `https://pokeapi.co/api/v2/pokemon/?limit=60`;
 

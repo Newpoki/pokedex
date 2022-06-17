@@ -1,0 +1,10 @@
+/**
+ * For a lot of items on the API, we have access to the following data
+ * that allow us to fetch full data about the item.
+ */
+export type SummarizedItemData = {
+  name: string;
+  url: string;
+};
+
+export type Languages = "ja-/" | "ko" | "zh-/" | "fr" | "de" | "es" | "it" | "en" | "ja" | "zh-/";
