@@ -13,9 +13,9 @@ export const Pokemons = () => {
 
   return (
     <Root>
-      <h1>Pokédex</h1>
+      <Title>Pokédex</Title>
 
-      <h2>Search for Pokémon by name or by scrolling !</h2>
+      <Description>Search for Pokémon by name or by scrolling !</Description>
 
       <InfiniteScroll
         pageStart={0}
@@ -41,6 +41,18 @@ export const Pokemons = () => {
 
 const Root = styled.div`
   padding: ${theme.spacings.l}px;
+`;
+
+const Title = styled.h1`
+  margin-top: 0px;
+  margin-bottom: ${theme.spacings.m}px;
+`;
+
+const Description = styled.h2`
+  margin-top: 0;
+  margin-bottom: ${theme.spacings.xxxl}px;
+  font-size: 18px;
+  color: ${theme.colors.types.normal};
 `;
 
 const List = styled.ul`

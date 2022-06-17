@@ -61,6 +61,7 @@ const Id = styled.span`
   display: block;
   color: ${theme.colors.common.black};
   margin-bottom: ${theme.spacings.xs}px;
+  font-weight: bold;
 `;
 
 const Name = styled.h3`
