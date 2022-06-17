@@ -45,18 +45,18 @@ const Root = styled.li<{ typeName: PokemonTypeName | undefined }>`
   border-radius: 10px;
   background-color: ${({ typeName }) =>
     typeName ? theme.colors.types.background[typeName] : theme.colors.common.grey};
-  padding: 8px;
+  padding: ${theme.spacings.l}px;
   position: relative;
 `;
 
 const Id = styled.b`
   font-size: 10px;
-  color: black;
+  color: ${theme.colors.common.black};
 `;
 
 const Name = styled.h3`
   font-size: 18px;
-  color: white;
+  color: ${theme.colors.common.white};
 `;
 
 const TypeList = styled.ul`
