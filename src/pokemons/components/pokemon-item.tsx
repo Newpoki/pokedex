@@ -7,7 +7,7 @@ import { TypeChip } from "../../type/components/type-chip";
 import { PokemonListItem } from "../typings";
 import { ReactComponent as PokeballLowOpacityIcon } from "../../icons/pokeball-low-opacity.svg";
 import { ReactComponent as PointsIcon } from "../../icons/points.svg";
-import { POKEMONS_ITEM_BORDER_RADIUS } from "../pokemons-constants";
+import { POKEMONS_ITEMS_HEIGHT, POKEMONS_ITEM_BORDER_RADIUS } from "../pokemons-constants";
 import { PokemonItemLoading } from "./pokemon-item-loading";
 import { NavLink } from "react-router-dom";
 
@@ -59,6 +59,8 @@ const Root = styled(NavLink)<{ typeName: PokemonTypeName | undefined }>`
   position: relative;
   display: block;
   text-decoration: none;
+  height: ${POKEMONS_ITEMS_HEIGHT}px;
+  box-sizing: border-box;
 `;
 
 const Id = styled.span`

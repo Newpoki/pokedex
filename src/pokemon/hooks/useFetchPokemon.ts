@@ -3,6 +3,11 @@ import { pokemonQueryKeys } from "../pokemon-constants";
 import { Pokemon } from "../typings";
 import { getFetchPokemonUrl } from "../utils/getFetchPokemonUrl";
 
+/**
+ * It's called `pokemonName` but it would also work with the pokemon's id.
+ * It's better to use the name, because we already cached the pokemon data with its name
+ * when fetching inside the list
+ */
 export const useFetchPokemon = (pokemonName: string | undefined) => {
   return useQuery<Pokemon>(
     pokemonQueryKeys.pokemon(pokemonName),

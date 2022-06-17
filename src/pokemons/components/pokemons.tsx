@@ -25,7 +25,13 @@ export const Pokemons = () => {
         pageStart={0}
         loadMore={handleFetchNextPage}
         hasMore={hasNextPage}
-        loader={<PokemonItemLoading key={POKEMONS_INFINITE_SCROLL_ID} />}
+        loader={
+          <InfiniteScrollList key={POKEMONS_INFINITE_SCROLL_ID}>
+            {times(10).map((index) => {
+              return <PokemonItemLoading key={index} />;
+            })}
+          </InfiniteScrollList>
+        }
       >
         <List>
           {isLoading &&
@@ -35,7 +41,7 @@ export const Pokemons = () => {
 
           {data?.pages.map((page) => {
             return page.results.map((pokemon) => {
-              return <StyledPokemonItem key={pokemon.name} pokemon={pokemon} />;
+              return <PokemonItem key={pokemon.name} pokemon={pokemon} />;
             });
           })}
         </List>
@@ -43,6 +49,8 @@ export const Pokemons = () => {
     </Root>
   );
 };
+
+const LIST_GAP = 40;
 
 const Root = styled.div`
   padding: ${theme.spacings.l}px;
@@ -55,7 +63,6 @@ const Title = styled.h1`
 
 const Description = styled.h2`
   margin-top: 0;
-  margin-bottom: ${theme.spacings.xxxl}px;
   font-size: 18px;
   color: ${theme.colors.types.normal};
 `;
@@ -63,8 +70,15 @@ const Description = styled.h2`
 const List = styled.ul`
   list-style-type: none;
   padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: ${LIST_GAP}px;
+  margin-top: ${theme.spacings.xxxl}px;
 `;
 
-const StyledPokemonItem = styled(PokemonItem)`
-  margin-bottom: 40px;
+const InfiniteScrollList = styled(List)`
+  /* As we're not in the original List, we do not have the grid-gap, so we must 
+    use a margin top to simulate the grid-gap for the first line
+  */
+  margin-top: ${LIST_GAP}px;
 `;
