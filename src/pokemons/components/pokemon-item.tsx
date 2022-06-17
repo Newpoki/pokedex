@@ -5,6 +5,8 @@ import { PokemonTypeName } from "../../pokemon/typings";
 import { theme } from "../../theme";
 import { TypeChip } from "../../type/components/type-chip";
 import { PokemonListItem } from "../typings";
+import { ReactComponent as PokeballLowOpacityIcon } from "../../icons/pokeball-low-opacity.svg";
+import { ReactComponent as PointsIcon } from "../../icons/points.svg";
 
 type PokemonItemProps = {
   className?: string;
@@ -36,7 +38,12 @@ export const PokemonItem = ({ className, pokemon }: PokemonItemProps) => {
         })}
       </TypeList>
 
-      <Sprite src={data.sprites.front_default} alt={`${data.name} front sprite`} />
+      <StyledPointsIcon />
+
+      <SpriteWrapper>
+        <PokeballLowOpacityIcon />
+        <Sprite src={data.sprites.front_default} alt={`${data.name} front sprite`} />
+      </SpriteWrapper>
     </Root>
   );
 };
@@ -49,14 +56,18 @@ const Root = styled.li<{ typeName: PokemonTypeName | undefined }>`
   position: relative;
 `;
 
-const Id = styled.b`
-  font-size: 10px;
+const Id = styled.span`
+  font-size: 13px;
+  display: block;
   color: ${theme.colors.common.black};
+  margin-bottom: ${theme.spacings.xs}px;
 `;
 
 const Name = styled.h3`
-  font-size: 18px;
+  font-size: 22px;
   color: ${theme.colors.common.white};
+  margin: 0 0 ${theme.spacings.s}px;
+  text-transform: capitalize;
 `;
 
 const TypeList = styled.ul`
@@ -70,8 +81,22 @@ const StyledTypeChip = styled(TypeChip)`
   margin-right: ${theme.spacings.s}px;
 `;
 
-const Sprite = styled.img`
+const StyledPointsIcon = styled(PointsIcon)`
+  position: absolute;
+  top: -28px;
+  left: 36%;
+  width: 90px;
+  height: 90px;
+`;
+
+const SpriteWrapper = styled.div`
   position: absolute;
   right: 0;
-  top: -40px;
+  top: 0px;
+  display: flex;
+`;
+
+const Sprite = styled.img`
+  position: absolute;
+  right: 10px;
 `;
