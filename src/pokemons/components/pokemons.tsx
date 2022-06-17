@@ -5,11 +5,10 @@ import InfiniteScroll from "react-infinite-scroller";
 import { theme } from "../../theme";
 import times from "lodash.times";
 import { PokemonItemLoading } from "./pokemon-item-loading";
-import { POKEMONS_INFINITE_SCROLL_ID } from "../pokemons-constants";
 import { useCallback } from "react";
 
 export const Pokemons = () => {
-  const { data, fetchNextPage, isLoading, hasNextPage } = useFetchPokemons();
+  const { data, fetchNextPage, isLoading, hasNextPage, isFetching } = useFetchPokemons();
 
   const handleFetchNextPage = useCallback(() => {
     fetchNextPage();
@@ -18,23 +17,16 @@ export const Pokemons = () => {
   return (
     <Root>
       <Title>Pokédex</Title>
-
       <Description>Search for Pokémon by name or by scrolling !</Description>
-
       <InfiniteScroll
         pageStart={0}
         loadMore={handleFetchNextPage}
         hasMore={hasNextPage}
-        loader={
-          <InfiniteScrollList key={POKEMONS_INFINITE_SCROLL_ID}>
-            {times(10).map((index) => {
-              return <PokemonItemLoading key={index} />;
-            })}
-          </InfiniteScrollList>
-        }
+        // As we're in a grid display, using a loader would make it go to the next row and
+        // it's a weird behavior. So we rely on the isLoading flag to display a loader.
       >
         <List>
-          {isLoading &&
+          {(isFetching || isLoading) &&
             times(10).map((index) => {
               return <PokemonItemLoading key={index} />;
             })}
