@@ -1,22 +1,23 @@
 import styled from "@emotion/styled";
 import { memo } from "react";
-import { PokemonType, PokemonTypeName } from "../../pokemon/typings";
+import { PokemonTypeName } from "../../pokemon/typings";
 import { theme } from "../../theme";
 import { TypeIcon } from "./type-icon";
 
 type PokemonTypeProps = {
   className?: string;
-  type: PokemonType["type"];
+  typeName: PokemonTypeName;
+  withLabel?: boolean;
 };
 
-export const TypeChip = memo(({ className, type }: PokemonTypeProps) => {
+export const TypeChip = memo(({ className, typeName, withLabel = true }: PokemonTypeProps) => {
   return (
-    <Root className={className} typeName={type.name}>
-      <TypeIconWrapper>
-        <StyledTypeIcon typeName={type.name} />
+    <Root className={className} typeName={typeName}>
+      <TypeIconWrapper withLabel={withLabel}>
+        <StyledTypeIcon typeName={typeName} />
       </TypeIconWrapper>
 
-      <Name>{type.name}</Name>
+      {withLabel && <Name>{typeName}</Name>}
     </Root>
   );
 });
@@ -29,9 +30,9 @@ const Root = styled.li<{ typeName: PokemonTypeName }>`
   border-radius: 4px;
 `;
 
-const TypeIconWrapper = styled.div`
+const TypeIconWrapper = styled.div<{ withLabel: boolean }>`
   display: flex;
-  margin-right: ${theme.spacings.xs}px;
+  margin-right: ${({ withLabel }) => (withLabel ? theme.spacings.xs : 0)}px;
 `;
 
 const StyledTypeIcon = styled(TypeIcon)`

@@ -5,14 +5,15 @@ import { TypeChip } from "./type-chip";
 
 type TypeChipsProps = {
   className?: string;
-  types: Array<PokemonType>;
+  types: Array<PokemonType["type"]>;
+  withLabel?: boolean;
 };
 
-export const TypeChips = ({ types }: TypeChipsProps) => {
+export const TypeChips = ({ types, withLabel }: TypeChipsProps) => {
   return (
     <Root>
       {types.map((type) => {
-        return <StyledTypeChip key={type.slot} type={type.type} />;
+        return <StyledTypeChip key={type.name} typeName={type.name} withLabel={withLabel} />;
       })}
     </Root>
   );

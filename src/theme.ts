@@ -2,8 +2,28 @@ export const theme = {
   colors: {
     common: {
       white: "#FFFFFF",
-      black: "#17171B",
-      grey: "#747476",
+      grey: {
+        100: "#F5F5F5",
+        200: "#EBEBEB",
+        300: "#DADADA",
+        400: "#CACACA",
+        500: "#B9B9B9",
+        600: "#A8A8A8",
+        700: "#979797",
+        800: "#868686",
+        900: "#757575",
+      },
+      black: {
+        100: "rgba(0, 0,0 , 0.1)",
+        200: "rgba(0, 0,0 , 0.2)",
+        300: "rgba(0, 0,0 , 0.3)",
+        400: "rgba(0, 0,0 , 0.4)",
+        500: "rgba(0, 0,0 , 0.5)",
+        600: "rgba(0, 0,0 , 0.6)",
+        700: "rgba(0, 0,0 , 0.7)",
+        800: "rgba(0, 0,0 , 0.8)",
+        900: "rgba(0, 0,0 , 0.9)",
+      },
     },
     types: {
       /** The colors used to represent the type */

@@ -35,7 +35,7 @@ export const PokemonItem = ({ className, pokemon }: PokemonItemProps) => {
 
       <Name>{data.name}</Name>
 
-      <TypeChips types={data.types} />
+      <TypeChips types={data.types.map((type) => type.type)} />
 
       <StyledPointsIcon />
 
@@ -54,7 +54,7 @@ export const PokemonItem = ({ className, pokemon }: PokemonItemProps) => {
 const Root = styled(NavLink)<{ typeName: PokemonTypeName | undefined }>`
   border-radius: ${POKEMONS_ITEM_BORDER_RADIUS}px;
   background-color: ${({ typeName }) =>
-    typeName ? theme.colors.types.background[typeName] : theme.colors.common.grey};
+    typeName ? theme.colors.types.background[typeName] : theme.colors.common.grey[500]};
   padding: ${theme.spacings.l}px;
   position: relative;
   display: block;
@@ -66,7 +66,7 @@ const Root = styled(NavLink)<{ typeName: PokemonTypeName | undefined }>`
 const Id = styled.span`
   font-size: 13px;
   display: block;
-  color: ${theme.colors.common.black};
+  color: ${theme.colors.common.black[700]};
   margin-bottom: ${theme.spacings.xs}px;
   font-weight: bold;
 `;

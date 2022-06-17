@@ -6,6 +6,7 @@ import { useFetchPokemon } from "../hooks/useFetchPokemon";
 import { PokemonTypeName } from "../typings";
 import { ReactComponent as BackArrowIcon } from "../../icons/back-arrow.svg";
 import { useCallback } from "react";
+import { PokemonAbout } from "./pokemon-about";
 
 export const Pokemon = () => {
   const params = useParams();
@@ -32,7 +33,7 @@ export const Pokemon = () => {
                 <Id>#{pokemon.id}</Id>
                 <Name>{pokemon.name}</Name>
 
-                <TypeChips types={pokemon.types} />
+                <TypeChips types={pokemon.types.map((type) => type.type)} />
               </MainData>
             </SpriteAndMainData>
 
@@ -43,7 +44,9 @@ export const Pokemon = () => {
             </Menu>
           </UpperPart>
 
-          <LowerPart></LowerPart>
+          <LowerPart>
+            <PokemonAbout pokemon={pokemon} />
+          </LowerPart>
         </>
       )}
     </Root>
@@ -118,4 +121,9 @@ const LowerPart = styled.div`
   flex: 1;
   background-color: ${theme.colors.common.white};
   border-radius: 30px;
+  overflow: auto;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  padding: 28px;
+  flex-direction: column;
 `;

@@ -7,4 +7,19 @@ export type SummarizedItemData = {
   url: string;
 };
 
-export type Languages = "ja-/" | "ko" | "zh-/" | "fr" | "de" | "es" | "it" | "en" | "ja" | "zh-/";
+export type LanguageName =
+  | "ja-/"
+  | "ko"
+  | "zh-/"
+  | "fr"
+  | "de"
+  | "es"
+  | "it"
+  | "en"
+  | "ja"
+  | "zh-/";
+
+export type Language = {
+  name: LanguageName;
+  url: string;
+};
