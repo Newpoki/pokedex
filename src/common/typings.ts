@@ -8,7 +8,7 @@ export type SummarizedItemData = {
 };
 
 export type LanguageName =
-  | "ja-/"
+  | "ja-Hrkt"
   | "ko"
   | "zh-/"
   | "fr"
@@ -17,7 +17,8 @@ export type LanguageName =
   | "it"
   | "en"
   | "ja"
-  | "zh-/";
+  | "zh-Hant"
+  | "zh-Hans";
 
 export type Language = {
   name: LanguageName;

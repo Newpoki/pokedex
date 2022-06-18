@@ -13,8 +13,6 @@ export const useFetchType = (typeName: PokemonTypeName | undefined) => {
 
       return data;
     },
-    {
-      enabled: Boolean(typeName),
-    }
+    { enabled: Boolean(typeName) }
   );
 };

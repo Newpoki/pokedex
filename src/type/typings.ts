@@ -1,4 +1,4 @@
-import { LanguageName, SummarizedItemData } from "../common/typings";
+import { Language, SummarizedItemData } from "../common/typings";
 import { PokemonType, PokemonTypeName } from "../pokemon/typings";
 
 type TypeGameIndice = {
@@ -7,7 +7,7 @@ type TypeGameIndice = {
 };
 
 type TypeName = {
-  language: LanguageName;
+  language: Language;
   name: string;
 };
 

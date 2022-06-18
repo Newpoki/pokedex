@@ -3,9 +3,10 @@ import { useFetchType } from "./useFetchType";
 import uniqBy from "lodash.uniqby";
 
 export const useGetWeaknessess = (pokemonTypes: Array<PokemonType>) => {
-  const { data: firstType } = useFetchType(pokemonTypes[0].type.name);
+  const { data: firstType, isStale } = useFetchType(pokemonTypes[0].type.name);
   const { data: secondType } = useFetchType(pokemonTypes[1]?.type.name);
 
+  console.log({ isStale });
   if (!firstType) return [];
 
   const types = secondType ? [firstType, secondType] : [firstType];

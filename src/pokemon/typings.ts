@@ -1,5 +1,36 @@
 import { Language, SummarizedItemData } from "../common/typings";
 
+type PokemonSpritesVersionBase = {
+  back_default?: string | null;
+  back_female?: string | null;
+  back_shiny?: string | null;
+  back_shiny_female?: string | null;
+  back_shiny_transparent?: string | null;
+  back_gray?: string | null;
+  back_transparent?: string | null;
+  front_default: string | null;
+  front_female?: string | null;
+  front_shiny?: string | null;
+  front_shiny_female?: string | null;
+  front_shiny_transparent?: string | null;
+  front_gray?: string | null;
+  front_transparent?: string | null;
+};
+
+// type PokemonSpritesVersion = PokemonSpritesVersionBase & {
+//   animated: PokemonSpritesVersionBase;
+// };
+
+type PokemonSpritesVersion = {
+  [version: string]: PokemonSpritesVersionBase & {
+    animated?: PokemonSpritesVersionBase;
+  };
+};
+
+type PokemonSpritesVersions = {
+  [generation: string]: PokemonSpritesVersion;
+};
+
 type PokemonSprites = {
   back_default: string;
   back_female: string;
@@ -24,6 +55,7 @@ type PokemonSprites = {
       front_default: string;
     };
   };
+  versions: PokemonSpritesVersions;
 };
 
 export type PokemonTypeName =
@@ -66,20 +98,54 @@ type PokemonStat = {
   stat: SummarizedItemData;
 };
 
+type PokemonGameIndice = {
+  game_index: number;
+  version: SummarizedItemData;
+};
+
+type PokemonMoveVersionGroupDetail = {
+  level_learned_at: number;
+  move_learn_method: SummarizedItemData;
+  version_group: SummarizedItemData;
+};
+
+type PokemonMove = {
+  move: SummarizedItemData;
+  version_group_details: Array<PokemonMoveVersionGroupDetail>;
+};
+
 export type Pokemon = {
   /** The pokemon abilities */
   abilities: Array<PokemonAbility>;
 
   base_experience: number;
 
+  forms: Array<SummarizedItemData>;
+
+  game_indices: Array<PokemonGameIndice>;
+
   /** The pokemon height in decimeters */
   height: number;
+
+  held_items: Array<SummarizedItemData>;
+
+  is_default: boolean;
+
+  location_area_encounters: string;
+
+  moves: Array<PokemonMove>;
 
   /** The national pokedex number of this Pokémon. */
   id: number;
 
   /** The name of this Pokémon. */
   name: string;
+
+  order: number;
+
+  past_types: Array<SummarizedItemData>;
+
+  species: SummarizedItemData;
 
   /** The available sprites for this pokemon */
   sprites: PokemonSprites;
