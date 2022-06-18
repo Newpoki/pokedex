@@ -1,15 +1,15 @@
 import { LanguageName } from "../../common/typings";
 import { PokemonSpecies, PokemonSpeciesFlavor } from "../typings";
 
-type UseGetLatestPokemonFlavorInput = {
+type useGetLocalizedLatestPokemonFlavorInput = {
   pokemonSpecies: PokemonSpecies | undefined;
   language?: LanguageName;
 };
 
-export const useGetLatestPokemonFlavor = ({
+export const useGetLocalizedLatestPokemonFlavor = ({
   pokemonSpecies,
   language = "en",
-}: UseGetLatestPokemonFlavorInput) => {
+}: useGetLocalizedLatestPokemonFlavorInput) => {
   // The flavor entries are sorted by version, so we can just take the last one
   return (
     pokemonSpecies?.flavor_text_entries.reduce<PokemonSpeciesFlavor | null>((acc, flavor) => {

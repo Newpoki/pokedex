@@ -174,6 +174,18 @@ const StyledPokeballLowOpacityIcon = styled(PokeballLowOpacityIcon)`
   top: -100%;
   left: 50%;
   transform: translateX(-50%);
+  opacity: 0;
+  animation: 0.3s appear ease-in-out forwards;
+
+  @keyframes appear {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
 `;
 
 const LowerPart = styled.div`

@@ -19,8 +19,6 @@ export const useFetchPokemon = (pokemonName: string | undefined) => {
 
       return data;
     },
-    {
-      enabled: Boolean(pokemonName),
-    }
+    { enabled: Boolean(pokemonName) }
   );
 };

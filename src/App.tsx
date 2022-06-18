@@ -1,5 +1,6 @@
 import { Routes } from "./routes";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 
 const App = () => {
   const queryClient = new QueryClient({
@@ -13,11 +14,10 @@ const App = () => {
   });
 
   return (
-    <div>
-      <QueryClientProvider client={queryClient}>
-        <Routes />
-      </QueryClientProvider>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
+      <Routes />
+    </QueryClientProvider>
   );
 };
 
