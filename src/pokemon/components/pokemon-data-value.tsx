@@ -12,7 +12,8 @@ export const PokemonDataValue = ({ children, className }: PokemonDataValueProps)
 };
 
 const Root = styled.span`
-  font-size: 14px;
-  color: ${theme.colors.common.grey[600]};
+  font-size: 16px;
+  color: ${theme.colors.text.grey};
+  font-weight: 400;
   text-transform: capitalize;
 `;

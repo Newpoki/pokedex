@@ -5,4 +5,4 @@ export const pokemonsQueryKeys = {
 
 export const POKEMONS_ITEM_BORDER_RADIUS = 10;
 
-export const POKEMONS_ITEMS_HEIGHT = 100;
+export const POKEMONS_ITEMS_HEIGHT = 114;

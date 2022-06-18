@@ -9,9 +9,9 @@ type TypeChipsProps = {
   withLabel?: boolean;
 };
 
-export const TypeChips = ({ types, withLabel }: TypeChipsProps) => {
+export const TypeChips = ({ className, types, withLabel }: TypeChipsProps) => {
   return (
-    <Root>
+    <Root className={className}>
       {types.map((type) => {
         return <StyledTypeChip key={type.name} typeName={type.name} withLabel={withLabel} />;
       })}

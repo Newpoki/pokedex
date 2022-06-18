@@ -22,7 +22,5 @@ export const PokemonCategoryTitle = ({
 
 const Root = styled.h2<{ pokemonTypeName: PokemonTypeName | undefined }>`
   color: ${({ pokemonTypeName }) =>
-    pokemonTypeName
-      ? theme.colors.types.background[pokemonTypeName]
-      : theme.colors.common.black[800]};
+    pokemonTypeName ? theme.colors.types[pokemonTypeName] : theme.colors.text.black};
 `;

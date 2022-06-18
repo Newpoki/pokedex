@@ -40,12 +40,11 @@ export const PokemonItem = ({ className, pokemon }: PokemonItemProps) => {
       <StyledPointsIcon />
 
       <SpriteWrapper>
-        <PokeballLowOpacityIcon />
+        <StyledPokeballLowOpacityIcon />
         <Sprite
           src={data.sprites.other["official-artwork"].front_default}
           alt={`${data.name} front sprite`}
         />
-        {/* <Sprite src={data.sprites.front_default} alt={`${data.name} front sprite`} /> */}
       </SpriteWrapper>
     </Root>
   );
@@ -53,29 +52,34 @@ export const PokemonItem = ({ className, pokemon }: PokemonItemProps) => {
 
 const Root = styled(NavLink)<{ typeName: PokemonTypeName | undefined }>`
   border-radius: ${POKEMONS_ITEM_BORDER_RADIUS}px;
-  background-color: ${({ typeName }) =>
-    typeName ? theme.colors.types.background[typeName] : theme.colors.common.grey[500]};
-  padding: ${theme.spacings.l}px;
+  padding: ${theme.spacings.xl}px;
   position: relative;
   display: block;
   text-decoration: none;
   height: ${POKEMONS_ITEMS_HEIGHT}px;
   box-sizing: border-box;
+  ${({ typeName }) =>
+    typeName &&
+    `
+      background-color: ${theme.colors.backgroundTypes[typeName]};
+      box-shadow: ${theme.colors.typesBoxShadow[typeName]};
+  `};
 `;
 
 const Id = styled.span`
   font-size: 13px;
   display: block;
-  color: ${theme.colors.common.black[700]};
+  color: ${theme.colors.text.number};
   margin-bottom: ${theme.spacings.xs}px;
   font-weight: bold;
 `;
 
 const Name = styled.h3`
-  font-size: 22px;
-  color: ${theme.colors.common.white[900]};
-  margin: 0 0 ${theme.spacings.s}px;
+  color: ${theme.colors.text.white};
+  margin: 0 0 ${theme.spacings.xs}px;
   text-transform: capitalize;
+  font-weight: 700;
+  font-size: 26px;
 `;
 
 const StyledPointsIcon = styled(PointsIcon)`
@@ -88,13 +92,22 @@ const StyledPointsIcon = styled(PointsIcon)`
 
 const SpriteWrapper = styled.div`
   position: absolute;
-  right: 0;
-  top: 0px;
+  right: 8px;
+  top: -25px;
   display: flex;
+  width: 130px;
+  height: 130px;
 `;
 
 const Sprite = styled.img`
   position: absolute;
-  right: 10px;
-  width: 90px;
+  width: 130px;
+`;
+
+const StyledPokeballLowOpacityIcon = styled(PokeballLowOpacityIcon)`
+  width: 145px;
+  height: 145px;
+  position: relative;
+  top: 10px;
+  right: 0;
 `;

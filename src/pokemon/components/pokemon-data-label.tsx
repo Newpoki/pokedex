@@ -12,6 +12,6 @@ export const PokemonDataLabel = ({ children, className }: PokemonDataLabelProps)
 
 const Root = styled.span`
   font-size: 12px;
-  font-weight: 700;
-  color: ${theme.colors.common.black[800]};
+  font-weight: 500;
+  color: ${theme.colors.text.black};
 `;

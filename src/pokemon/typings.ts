@@ -60,6 +60,12 @@ type PokemonAbility = {
   slot: number;
 };
 
+type PokemonStat = {
+  base_stat: number;
+  effort: number;
+  stat: SummarizedItemData;
+};
+
 export type Pokemon = {
   /** The pokemon abilities */
   abilities: Array<PokemonAbility>;
@@ -77,6 +83,9 @@ export type Pokemon = {
 
   /** The available sprites for this pokemon */
   sprites: PokemonSprites;
+
+  /* The pokemon stats and EVs (effort) */
+  stats: Array<PokemonStat>;
 
   /** The pokemon"s type(s) */
   types: Array<PokemonType>;

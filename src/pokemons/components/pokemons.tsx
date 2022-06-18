@@ -6,6 +6,7 @@ import { theme } from "../../theme";
 import times from "lodash.times";
 import { PokemonItemLoading } from "./pokemon-item-loading";
 import { useCallback } from "react";
+import { ReactComponent as BigBackgroundPokeball } from "../../icons/big-background-pokeball.svg";
 
 export const Pokemons = () => {
   const { data, fetchNextPage, isLoading, hasNextPage, isFetching } = useFetchPokemons();
@@ -16,8 +17,9 @@ export const Pokemons = () => {
 
   return (
     <Root>
+      <StyledBigBackgroundPokeballIcon />
       <Title>Pokédex</Title>
-      <Description>Search for Pokémon by name or by scrolling !</Description>
+      <Description>Search for Pokémon by name or using the National Pokédex number.</Description>
       <InfiniteScroll
         pageStart={0}
         loadMore={handleFetchNextPage}
@@ -43,18 +45,32 @@ export const Pokemons = () => {
 };
 
 const Root = styled.div`
-  padding: ${theme.spacings.l}px;
+  padding: 40px;
+  position: relative;
+`;
+
+const StyledBigBackgroundPokeballIcon = styled(BigBackgroundPokeball)`
+  position: absolute;
+  top: 0;
+  left: 0;
 `;
 
 const Title = styled.h1`
   margin-top: 0px;
   margin-bottom: ${theme.spacings.m}px;
+  color: ${theme.colors.text.black};
+  font-size: 32px;
+  /* Allow to be displayed on above the BigBackgroundPokeballIcon */
+  position: relative;
 `;
 
 const Description = styled.h2`
   margin-top: 0;
-  font-size: 18px;
-  color: ${theme.colors.types.normal};
+  color: ${theme.colors.text.grey};
+  font-weight: 400;
+  font-size: 16px;
+  /* Allow to be displayed on above the BigBackgroundPokeballIcon */
+  position: relative;
 `;
 
 const List = styled.ul`

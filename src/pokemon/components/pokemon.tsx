@@ -64,8 +64,8 @@ export const Pokemon = () => {
           <LowerPart>
             <Routes>
               <Route element={<p>stats</p>} path="stats" />
-              <Route element={<p>evolutions</p>} path="/evolutions" />
-              <Route element={<PokemonAbout pokemon={pokemon} />} path="*" />
+              <Route element={<p>evolutions</p>} path="evolutions" />
+              <Route element={<PokemonAbout pokemon={pokemon} />} path="" />
             </Routes>
           </LowerPart>
         </>
@@ -74,20 +74,20 @@ export const Pokemon = () => {
   );
 };
 
-const POKEMON_SPRITE_SIZE = 150;
+const POKEMON_SPRITE_SIZE = 125;
 
 const Root = styled.div<{ typeName: PokemonTypeName | undefined }>`
   position: relative;
   background-color: ${({ typeName }) =>
-    typeName ? theme.colors.types.background[typeName] : "transparent"};
+    typeName ? theme.colors.backgroundTypes[typeName] : "transparent"};
   height: 100vh;
   display: flex;
   flex-direction: column;
 `;
 
 const UpperPart = styled.div`
-  padding: ${theme.spacings.xxxl}px;
-  padding-bottom: ${theme.spacings.m}px;
+  padding: 40px;
+  padding-bottom: ${theme.spacings.l}px;
 `;
 
 const StyledBackArrowIcon = styled(BackArrowIcon)`
@@ -98,9 +98,9 @@ const StyledBackArrowIcon = styled(BackArrowIcon)`
 const SpriteAndMainData = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   position: relative;
-  margin-bottom: ${theme.spacings.xxl}px;
+  margin-bottom: 60px;
 `;
 
 const MainData = styled.div``;
@@ -108,14 +108,15 @@ const MainData = styled.div``;
 const Id = styled.h2`
   margin-top: 0;
   font-size: 16px;
-  color: rgba(0, 0, 0, 0.55);
+  color: ${theme.colors.text.number};
   margin-bottom: ${theme.spacings.xs}px;
+  font-weight: 700;
 `;
 
 const Name = styled.h1`
   margin-top: 0;
   text-transform: capitalize;
-  color: ${theme.colors.common.white[900]};
+  color: ${theme.colors.text.white};
   margin-bottom: ${theme.spacings.s}px;
 `;
 
@@ -152,23 +153,27 @@ const Menu = styled.ul`
 
 const MenuItem = styled(NavLink)<{ isActive: boolean }>`
   position: relative;
-  color: ${theme.colors.common.white[500]};
+  color: ${theme.colors.text.white};
+  opacity: 0.5;
   text-decoration: none;
+  font-weight: 400;
   padding: 0 ${theme.spacings.l}px;
+  transition: 0.3s;
 
   ${({ isActive }) =>
     isActive &&
     `
-      color: ${theme.colors.common.white[900]};
-      font-weight: bold;
+      opacity: 1;
+      font-weight: 700;
     `}
 `;
 
 const StyledPokeballLowOpacityIcon = styled(PokeballLowOpacityIcon)`
   position: absolute;
-  left: 0;
-  width: 100%;
-  top: -100%; ;
+  width: 100px;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
 `;
 
 const LowerPart = styled.div`
@@ -177,11 +182,11 @@ const LowerPart = styled.div`
   z-index: 2;
   display: flex;
   flex: 1;
-  background-color: ${theme.colors.common.white[900]};
+  background-color: ${theme.colors.background.white};
   border-radius: 30px;
   overflow: auto;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
-  padding: 28px;
+  padding: 40px;
   flex-direction: column;
 `;

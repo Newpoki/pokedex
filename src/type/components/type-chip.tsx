@@ -42,5 +42,6 @@ const StyledTypeIcon = styled(TypeIcon)`
 
 const Name = styled.span`
   font-size: 12px;
-  color: ${theme.colors.common.white[900]};
+  color: ${theme.colors.text.white};
+  text-transform: capitalize;
 `;

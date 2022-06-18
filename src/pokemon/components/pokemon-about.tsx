@@ -6,6 +6,7 @@ import { TypeChips } from "../../type/components/type-chips";
 import { useGetWeaknessess } from "../../type/hooks/useGetWeaknesses";
 import { useFetchPokemonSpecies } from "../hooks/useFetchPokemonSpecies";
 import { useGetLatestPokemonFlavor } from "../hooks/useGetLatestPokemonFlavor";
+import { useGetPokemonYieldEVs } from "../hooks/useGetPokemonYieldEVs";
 import { Pokemon } from "../typings";
 import { PokemonCategoryTitle } from "./pokemon-category-title";
 import { PokemonDataLabel } from "./pokemon-data-label";
@@ -17,9 +18,10 @@ type PokemonAboutProps = {
 
 export const PokemonAbout = ({ pokemon }: PokemonAboutProps) => {
   const { data: pokemonSpecies } = useFetchPokemonSpecies(pokemon.name);
+  const { data: growthRate } = useFetchPokemonGrowthRate(pokemonSpecies?.growth_rate?.url);
   const flavor = useGetLatestPokemonFlavor({ pokemonSpecies });
   const weaknesses = useGetWeaknessess(pokemon.types);
-  const { data: growthRate } = useFetchPokemonGrowthRate(pokemonSpecies?.growth_rate?.url);
+  const yieldEVs = useGetPokemonYieldEVs(pokemon);
 
   const pokemonFirstTypeName = useMemo(() => {
     return pokemon.types[0].type.name;
@@ -34,7 +36,6 @@ export const PokemonAbout = ({ pokemon }: PokemonAboutProps) => {
       ?.description;
   }, [growthRate?.descriptions]);
 
-  console.log({ pokemonSpecies });
   return (
     <>
       <Flavor>{flavor?.flavor_text}</Flavor>
@@ -69,7 +70,7 @@ export const PokemonAbout = ({ pokemon }: PokemonAboutProps) => {
 
         <PokemonDataLabel>Weaknessess</PokemonDataLabel>
         <PokemonDataValue>
-          <TypeChips types={weaknesses} withLabel={false} />
+          <StyledTypeChips types={weaknesses} withLabel={false} />
         </PokemonDataValue>
       </Data>
 
@@ -78,6 +79,17 @@ export const PokemonAbout = ({ pokemon }: PokemonAboutProps) => {
       </StyledPokemonCategoryTitle>
 
       <Training>
+        <PokemonDataLabel>EV Yield</PokemonDataLabel>
+        <PokemonDataValue>
+          {yieldEVs.map((EV) => {
+            return (
+              <PokemonEV key={EV.stat.name}>
+                {EV.effort} {EV.stat.name.replace("-", " ")}
+              </PokemonEV>
+            );
+          })}
+        </PokemonDataValue>
+
         <PokemonDataLabel>Catch rate</PokemonDataLabel>
         <PokemonDataValue>{pokemonSpecies?.capture_rate}</PokemonDataValue>
 
@@ -96,11 +108,13 @@ export const PokemonAbout = ({ pokemon }: PokemonAboutProps) => {
 
 const Flavor = styled.p`
   margin-bottom: ${theme.spacings.xxxl}px;
-  color: ${theme.colors.common.grey[900]};
+  color: ${theme.colors.text.grey};
+  font-size: 16px;
+  font-weight: 400px;
 `;
 
 const StyledPokemonCategoryTitle = styled(PokemonCategoryTitle)`
-  margin-bottom: ${theme.spacings.xxxl}px;
+  margin-bottom: ${theme.spacings.xxl}px;
 `;
 
 const Data = styled.div`
@@ -117,8 +131,22 @@ const PokemonAbility = styled.span<{ isHiddenAbility: boolean }>`
   ${({ isHiddenAbility }) =>
     isHiddenAbility &&
     `
-        font-size: 11px;
+      font-size: 11px;
     `}
 `;
 
+const StyledTypeChips = styled(TypeChips)`
+  flex-wrap: wrap;
+
+  & li {
+    margin-bottom: ${theme.spacings.xs}px;
+  }
+`;
+
 const Training = styled(Data)``;
+
+const PokemonEV = styled.p`
+  &::first-letter {
+    text-transform: capitalize;
+  }
+`;
