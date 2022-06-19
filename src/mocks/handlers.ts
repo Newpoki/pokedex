@@ -1,8 +1,15 @@
 import { mockedPokemon } from "./data/pokemon/pokemon";
+import { mockedPokemons } from "./data/pokemons/pokemons";
 import { mockedType } from "./data/type/type";
 
 export const handlers = [
+  /* Pokemons */
+  mockedPokemons.default.handler(),
+
+  /* Pokemon */
   mockedPokemon.default.handler(),
+
+  /* Types */
   mockedType.bug.handler(),
   mockedType.dark.handler(),
   mockedType.dragon.handler(),
