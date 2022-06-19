@@ -1,11 +1,23 @@
 import { mockedPokemon } from "./data/pokemon/pokemon";
-import { mockedFlyingType } from "./data/type/flying.ts";
 import { mockedType } from "./data/type/type";
-import { mockedWaterType } from "./data/type/water";
 
 export const handlers = [
   mockedPokemon.default.handler(),
-  mockedType.default.handler(),
-  mockedFlyingType.handler(),
-  mockedWaterType.handler(),
+  mockedType.bug.handler(),
+  mockedType.dark.handler(),
+  mockedType.dragon.handler(),
+  mockedType.fairy.handler(),
+  mockedType.fighting.handler(),
+  mockedType.fire.handler(),
+  mockedType.flying.handler(),
+  mockedType.ghost.handler(),
+  mockedType.grass.handler(),
+  mockedType.ground.handler(),
+  mockedType.ice.handler(),
+  mockedType.normal.handler(),
+  mockedType.poison.handler(),
+  mockedType.psychic.handler(),
+  mockedType.rock.handler(),
+  mockedType.steel.handler(),
+  mockedType.water.handler(),
 ];

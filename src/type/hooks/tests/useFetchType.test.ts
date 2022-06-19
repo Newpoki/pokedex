@@ -6,7 +6,7 @@ import { mockedType } from "../../../mocks/data/type/type";
 describe("useFetchType", () => {
   describe("API call was a success", () => {
     it("should return the type data", async () => {
-      const name = "grass";
+      const name = mockedType.bug.data.name;
 
       const { result } = renderHook(() => useFetchType(name), {
         wrapper: createMockWrapper(),
@@ -15,7 +15,7 @@ describe("useFetchType", () => {
       await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
       const actual = result.current.data;
-      const expected = mockedType.default.data;
+      const expected = mockedType[name].data;
 
       expect(actual).toEqual(expected);
     });

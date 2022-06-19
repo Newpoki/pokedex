@@ -33,7 +33,7 @@ export type Type = {
 
   id: number;
 
-  move_damage_class: SummarizedItemData;
+  move_damage_class: SummarizedItemData | null;
 
   moves: Array<SummarizedItemData>;
 

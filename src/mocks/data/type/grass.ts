@@ -1,7 +1,7 @@
 import { rest } from "msw";
 import { Type } from "../../../type/typings";
 
-const mockedDefaultTypeData: Type = {
+const mockedGrassTypeData: Type = {
   damage_relations: {
     double_damage_from: [
       { name: "flying", url: "https://pokeapi.co/api/v2/type/3/" },
@@ -334,13 +334,13 @@ const mockedDefaultTypeData: Type = {
   ],
 };
 
-const defaultTypeHandler = () => {
+const grassTypeHandler = () => {
   return rest.get(`https://pokeapi.co/api/v2/type/grass`, (req, res, ctx) => {
-    return res(ctx.json(mockedDefaultTypeData));
+    return res(ctx.json(mockedGrassTypeData));
   });
 };
 
-export const mockedDefaultType = {
-  data: mockedDefaultTypeData,
-  handler: defaultTypeHandler,
+export const mockedGrassType = {
+  data: mockedGrassTypeData,
+  handler: grassTypeHandler,
 };

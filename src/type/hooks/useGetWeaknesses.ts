@@ -1,12 +1,11 @@
 import { PokemonType } from "../../pokemon/typings";
 import { useFetchType } from "./useFetchType";
 import uniqBy from "lodash.uniqby";
-import unionBy from "lodash.unionby";
 
 type WeaknessesAndStrength = {
-  weaknesses: Array<PokemonType["type"]>;
-  useless: Array<PokemonType["type"]>;
-  half: Array<PokemonType["type"]>;
+  doubleDamageFrom: Array<PokemonType["type"]>;
+  noDamageFrom: Array<PokemonType["type"]>;
+  halfDamageFrom: Array<PokemonType["type"]>;
 };
 
 export const useGetWeaknessess = (pokemonTypes: Array<PokemonType>) => {
@@ -19,29 +18,25 @@ export const useGetWeaknessess = (pokemonTypes: Array<PokemonType>) => {
 
   const types = secondType ? [firstType, secondType] : [firstType];
 
-  const { weaknesses, useless, half } = types.reduce<WeaknessesAndStrength>(
+  const { doubleDamageFrom, noDamageFrom, halfDamageFrom } = types.reduce<WeaknessesAndStrength>(
     (acc, type) => {
       return {
-        weaknesses: [...acc.weaknesses, ...type.damage_relations.double_damage_from],
-        useless: [...acc.useless, ...type.damage_relations.no_damage_from],
-        half: [...acc.half, ...type.damage_relations.half_damage_from],
+        doubleDamageFrom: [...acc.doubleDamageFrom, ...type.damage_relations.double_damage_from],
+        noDamageFrom: [...acc.noDamageFrom, ...type.damage_relations.no_damage_from],
+        halfDamageFrom: [...acc.halfDamageFrom, ...type.damage_relations.half_damage_from],
       };
     },
-    { weaknesses: [], useless: [], half: [] }
+    { doubleDamageFrom: [], noDamageFrom: [], halfDamageFrom: [] }
   );
 
-  const computedWeaknesses = weaknesses.filter((weakness) => {
-    const isInUseless = useless.some((useless) => useless.name === weakness.name);
-    const isSameType = pokemonTypes.some((pokemonType) => pokemonType.type.name === weakness.name);
-    const isHalf = half.some((half) => half.name === weakness.name);
+  const computedWeaknesses = doubleDamageFrom.filter((weakness) => {
+    const isInUseless = noDamageFrom.some((type) => type.name === weakness.name);
+    const isHalf = halfDamageFrom.some((type) => type.name === weakness.name);
 
-    return !isInUseless && !isSameType && !isHalf;
+    return !isInUseless && !isHalf;
   });
 
   const data = uniqBy(computedWeaknesses, "name");
 
-  return {
-    data,
-    isSuccess: true,
-  };
+  return { data, isSuccess: true };
 };

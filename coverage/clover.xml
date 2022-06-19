@@ -1,34 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1655578129123" clover="3.2.0">
-  <project timestamp="1655578129123" name="All files">
-    <metrics statements="11" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="4" elements="16" coveredelements="15" complexity="0" loc="11" ncloc="11" packages="3" files="3" classes="3"/>
+<coverage generated="1655655303458" clover="3.2.0">
+  <project timestamp="1655655303458" name="All files">
+    <metrics statements="34" coveredstatements="33" conditionals="7" coveredconditionals="6" methods="13" coveredmethods="11" elements="54" coveredelements="50" complexity="0" loc="34" ncloc="34" packages="4" files="6" classes="6"/>
     <package name="mocks">
-      <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="2"/>
+      <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="2"/>
+      <file name="handlers.ts" path="/home/tenza/Desktop/pokedex/src/mocks/handlers.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="6" count="1" type="stmt"/>
+      </file>
       <file name="mock-wrapper.tsx" path="/home/tenza/Desktop/pokedex/src/mocks/mock-wrapper.tsx">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="2"/>
         <line num="10" count="1" type="stmt"/>
         <line num="17" count="1" type="stmt"/>
         <line num="18" count="1" type="stmt"/>
-        <line num="26" count="1" type="stmt"/>
         <line num="27" count="1" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
       </file>
     </package>
-    <package name="mocks.data.type">
+    <package name="mocks.data.pokemon">
       <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <file name="type.ts" path="/home/tenza/Desktop/pokedex/src/mocks/data/type/type.ts">
+      <file name="pokemon.ts" path="/home/tenza/Desktop/pokedex/src/mocks/data/pokemon/pokemon.ts">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="4" count="1" type="stmt"/>
       </file>
     </package>
-    <package name="type.hooks">
-      <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-      <file name="useFetchType.ts" path="/home/tenza/Desktop/pokedex/src/type/hooks/useFetchType.ts">
+    <package name="mocks.data.type">
+      <metrics statements="10" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="3"/>
+      <file name="flying.ts.ts" path="/home/tenza/Desktop/pokedex/src/mocks/data/type/flying.ts.ts">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="6" count="1" type="stmt"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="10" count="1" type="stmt"/>
-        <line num="12" count="1" type="stmt"/>
-        <line num="14" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="334" count="1" type="stmt"/>
+        <line num="335" count="1" type="stmt"/>
+        <line num="336" count="1" type="stmt"/>
+        <line num="340" count="1" type="stmt"/>
+      </file>
+      <file name="water.ts" path="/home/tenza/Desktop/pokedex/src/mocks/data/type/water.ts">
+        <metrics statements="5" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="347" count="1" type="stmt"/>
+        <line num="348" count="1" type="stmt"/>
+        <line num="349" count="0" type="stmt"/>
+        <line num="353" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="type.hooks">
+      <metrics statements="17" coveredstatements="17" conditionals="7" coveredconditionals="6" methods="6" coveredmethods="6"/>
+      <file name="useGetWeaknesses.ts" path="/home/tenza/Desktop/pokedex/src/type/hooks/useGetWeaknesses.ts">
+        <metrics statements="17" coveredstatements="17" conditionals="7" coveredconditionals="6" methods="6" coveredmethods="6"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="15" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="22" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="36" count="3" type="stmt"/>
+        <line num="37" count="6" type="stmt"/>
+        <line num="38" count="9" type="stmt"/>
+        <line num="40" count="3" type="cond" truecount="3" falsecount="0"/>
+        <line num="43" count="1" type="stmt"/>
+        <line num="45" count="1" type="stmt"/>
       </file>
     </package>
   </project>

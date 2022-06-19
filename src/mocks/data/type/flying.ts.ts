@@ -332,7 +332,7 @@ const mockedFlyingTypeData: Type = {
   ],
 };
 const flyingTypeHandler = () => {
-  return rest.get(`https://pokeapi.co/api/v2/type/water`, (req, res, ctx) => {
+  return rest.get(`https://pokeapi.co/api/v2/type/flying`, (req, res, ctx) => {
     return res(ctx.json(mockedFlyingTypeData));
   });
 };
