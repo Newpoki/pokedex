@@ -1,8 +1,8 @@
 export const growthRateQueryKeys = {
   base: ["growthRate"],
-  pokemonGrowthRate: (pokemonGrowthRateUrl: string | undefined) => [
+  pokemonGrowthRate: (pokemonEggGroupNameOrId: string | undefined) => [
     ...growthRateQueryKeys.base,
-    pokemonGrowthRateUrl,
+    pokemonEggGroupNameOrId,
     "pokemonGrowthRate",
   ],
 };

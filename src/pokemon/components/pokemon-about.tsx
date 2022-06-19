@@ -5,10 +5,10 @@ import { EggGroup } from "../../egg-group/components/egg-group";
 import { useFetchPokemonGrowthRate } from "../../growth-rate/hooks/use-fetch-pokemon-growth-rate";
 import { theme } from "../../theme";
 import { TypeChips } from "../../type/components/type-chips";
-import { useGetWeaknessess } from "../../type/hooks/useGetWeaknesses";
-import { useFetchPokemonSpecies } from "../hooks/useFetchPokemonSpecies";
-import { useGetLocalizedLatestPokemonFlavor } from "../hooks/useGetLocalizedLatestPokemonFlavor";
-import { useGetPokemonYieldEVs } from "../hooks/useGetPokemonYieldEVs";
+import { useGetWeaknessess } from "../../type/hooks/use-get-weaknesses";
+import { useFetchPokemonSpecies } from "../hooks/use-fetch-pokemon-species";
+import { useGetLocalizedLatestPokemonFlavor } from "../hooks/use-get-localized-latest-pokemon-flavor";
+import { useGetPokemonYieldEVs } from "../hooks/use-get-pokemon-yield-evs";
 import { Pokemon } from "../typings";
 import { PokemonCategoryTitle } from "./pokemon-category-title";
 import { PokemonDataLabel } from "./pokemon-data-label";
@@ -123,7 +123,7 @@ export const PokemonAbout = ({ pokemon }: PokemonAboutProps) => {
           {pokemonSpecies.egg_groups.map((eggGroup, index) => {
             return (
               <>
-                <EggGroup pokemonEggGroupUrl={eggGroup.url} />
+                <EggGroup pokemonEggGroupNameOrId={eggGroup.name} />
                 {index !== pokemonSpecies?.egg_groups?.length - 1 && <span>, </span>}
               </>
             );

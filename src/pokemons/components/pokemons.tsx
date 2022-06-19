@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { useFetchPokemons } from "../hooks/useFetchPokemons";
+import { useFetchPokemons } from "../hooks/use-fetch-pokemons";
 import { PokemonItem } from "./pokemon-item";
 import InfiniteScroll from "react-infinite-scroller";
 import { theme } from "../../theme";

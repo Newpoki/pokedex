@@ -1,4 +1,4 @@
-import { useGetWeaknessess } from "../useGetWeaknesses";
+import { useGetWeaknessess } from "../use-get-weaknesses";
 import { renderHook, waitFor } from "@testing-library/react";
 import { createMockWrapper } from "../../../mocks/mock-wrapper";
 import { PokemonTypeName } from "../../../pokemon/typings";

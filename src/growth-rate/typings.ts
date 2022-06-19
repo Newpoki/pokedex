@@ -16,5 +16,6 @@ export type GrowthRate = {
   id: number;
   levels: Array<GrowthRateLevel>;
   name: string;
+  names: Array<GrowthRateName>;
   pokemon_species: Array<SummarizedItemData>;
 };

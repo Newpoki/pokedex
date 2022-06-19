@@ -1,5 +1,5 @@
 import { PokemonType } from "../../pokemon/typings";
-import { useFetchType } from "./useFetchType";
+import { useFetchType } from "./use-fetch-type";
 import uniqBy from "lodash.uniqby";
 import sortBy from "lodash.sortby";
 

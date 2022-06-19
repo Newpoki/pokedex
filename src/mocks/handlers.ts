@@ -4,6 +4,8 @@ import { mockedPokemon } from "./data/pokemon/pokemon";
 import { mockedPokemons } from "./data/pokemons/pokemons";
 import { mockedType } from "./data/type/type";
 
+import { mockedEggGroup } from "./data/egg-group/egg-group";
+
 export const handlers = [
   /* Pokemons */
   mockedPokemons.default.handler(),
@@ -36,4 +38,21 @@ export const handlers = [
 
   /* Pokemon Species */
   mockedPokemonSpecies.default.handler(),
+
+  /* Egg Groups */
+  mockedEggGroup.bug.handler(),
+  mockedEggGroup.ditto.handler(),
+  mockedEggGroup.dragon.handler(),
+  mockedEggGroup.fairy.handler(),
+  mockedEggGroup.flying.handler(),
+  mockedEggGroup.ground.handler(),
+  mockedEggGroup.humanShape.handler(),
+  mockedEggGroup.indeterminate.handler(),
+  mockedEggGroup.mineral.handler(),
+  mockedEggGroup.monster.handler(),
+  mockedEggGroup.noEggs.handler(),
+  mockedEggGroup.plant.handler(),
+  mockedEggGroup.water1.handler(),
+  mockedEggGroup.water2.handler(),
+  mockedEggGroup.water3.handler(),
 ];

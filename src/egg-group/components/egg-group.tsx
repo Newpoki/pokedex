@@ -1,13 +1,13 @@
 import { LanguageName } from "../../common/typings";
-import { useGetLocalizedEggGroup } from "../hooks/useGetLocalizedEggGroup";
+import { useGetLocalizedEggGroupName } from "../hooks/use-get-localized-egg-group-name";
 
 type EggGroupProps = {
-  pokemonEggGroupUrl: string | undefined;
+  pokemonEggGroupNameOrId: string | undefined;
   languageName?: LanguageName;
 };
 
-export const EggGroup = ({ pokemonEggGroupUrl, languageName = "en" }: EggGroupProps) => {
-  const { data: eggGroup } = useGetLocalizedEggGroup({ pokemonEggGroupUrl, languageName });
+export const EggGroup = ({ pokemonEggGroupNameOrId, languageName = "en" }: EggGroupProps) => {
+  const { data: eggGroup } = useGetLocalizedEggGroupName({ pokemonEggGroupNameOrId, languageName });
 
   return <span>{eggGroup?.name}</span>;
 };

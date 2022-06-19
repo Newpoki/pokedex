@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { NavLink, Route, Routes, useNavigate, useParams } from "react-router-dom";
 import { theme } from "../../theme";
 import { TypeChips } from "../../type/components/type-chips";
-import { useFetchPokemon } from "../hooks/useFetchPokemon";
+import { useFetchPokemon } from "../hooks/use-fetch-pokemon";
 import { PokemonTypeName } from "../typings";
 import { ReactComponent as BackArrowIcon } from "../../icons/back-arrow.svg";
 import { useCallback } from "react";
@@ -16,7 +16,6 @@ export const Pokemon = () => {
   const navigate = useNavigate();
 
   const { data: pokemon } = useFetchPokemon(params.idOrName);
-
 
   const handleGoBackToList = useCallback(() => {
     navigate("/");

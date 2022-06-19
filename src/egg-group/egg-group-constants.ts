@@ -1,8 +1,8 @@
 export const eggGroupQueryKeys = {
   base: ["eggGroup"],
-  pokemonEggGroup: (pokemonEggGroupUrl: string | undefined) => [
+  pokemonEggGroup: (pokemonEggGroupNameOrId: string | undefined) => [
     ...eggGroupQueryKeys.base,
-    pokemonEggGroupUrl,
+    pokemonEggGroupNameOrId,
     "pokemonEggGroup",
   ],
 };

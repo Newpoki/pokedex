@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { useMemo } from "react";
-import { useFetchPokemon } from "../../pokemon/hooks/useFetchPokemon";
+import { useFetchPokemon } from "../../pokemon/hooks/use-fetch-pokemon";
 import { PokemonTypeName } from "../../pokemon/typings";
 import { theme } from "../../theme";
 import { PokemonListItem } from "../typings";

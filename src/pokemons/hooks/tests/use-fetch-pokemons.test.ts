@@ -2,7 +2,7 @@ import { act, renderHook, waitFor } from "@testing-library/react";
 import { mockedPokemons } from "../../../mocks/data/pokemons/pokemons";
 import { createMockWrapper } from "../../../mocks/mock-wrapper";
 import { server } from "../../../mocks/server";
-import { useFetchPokemons } from "../useFetchPokemons";
+import { useFetchPokemons } from "../use-fetch-pokemons";
 
 describe("useFetchPokemons", () => {
   describe("API call was a success", () => {

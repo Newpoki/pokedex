@@ -6,6 +6,7 @@ import { useFetchPokemonGrowthRate } from "../use-fetch-pokemon-growth-rate";
 describe("useFetchPokemonGrowthRate", () => {
   describe("API call was a success", () => {
     const pokemonGrowthRateUrl = mockedPokemonSpecies.default.data.name;
+
     it("should fetch the pokemon growth rate", async () => {
       const { result } = renderHook(() => useFetchPokemonGrowthRate(pokemonGrowthRateUrl), {
         wrapper: createMockWrapper(),

@@ -1,4 +1,4 @@
-import { useFetchType } from "../useFetchType";
+import { useFetchType } from "../use-fetch-type";
 import { renderHook, waitFor } from "@testing-library/react";
 import { createMockWrapper } from "../../../mocks/mock-wrapper";
 import { mockedType } from "../../../mocks/data/type/type";

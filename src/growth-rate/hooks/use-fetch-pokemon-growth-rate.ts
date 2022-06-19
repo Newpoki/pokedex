@@ -6,7 +6,6 @@ export const useFetchPokemonGrowthRate = (pokemonNameOrId: string | undefined) =
   return useQuery<GrowthRate>(
     growthRateQueryKeys.pokemonGrowthRate(pokemonNameOrId),
     async () => {
-      if (!pokemonNameOrId) return undefined;
       const url = `https://pokeapi.co/api/v2/pokemon-species/${pokemonNameOrId}`;
 
       // It's safe to cast as string as we're in the query ONLY if there is a pokemon name thanks to the enabled condition

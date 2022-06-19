@@ -10,7 +10,6 @@ export type SummarizedItemData = {
 export type LanguageName =
   | "ja-Hrkt"
   | "ko"
-  | "zh-/"
   | "fr"
   | "de"
   | "es"

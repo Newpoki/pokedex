@@ -1,5 +1,5 @@
 import { mockedDefaultPokemon } from "./default";
-import { error500PokemonHandler } from "./error500";
+import { error500PokemonHandler } from "./error-500";
 
 export const mockedPokemon = {
   default: {
