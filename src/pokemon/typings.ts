@@ -187,6 +187,11 @@ type PokemonSpeciesVariety = {
   pokemon: SummarizedItemData;
 };
 
+type PokemonSpeciesPokedexNumber = {
+  entry_number: number;
+  pokedex: SummarizedItemData;
+};
+
 export type PokemonSpecies = {
   base_happiness: number;
   capture_rate: number;
@@ -195,7 +200,7 @@ export type PokemonSpecies = {
   evolution_chain: { url: string } | null;
   evolves_from_species: { url: string } | null;
   flavor_text_entries: Array<PokemonSpeciesFlavor>;
-  form_description: Array<any>;
+  form_descriptions: Array<any>;
   forms_switchable: boolean;
   gender_rate: number;
   genera: Array<PokemonSpeciesGenera>;
@@ -211,8 +216,8 @@ export type PokemonSpecies = {
   name: string;
   names: Array<PokemonSpeciesNames>;
   order: number;
-  pal_park_encouters: Array<PokemonSpeciesPalParkEncounter>;
-  pokedex_number: { entry_number: number; pokedex: SummarizedItemData };
+  pal_park_encounters: Array<PokemonSpeciesPalParkEncounter>;
+  pokedex_numbers: Array<PokemonSpeciesPokedexNumber>;
   shape: SummarizedItemData;
   varieties: Array<PokemonSpeciesVariety>;
 };

@@ -2,7 +2,7 @@ import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { useMemo } from "react";
 import { EggGroup } from "../../egg-group/components/egg-group";
-import { useFetchPokemonGrowthRate } from "../../growth-rate/hooks/useFetchGrowthRate";
+import { useFetchPokemonGrowthRate } from "../../growth-rate/hooks/use-fetch-pokemon-growth-rate";
 import { theme } from "../../theme";
 import { TypeChips } from "../../type/components/type-chips";
 import { useGetWeaknessess } from "../../type/hooks/useGetWeaknesses";
@@ -21,7 +21,7 @@ type PokemonAboutProps = {
 
 export const PokemonAbout = ({ pokemon }: PokemonAboutProps) => {
   const { data: pokemonSpecies } = useFetchPokemonSpecies(pokemon.name);
-  const { data: growthRate } = useFetchPokemonGrowthRate(pokemonSpecies?.growth_rate?.url);
+  const { data: growthRate } = useFetchPokemonGrowthRate(pokemon.name);
   const flavor = useGetLocalizedLatestPokemonFlavor({ pokemonSpecies });
   const { data: weaknesses } = useGetWeaknessess(pokemon.types);
   const yieldEVs = useGetPokemonYieldEVs(pokemon);

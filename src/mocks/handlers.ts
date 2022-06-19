@@ -1,3 +1,5 @@
+import { mockedGrowthRate } from "./data/growth-rate/growth-rate";
+import { mockedPokemonSpecies } from "./data/pokemon-species/pokemon-species";
 import { mockedPokemon } from "./data/pokemon/pokemon";
 import { mockedPokemons } from "./data/pokemons/pokemons";
 import { mockedType } from "./data/type/type";
@@ -28,4 +30,10 @@ export const handlers = [
   mockedType.rock.handler(),
   mockedType.steel.handler(),
   mockedType.water.handler(),
+
+  /* Growth Rates */
+  mockedGrowthRate.default.handler(),
+
+  /* Pokemon Species */
+  mockedPokemonSpecies.default.handler(),
 ];
