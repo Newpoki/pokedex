@@ -12,6 +12,7 @@ export const handlers = [
   mockedType.flying.handler(),
   mockedType.ghost.handler(),
   mockedType.grass.handler(),
+  mockedType.electric.handler(),
   mockedType.ground.handler(),
   mockedType.ice.handler(),
   mockedType.normal.handler(),

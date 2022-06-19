@@ -1,6 +1,7 @@
 import { PokemonType } from "../../pokemon/typings";
 import { useFetchType } from "./useFetchType";
 import uniqBy from "lodash.uniqby";
+import sortBy from "lodash.sortby";
 
 type WeaknessesAndStrength = {
   doubleDamageFrom: Array<PokemonType["type"]>;
@@ -36,7 +37,8 @@ export const useGetWeaknessess = (pokemonTypes: Array<PokemonType>) => {
     return !isInUseless && !isHalf;
   });
 
-  const data = uniqBy(computedWeaknesses, "name");
+  const weaknessesWithoutDupe = uniqBy(computedWeaknesses, "name");
+  const sortedWeaknesses = sortBy(weaknessesWithoutDupe, "name");
 
-  return { data, isSuccess: true };
+  return { data: sortedWeaknesses, isSuccess: true };
 };
