@@ -19,6 +19,7 @@ export const createMockWrapper = () => {
     defaultOptions: {
       queries: {
         retry: false,
+        cacheTime: 0,
       },
     },
   });

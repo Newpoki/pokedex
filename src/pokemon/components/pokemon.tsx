@@ -17,6 +17,7 @@ export const Pokemon = () => {
 
   const { data: pokemon } = useFetchPokemon(params.idOrName);
 
+
   const handleGoBackToList = useCallback(() => {
     navigate("/");
   }, [navigate]);

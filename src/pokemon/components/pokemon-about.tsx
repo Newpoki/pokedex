@@ -23,7 +23,7 @@ export const PokemonAbout = ({ pokemon }: PokemonAboutProps) => {
   const { data: pokemonSpecies } = useFetchPokemonSpecies(pokemon.name);
   const { data: growthRate } = useFetchPokemonGrowthRate(pokemonSpecies?.growth_rate?.url);
   const flavor = useGetLocalizedLatestPokemonFlavor({ pokemonSpecies });
-  const weaknesses = useGetWeaknessess(pokemon.types);
+  const { data: weaknesses } = useGetWeaknessess(pokemon.types);
   const yieldEVs = useGetPokemonYieldEVs(pokemon);
 
   const pokemonFirstTypeName = useMemo(() => {

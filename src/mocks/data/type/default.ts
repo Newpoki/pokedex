@@ -335,7 +335,7 @@ const mockedDefaultTypeData: Type = {
 };
 
 const defaultTypeHandler = () => {
-  return rest.get(`https://pokeapi.co/api/v2/type/:typename`, (req, res, ctx) => {
+  return rest.get(`https://pokeapi.co/api/v2/type/grass`, (req, res, ctx) => {
     return res(ctx.json(mockedDefaultTypeData));
   });
 };
