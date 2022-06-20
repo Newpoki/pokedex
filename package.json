@@ -12,8 +12,10 @@
   "dependencies": {
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
+    "@types/lodash.findlast": "^4.6.7",
     "@types/lodash.sortby": "^4.7.7",
     "@types/lodash.uniqby": "^4.7.7",
+    "lodash.findlast": "^4.6.0",
     "lodash.sortby": "^4.7.0",
     "lodash.times": "^4.3.2",
     "lodash.uniqby": "^4.7.0",
