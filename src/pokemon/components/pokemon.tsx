@@ -10,6 +10,7 @@ import { PokemonAbout } from "./pokemon-about";
 import { ReactComponent as PokeballLowOpacityIcon } from "../../icons/pokeball-low-opacity.svg";
 import { ReactComponent as PointsIcon } from "../../icons/points.svg";
 import { ReactComponent as PokemonBackgroundCircle } from "../../icons/pokemon-background-circle.svg";
+import { PokemonStats } from "./pokemon-stats";
 
 export const Pokemon = () => {
   const params = useParams();
@@ -63,7 +64,7 @@ export const Pokemon = () => {
 
           <LowerPart>
             <Routes>
-              <Route element={<p>stats</p>} path="stats" />
+              <Route element={<PokemonStats pokemon={pokemon} />} path="stats" />
               <Route element={<p>evolutions</p>} path="evolutions" />
               <Route element={<PokemonAbout pokemon={pokemon} />} path="" />
             </Routes>

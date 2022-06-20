@@ -1,0 +1,99 @@
+import styled from "@emotion/styled";
+import { ReactNode, useMemo } from "react";
+import { theme } from "../../theme";
+import { PokemonStatName, PokemonTypeName } from "../typings";
+import { PokemonDataLabel } from "./pokemon-data-label";
+import { PokemonDataValue } from "./pokemon-data-value";
+
+type PokemonStatProps = {
+  pokemonTypeName?: PokemonTypeName;
+  name: PokemonStatName | "Total";
+  baseStat: number;
+  maxStat: ReactNode;
+  minStat: ReactNode;
+  isSummary?: boolean;
+};
+
+export const PokemonStat = ({
+  pokemonTypeName,
+  name,
+  baseStat,
+  maxStat,
+  minStat,
+  isSummary = false,
+}: PokemonStatProps) => {
+  const displayedName = useMemo(() => {
+    switch (name) {
+      case "hp":
+        return "HP";
+      case "attack":
+        return "Attack";
+      case "defense":
+        return "Defense";
+      case "special-attack":
+        return "Sp. Atk";
+      case "special-defense":
+        return "Sp. Def";
+      case "speed":
+        return "Speed";
+      default:
+        return name;
+    }
+  }, [name]);
+
+  return (
+    <>
+      <PokemonDataLabel>{displayedName}</PokemonDataLabel>
+      <StyledPokemonDataValue>
+        <BaseStat isSummary={isSummary}>{baseStat}</BaseStat>
+        {pokemonTypeName && <PercentBar pokemonTypeName={pokemonTypeName} value={baseStat} />}
+
+        <MinStat isSummary={isSummary}>{minStat}</MinStat>
+        <MaxStat isSummary={isSummary}>{maxStat}</MaxStat>
+      </StyledPokemonDataValue>
+    </>
+  );
+};
+
+const BaseStat = styled.span<{ isSummary: boolean }>`
+  margin-right: ${theme.spacings.xl}px;
+
+  ${({ isSummary }) =>
+    isSummary &&
+    `
+    font-weight: 700;
+
+  `}
+`;
+
+const PercentBar = styled.div<{ pokemonTypeName: PokemonTypeName; value: number }>`
+  background-color: ${({ pokemonTypeName }) => theme.colors.types[pokemonTypeName]};
+  height: 4px;
+  border-radius: 2px;
+  width: ${({ value }) => value}px;
+`;
+
+const StyledPokemonDataValue = styled(PokemonDataValue)`
+  display: flex;
+  align-items: center;
+`;
+
+const MinStat = styled(PokemonDataValue)<{ isSummary: boolean }>`
+  margin-left: auto;
+  ${({ isSummary }) =>
+    isSummary &&
+    `
+      color: ${theme.colors.text.black};
+      font-size: 12px;
+  `}
+`;
+
+const MaxStat = styled(PokemonDataValue)<{ isSummary: boolean }>`
+  margin-left: ${theme.spacings.s}px;
+  ${({ isSummary }) =>
+    isSummary &&
+    `
+      color: ${theme.colors.text.black};
+      font-size: 12px;
+  `}
+`;

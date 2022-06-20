@@ -1081,7 +1081,7 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
-"@emotion/babel-plugin@^11.7.1":
+"@emotion/babel-plugin@^11.7.1", "@emotion/babel-plugin@^11.9.2":
   version "11.9.2"
   resolved "https://registry.yarnpkg.com/@emotion/babel-plugin/-/babel-plugin-11.9.2.tgz#723b6d394c89fb2ef782229d92ba95a740576e95"
   integrity sha512-Pr/7HGH6H6yKgnVFNEj2MVlreu3ADqftqjqwUvDy/OJzKFgxKeTQ+eeUf20FOTuHVkDON2iNa25rAXVYtWJCjw==
@@ -2468,6 +2468,11 @@ babel-plugin-dynamic-import-node@^2.3.3:
   integrity sha512-jZVI+s9Zg3IqA/kdi0i6UDCybUI3aSBLnglhYbSSjKlV7yF1F/5LWv8MakQmvYpnbJDS6fcBL2KzHSxNCMtWSQ==
   dependencies:
     object.assign "^4.1.0"
+
+babel-plugin-emotion@^11.0.0:
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-emotion/-/babel-plugin-emotion-11.0.0.tgz#f362c9fe05493821ab8995cd5a8e7be6504b73a9"
+  integrity sha512-cVD32sIXlidaqQBr7vw0uD2o58uBeD8jILDJ2yAGT1fOmgYcE5iX27bTVMV6meiUZarIAh1iAyTqrEWV+V2dqQ==
 
 babel-plugin-istanbul@^6.1.1:
   version "6.1.1"

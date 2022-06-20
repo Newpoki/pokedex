@@ -92,10 +92,21 @@ type PokemonAbility = {
   slot: number;
 };
 
-type PokemonStat = {
+export type PokemonStatName =
+  | "hp"
+  | "attack"
+  | "defense"
+  | "special-attack"
+  | "special-defense"
+  | "speed";
+
+export type PokemonStat = {
   base_stat: number;
   effort: number;
-  stat: SummarizedItemData;
+  stat: {
+    name: PokemonStatName;
+    url: string;
+  };
 };
 
 type PokemonGameIndice = {

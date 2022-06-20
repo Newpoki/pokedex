@@ -1,4 +1,3 @@
-import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { useMemo } from "react";
 import { EggGroup } from "../../egg-group/components/egg-group";
@@ -13,6 +12,7 @@ import { Pokemon } from "../typings";
 import { PokemonCategoryTitle } from "./pokemon-category-title";
 import { PokemonDataLabel } from "./pokemon-data-label";
 import { PokemonDataValue } from "./pokemon-data-value";
+import { PokemonDetails } from "./pokemon-details";
 import { PokemonGenderRate } from "./pokemon-gender-rate";
 
 type PokemonAboutProps = {
@@ -31,11 +31,11 @@ export const PokemonAbout = ({ pokemon }: PokemonAboutProps) => {
   }, [pokemon.types]);
 
   const pokemonGenera = useMemo(() => {
-    return pokemonSpecies?.genera.find((genera) => genera.language.name === "en");
+    return pokemonSpecies?.genera?.find((genera) => genera.language.name === "en");
   }, [pokemonSpecies?.genera]);
 
   const growthRateDescription = useMemo(() => {
-    return growthRate?.descriptions.find((description) => description.language.name === "en")
+    return growthRate?.descriptions?.find((description) => description.language.name === "en")
       ?.description;
   }, [growthRate?.descriptions]);
 
@@ -49,7 +49,7 @@ export const PokemonAbout = ({ pokemon }: PokemonAboutProps) => {
         Pokedex Data
       </StyledPokemonCategoryTitle>
 
-      <DataPart>
+      <PokemonDetails>
         <PokemonDataLabel>Species</PokemonDataLabel>
         <PokemonDataValue>{pokemonGenera?.genus}</PokemonDataValue>
 
@@ -77,13 +77,13 @@ export const PokemonAbout = ({ pokemon }: PokemonAboutProps) => {
         <PokemonDataValue>
           <StyledTypeChips types={weaknesses} withLabel={false} />
         </PokemonDataValue>
-      </DataPart>
+      </PokemonDetails>
 
       <StyledPokemonCategoryTitle pokemonTypeName={pokemonFirstTypeName}>
         Training
       </StyledPokemonCategoryTitle>
 
-      <TrainingPart>
+      <PokemonDetails>
         <PokemonDataLabel>EV Yield</PokemonDataLabel>
         <PokemonDataValue>
           {yieldEVs.map((EV) => {
@@ -106,19 +106,19 @@ export const PokemonAbout = ({ pokemon }: PokemonAboutProps) => {
 
         <PokemonDataLabel>Growth Rate</PokemonDataLabel>
         <PokemonDataValue>{growthRateDescription}</PokemonDataValue>
-      </TrainingPart>
+      </PokemonDetails>
 
       <StyledPokemonCategoryTitle pokemonTypeName={pokemonFirstTypeName}>
         Breeding
       </StyledPokemonCategoryTitle>
 
-      <BreedingPart>
+      <PokemonDetails>
         <PokemonDataLabel>Growth Rate</PokemonDataLabel>
         <PokemonDataValue>
           <PokemonGenderRate pokemonGenderRate={pokemonSpecies?.gender_rate} />
         </PokemonDataValue>
 
-        <PokemonDataLabel>Growth Rate</PokemonDataLabel>
+        <PokemonDataLabel>Egg Groups</PokemonDataLabel>
         <PokemonDataValue>
           {pokemonSpecies.egg_groups.map((eggGroup, index) => {
             return (
@@ -135,18 +135,10 @@ export const PokemonAbout = ({ pokemon }: PokemonAboutProps) => {
           {pokemonSpecies.hatch_counter}
           <HatchCounterSteps> ({(pokemonSpecies.hatch_counter + 1) * 255} steps)</HatchCounterSteps>
         </PokemonDataValue>
-      </BreedingPart>
+      </PokemonDetails>
     </>
   );
 };
-
-const partStyles = css`
-  display: inline-grid;
-  grid-template-columns: 100px auto;
-  grid-column-gap: ${theme.spacings.xxxl}px;
-  grid-row-gap: ${theme.spacings.xxl}px;
-  margin-bottom: ${theme.spacings.xxxl}px;
-`;
 
 const Flavor = styled.p`
   margin-bottom: ${theme.spacings.xxxl}px;
@@ -157,10 +149,6 @@ const Flavor = styled.p`
 
 const StyledPokemonCategoryTitle = styled(PokemonCategoryTitle)`
   margin-bottom: ${theme.spacings.xxl}px;
-`;
-
-const DataPart = styled.div`
-  ${partStyles};
 `;
 
 const PokemonAbility = styled.span<{ isHiddenAbility: boolean }>`
@@ -181,18 +169,10 @@ const StyledTypeChips = styled(TypeChips)`
   }
 `;
 
-const TrainingPart = styled.div`
-  ${partStyles};
-`;
-
 const PokemonEV = styled.p`
   &::first-letter {
     text-transform: capitalize;
   }
-`;
-
-const BreedingPart = styled.div`
-  ${partStyles};
 `;
 
 const HatchCounterSteps = styled.span`
