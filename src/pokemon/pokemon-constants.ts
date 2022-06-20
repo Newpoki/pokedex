@@ -1,9 +1,18 @@
 export const pokemonQueryKeys = {
   base: ["pokemon"],
-  pokemon: (pokemonName: string | undefined) => [...pokemonQueryKeys.base, pokemonName, "pokemon"],
-  pokemonSpecies: (pokemonName: string | undefined) => [
+  pokemon: (pokemonNameOrId: string | undefined) => [
     ...pokemonQueryKeys.base,
-    pokemonName,
+    pokemonNameOrId,
+    "pokemon",
+  ],
+  pokemonSpecies: (pokemonNameOrId: string | undefined) => [
+    ...pokemonQueryKeys.base,
+    pokemonNameOrId,
     "pokemonSpecies",
+  ],
+  pokemonEvolutionChain: (evolutionChainId: string | undefined) => [
+    ...pokemonQueryKeys.base,
+    evolutionChainId,
+    "pokemonEvolutionChain",
   ],
 };

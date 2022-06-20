@@ -6,7 +6,7 @@ import { theme } from "../../theme";
 import times from "lodash.times";
 import { PokemonItemLoading } from "./pokemon-item-loading";
 import { useCallback } from "react";
-import { ReactComponent as BigBackgroundPokeball } from "../../icons/big-background-pokeball.svg";
+import { ReactComponent as BigBackgroundHalfPokeball } from "../../icons/big-background-half-pokeball.svg";
 
 export const Pokemons = () => {
   const { data, fetchNextPage, isLoading, hasNextPage, isFetching } = useFetchPokemons();
@@ -17,7 +17,7 @@ export const Pokemons = () => {
 
   return (
     <Root>
-      <StyledBigBackgroundPokeballIcon />
+      <StyledBigBackgroundHalfPokeballIcon />
       <Title>Pokédex</Title>
       <Description>Search for Pokémon by name or using the National Pokédex number.</Description>
       <InfiniteScroll
@@ -49,7 +49,7 @@ const Root = styled.div`
   position: relative;
 `;
 
-const StyledBigBackgroundPokeballIcon = styled(BigBackgroundPokeball)`
+const StyledBigBackgroundHalfPokeballIcon = styled(BigBackgroundHalfPokeball)`
   position: absolute;
   top: 0;
   left: 0;
@@ -60,7 +60,7 @@ const Title = styled.h1`
   margin-bottom: ${theme.spacings.m}px;
   color: ${theme.colors.text.black};
   font-size: 32px;
-  /* Allow to be displayed on above the BigBackgroundPokeballIcon */
+  /* Allow to be displayed on above the BigBackgroundHalfPokeballIcon */
   position: relative;
 `;
 
@@ -69,7 +69,7 @@ const Description = styled.h2`
   color: ${theme.colors.text.grey};
   font-weight: 400;
   font-size: 16px;
-  /* Allow to be displayed on above the BigBackgroundPokeballIcon */
+  /* Allow to be displayed on above the BigBackgroundHalfPokeballIcon */
   position: relative;
 `;
 

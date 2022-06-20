@@ -209,7 +209,7 @@ export type PokemonSpecies = {
   color: SummarizedItemData;
   egg_groups: Array<SummarizedItemData>;
   evolution_chain: { url: string } | null;
-  evolves_from_species: { url: string } | null;
+  evolves_from_species: SummarizedItemData | null;
   flavor_text_entries: Array<PokemonSpeciesFlavor>;
   form_descriptions: Array<any>;
   forms_switchable: boolean;
@@ -231,4 +231,54 @@ export type PokemonSpecies = {
   pokedex_numbers: Array<PokemonSpeciesPokedexNumber>;
   shape: SummarizedItemData;
   varieties: Array<PokemonSpeciesVariety>;
+};
+
+type PokemonEvolutionChainDetailTriggerName =
+  | "level-up"
+  | "trade"
+  | "use-item"
+  | "shed"
+  | "spin"
+  | "tower-of-darkness"
+  | "tower-of-water"
+  | "three-critical-hits"
+  | "take-damage"
+  | "other";
+
+type PokemonEvolutionChainChainDetailTrigger = {
+  name: PokemonEvolutionChainDetailTriggerName;
+  url: string;
+};
+
+export type PokemonEvolutionChainChainDetail = {
+  gender: null;
+  held_item: null;
+  item: null;
+  known_move: null;
+  known_move_type: null;
+  location: null;
+  min_affection: null;
+  min_beauty: null;
+  min_happiness: null;
+  min_level: 16;
+  needs_overworld_rain: false;
+  party_species: null;
+  party_type: null;
+  relative_physical_stats: null;
+  time_of_day: "";
+  trade_species: null;
+  trigger: PokemonEvolutionChainChainDetailTrigger;
+};
+
+type PokemonEvolutionChainChain = {
+  evolutions_details: Array<PokemonEvolutionChainChainDetail>;
+  evolves_to: Array<PokemonEvolutionChainChain>;
+  is_baby: boolean;
+  species: SummarizedItemData;
+};
+
+export type PokemonEvolutionChain = {
+  id: number;
+  baby_trigger_item: SummarizedItemData;
+  chain: PokemonEvolutionChainChain;
 };
