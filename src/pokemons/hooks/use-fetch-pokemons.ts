@@ -6,7 +6,7 @@ export const useFetchPokemons = () => {
   return useInfiniteQuery<PokemonList>(
     pokemonsQueryKeys.list(),
     async ({ pageParam }) => {
-      const url = pageParam ?? `https://pokeapi.co/api/v2/pokemon`;
+      const url = pageParam ?? `https://pokeapi.co/api/v2/pokemon?limit=120`;
 
       const response = await fetch(url);
       const data = await response.json();

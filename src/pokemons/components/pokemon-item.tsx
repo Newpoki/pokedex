@@ -58,11 +58,23 @@ const Root = styled(NavLink)<{ typeName: PokemonTypeName | undefined }>`
   text-decoration: none;
   height: ${POKEMONS_ITEMS_HEIGHT}px;
   box-sizing: border-box;
+  opacity: 1;
+  transition: 0.3s;
+  transform: scale(1);
+
+  &:hover {
+  }
+
   ${({ typeName }) =>
     typeName &&
     `
       background-color: ${theme.colors.backgroundTypes[typeName]};
       box-shadow: ${theme.colors.typesBoxShadow[typeName]};
+      
+      &:hover {
+        transform: scale(1.1);
+        box-shadow: ${theme.colors.typesBoxShadow[typeName].replace("0.4", "0.8")};
+      }
   `};
 `;
 
