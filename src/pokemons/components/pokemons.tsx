@@ -7,6 +7,7 @@ import times from "lodash.times";
 import { PokemonItemLoading } from "./pokemon-item-loading";
 import { useCallback } from "react";
 import { ReactComponent as BigBackgroundHalfPokeball } from "../../icons/big-background-half-pokeball.svg";
+import { PokemonsSearch } from "./pokemons-search";
 
 export const Pokemons = () => {
   const { data, fetchNextPage, isLoading, hasNextPage, isFetching } = useFetchPokemons();
@@ -20,6 +21,9 @@ export const Pokemons = () => {
       <StyledBigBackgroundHalfPokeballIcon />
       <Title>Pokédex</Title>
       <Description>Search for Pokémon by name or using the National Pokédex number.</Description>
+
+      <StyledPokemonsSearch />
+
       <InfiniteScroll
         pageStart={0}
         loadMore={handleFetchNextPage}
@@ -71,6 +75,12 @@ const Description = styled.h2`
   font-size: 16px;
   /* Allow to be displayed on above the BigBackgroundHalfPokeballIcon */
   position: relative;
+  margin-bottom: ${theme.spacings.xxl}px;
+`;
+
+const StyledPokemonsSearch = styled(PokemonsSearch)`
+  position: relative;
+  margin-bottom: 45px;
 `;
 
 const List = styled.ul`
@@ -79,5 +89,4 @@ const List = styled.ul`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   grid-gap: 40px;
-  margin-top: ${theme.spacings.xxxl}px;
 `;

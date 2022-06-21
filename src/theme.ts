@@ -64,7 +64,7 @@ export const theme = {
     },
     background: {
       white: "#FFFFFF",
-      defaultInput: "F2F2F2",
+      defaultInput: "#F2F2F2",
       pressedInput: "#E2E2E2",
       modal: "17171B80",
     },
