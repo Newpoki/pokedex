@@ -5,7 +5,7 @@ import { TypeChips } from "../../type/components/type-chips";
 import { useFetchPokemon } from "../hooks/use-fetch-pokemon";
 import { PokemonTypeName } from "../typings";
 import { ReactComponent as BackArrowIcon } from "../../icons/back-arrow.svg";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { PokemonAbout } from "./pokemon-about";
 import { ReactComponent as PokeballLowOpacityIcon } from "../../icons/pokeball-low-opacity.svg";
 import { ReactComponent as PointsIcon } from "../../icons/points.svg";
@@ -19,12 +19,16 @@ export const Pokemon = () => {
 
   const { data: pokemon } = useFetchPokemon(params.idOrName);
 
+  const pokemonFirstType = useMemo(() => {
+    return pokemon?.types[0]?.type?.name;
+  }, [pokemon?.types]);
+
   const handleGoBackToList = useCallback(() => {
     navigate("/");
   }, [navigate]);
 
   return (
-    <Root typeName={pokemon?.types[0]?.type?.name}>
+    <Root typeName={pokemonFirstType}>
       {pokemon && (
         <>
           <UpperPart>
@@ -44,24 +48,24 @@ export const Pokemon = () => {
                 <StyledPointsIcon />
               </MainData>
             </SpriteAndMainData>
-
-            <Menu>
-              <MenuItem to="" isActive={params["*"] === ""}>
-                {params["*"] === "" && <StyledPokeballLowOpacityIcon />}
-                About
-              </MenuItem>
-
-              <MenuItem to="stats" isActive={params["*"] === "stats"}>
-                {params["*"] === "stats" && <StyledPokeballLowOpacityIcon />}
-                Stats
-              </MenuItem>
-
-              <MenuItem to="evolutions" isActive={params["*"] === "evolutions"}>
-                {params["*"] === "evolutions" && <StyledPokeballLowOpacityIcon />}
-                Evolution
-              </MenuItem>
-            </Menu>
           </UpperPart>
+
+          <Menu typeName={pokemonFirstType}>
+            <MenuItem to="" isActive={params["*"] === ""}>
+              {params["*"] === "" && <StyledPokeballLowOpacityIcon />}
+              About
+            </MenuItem>
+
+            <MenuItem to="stats" isActive={params["*"] === "stats"}>
+              {params["*"] === "stats" && <StyledPokeballLowOpacityIcon />}
+              Stats
+            </MenuItem>
+
+            <MenuItem to="evolutions" isActive={params["*"] === "evolutions"}>
+              {params["*"] === "evolutions" && <StyledPokeballLowOpacityIcon />}
+              Evolution
+            </MenuItem>
+          </Menu>
 
           <LowerPart>
             <Routes>
@@ -82,7 +86,6 @@ const Root = styled.div<{ typeName: PokemonTypeName | undefined }>`
   position: relative;
   background-color: ${({ typeName }) =>
     typeName ? theme.colors.backgroundTypes[typeName] : "transparent"};
-  height: 100vh;
   display: flex;
   flex-direction: column;
 `;
@@ -95,6 +98,7 @@ const UpperPart = styled.div`
 const StyledBackArrowIcon = styled(BackArrowIcon)`
   width: 20px;
   position: relative;
+  cursor: pointer;
 `;
 
 const SpriteAndMainData = styled.div`
@@ -102,7 +106,7 @@ const SpriteAndMainData = styled.div`
   align-items: center;
   justify-content: flex-start;
   position: relative;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
 `;
 
 const MainData = styled.div``;
@@ -146,11 +150,17 @@ const StyledPokemonBackgroundCircle = styled(PokemonBackgroundCircle)`
   height: ${POKEMON_SPRITE_SIZE}px;
 `;
 
-const Menu = styled.ul`
+const Menu = styled.ul<{ typeName: PokemonTypeName | undefined }>`
   padding: 0;
   list-style: none;
   display: flex;
   justify-content: space-between;
+  padding: ${theme.spacings.xxl}px 40px ${theme.spacings.l}px;
+  position: sticky;
+  top: 0px;
+  background-color: ${({ typeName }) =>
+    typeName ? theme.colors.backgroundTypes[typeName] : "transparent"};
+  z-index: 3;
 `;
 
 const MenuItem = styled(NavLink)<{ isActive: boolean }>`
@@ -198,9 +208,9 @@ const LowerPart = styled.div`
   flex: 1;
   background-color: ${theme.colors.background.white};
   border-radius: 30px;
-  overflow: auto;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   padding: 40px;
+  padding-bottom: 0;
   flex-direction: column;
 `;

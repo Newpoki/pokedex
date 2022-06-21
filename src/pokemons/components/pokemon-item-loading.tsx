@@ -9,4 +9,6 @@ export const PokemonItemLoading = () => {
 const StyledSkeleton = styled(Skeleton)`
   height: ${POKEMONS_ITEMS_HEIGHT}px;
   border-radius: ${POKEMONS_ITEM_BORDER_RADIUS}px;
+  /* In order to be displayed above near absolute element */
+  position: relative;
 `;
