@@ -271,7 +271,7 @@ export type PokemonEvolutionChainChainDetail = {
 };
 
 type PokemonEvolutionChainChain = {
-  evolutions_details: Array<PokemonEvolutionChainChainDetail>;
+  evolution_details: Array<PokemonEvolutionChainChainDetail>;
   evolves_to: Array<PokemonEvolutionChainChain>;
   is_baby: boolean;
   species: SummarizedItemData;

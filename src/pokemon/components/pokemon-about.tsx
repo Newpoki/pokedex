@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { useMemo } from "react";
+import { Fragment, useMemo } from "react";
 import { EggGroup } from "../../egg-group/components/egg-group";
 import { useFetchPokemonGrowthRate } from "../../growth-rate/hooks/use-fetch-pokemon-growth-rate";
 import { theme } from "../../theme";
@@ -122,10 +122,10 @@ export const PokemonAbout = ({ pokemon }: PokemonAboutProps) => {
         <PokemonDataValue>
           {pokemonSpecies.egg_groups.map((eggGroup, index) => {
             return (
-              <>
+              <Fragment key={eggGroup.name}>
                 <EggGroup pokemonEggGroupNameOrId={eggGroup.name} />
                 {index !== pokemonSpecies?.egg_groups?.length - 1 && <span>, </span>}
-              </>
+              </Fragment>
             );
           })}
         </PokemonDataValue>

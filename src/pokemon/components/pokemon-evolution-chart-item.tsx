@@ -12,7 +12,6 @@ type PokemonEvolutionChartItemProps = {
 export const PokemonEvolutionChartItem = ({ pokemonName }: PokemonEvolutionChartItemProps) => {
   const { data: pokemon } = useFetchPokemon(pokemonName);
 
-  console.log({ pokemon });
   const displayedId = useMemo(() => {
     return pokemon?.id ? formatPokemonId(pokemon.id) : undefined;
   }, [pokemon?.id]);

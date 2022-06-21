@@ -29,9 +29,19 @@ export const PokemonEvolution = ({ pokemon }: PokemonEvolutionProps) => {
     firstEvolutionSpecies?.evolves_from_species?.name
   );
 
+  console.log({ pokemonEvolutionChain });
+
   const pokemonFirstTypeName = useMemo(() => {
     return pokemon.types[0].type.name;
   }, [pokemon.types]);
+
+  const firstEvolutionDetail = useMemo(() => {
+    return pokemonEvolutionChain?.chain?.evolves_to?.[0]?.evolution_details?.[0];
+  }, [pokemonEvolutionChain?.chain?.evolves_to]);
+
+  const secondEvolutionDetail = useMemo(() => {
+    return pokemonEvolutionChain?.chain?.evolves_to?.[0]?.evolves_to[0]?.evolution_details?.[0];
+  }, [pokemonEvolutionChain?.chain?.evolves_to]);
 
   if (!originalPokemonSpecies || !firstEvolutionSpecies || !secondEvolutionSpecies) return null;
 
@@ -41,17 +51,21 @@ export const PokemonEvolution = ({ pokemon }: PokemonEvolutionProps) => {
         Evolution Chart
       </StyledPokemonCategoryTitle>
 
-      <PokemonEvolutionChart>
-        <PokemonEvolutionChartItem pokemonName={originalPokemonSpecies.name} />
-        <PokemonEvolutionChartSeparator />
-        <PokemonEvolutionChartItem pokemonName={firstEvolutionSpecies.name} />
-      </PokemonEvolutionChart>
+      {firstEvolutionSpecies && firstEvolutionDetail && (
+        <PokemonEvolutionChart>
+          <PokemonEvolutionChartItem pokemonName={originalPokemonSpecies.name} />
+          <PokemonEvolutionChartSeparator detail={firstEvolutionDetail} />
+          <PokemonEvolutionChartItem pokemonName={firstEvolutionSpecies.name} />
+        </PokemonEvolutionChart>
+      )}
 
-      <PokemonEvolutionChart>
-        <PokemonEvolutionChartItem pokemonName={firstEvolutionSpecies.name} />
-        <PokemonEvolutionChartSeparator />
-        <PokemonEvolutionChartItem pokemonName={secondEvolutionSpecies.name} />
-      </PokemonEvolutionChart>
+      {secondEvolutionSpecies && secondEvolutionDetail && (
+        <PokemonEvolutionChart>
+          <PokemonEvolutionChartItem pokemonName={firstEvolutionSpecies.name} />
+          <PokemonEvolutionChartSeparator detail={secondEvolutionDetail} />
+          <PokemonEvolutionChartItem pokemonName={secondEvolutionSpecies.name} />
+        </PokemonEvolutionChart>
+      )}
     </>
   );
 };

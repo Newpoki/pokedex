@@ -70,7 +70,17 @@ const PercentBar = styled.div<{ pokemonTypeName: PokemonTypeName; value: number 
   background-color: ${({ pokemonTypeName }) => theme.colors.types[pokemonTypeName]};
   height: 4px;
   border-radius: 2px;
-  width: ${({ value }) => value}px;
+  animation: 0.3s appear ease-out forwards;
+
+  @keyframes appear {
+    0% {
+      width: 0;
+    }
+
+    100% {
+      width: ${({ value }) => value}px;
+    }
+  }
 `;
 
 const StyledPokemonDataValue = styled(PokemonDataValue)`
