@@ -46,7 +46,14 @@ export const PokemonStat = ({
       <PokemonDataLabel>{displayedName}</PokemonDataLabel>
       <StyledPokemonDataValue>
         <BaseStat isSummary={isSummary}>{baseStat}</BaseStat>
-        {pokemonTypeName && <PercentBar pokemonTypeName={pokemonTypeName} value={baseStat} />}
+
+        {pokemonTypeName && (
+          // We should be able to only use PercentBar component here, but it doesn't work with emotion
+          // A weird bug makes all PercentBar having the same width
+          <PercentBarWrapper value={baseStat}>
+            <PercentBar pokemonTypeName={pokemonTypeName} />
+          </PercentBarWrapper>
+        )}
 
         <MinStat isSummary={isSummary}>{minStat}</MinStat>
         <MaxStat isSummary={isSummary}>{maxStat}</MaxStat>
@@ -57,16 +64,22 @@ export const PokemonStat = ({
 
 const BaseStat = styled.span<{ isSummary: boolean }>`
   margin-right: ${theme.spacings.xl}px;
+  width: 25px;
+  text-align: right;
 
   ${({ isSummary }) =>
     isSummary &&
     `
-    font-weight: 700;
-
+      font-weight: 700;
   `}
 `;
 
-const PercentBar = styled.div<{ pokemonTypeName: PokemonTypeName; value: number }>`
+const PercentBarWrapper = styled.div<{ value: number }>`
+  width: ${({ value }) => value}px;
+  max-width: 150px;
+`;
+
+const PercentBar = styled.div<{ pokemonTypeName: PokemonTypeName }>`
   background-color: ${({ pokemonTypeName }) => theme.colors.types[pokemonTypeName]};
   height: 4px;
   border-radius: 2px;
@@ -78,7 +91,7 @@ const PercentBar = styled.div<{ pokemonTypeName: PokemonTypeName; value: number 
     }
 
     100% {
-      width: ${({ value }) => value}px;
+      width: 100%;
     }
   }
 `;
@@ -90,6 +103,8 @@ const StyledPokemonDataValue = styled(PokemonDataValue)`
 
 const MinStat = styled(PokemonDataValue)<{ isSummary: boolean }>`
   margin-left: auto;
+  padding-left: ${theme.spacings.m}px;
+
   ${({ isSummary }) =>
     isSummary &&
     `
