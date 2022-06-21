@@ -1,10 +1,5 @@
-import { Language, SummarizedItemData } from "../common/typings";
+import { GameIndice, Language, SummarizedItemData } from "../common/typings";
 import { PokemonType, PokemonTypeName } from "../pokemon/typings";
-
-type TypeGameIndice = {
-  game_index: number;
-  generation: SummarizedItemData;
-};
 
 type TypeName = {
   language: Language;
@@ -27,7 +22,7 @@ export type Type = {
     no_damage_to: Array<PokemonType["type"]>;
   };
 
-  game_indices: Array<TypeGameIndice>;
+  game_indices: Array<GameIndice>;
 
   generation: SummarizedItemData;
 

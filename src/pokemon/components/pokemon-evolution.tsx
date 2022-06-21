@@ -43,7 +43,7 @@ export const PokemonEvolution = ({ pokemon }: PokemonEvolutionProps) => {
     return pokemonEvolutionChain?.chain?.evolves_to?.[0]?.evolves_to[0]?.evolution_details?.[0];
   }, [pokemonEvolutionChain?.chain?.evolves_to]);
 
-  if (!originalPokemonSpecies || !firstEvolutionSpecies || !secondEvolutionSpecies) return null;
+  if (!originalPokemonSpecies) return null;
 
   return (
     <>
@@ -59,7 +59,7 @@ export const PokemonEvolution = ({ pokemon }: PokemonEvolutionProps) => {
         </PokemonEvolutionChart>
       )}
 
-      {secondEvolutionSpecies && secondEvolutionDetail && (
+      {firstEvolutionSpecies && secondEvolutionSpecies && secondEvolutionDetail && (
         <PokemonEvolutionChart>
           <PokemonEvolutionChartItem pokemonName={firstEvolutionSpecies.name} />
           <PokemonEvolutionChartSeparator detail={secondEvolutionDetail} />

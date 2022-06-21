@@ -1,4 +1,4 @@
-import { Language, SummarizedItemData } from "../common/typings";
+import { GameIndice, Language, SummarizedItemData } from "../common/typings";
 
 type PokemonSpritesVersionBase = {
   back_default?: string | null;
@@ -109,11 +109,6 @@ export type PokemonStat = {
   };
 };
 
-type PokemonGameIndice = {
-  game_index: number;
-  version: SummarizedItemData;
-};
-
 type PokemonMoveVersionGroupDetail = {
   level_learned_at: number;
   move_learn_method: SummarizedItemData;
@@ -133,7 +128,7 @@ export type Pokemon = {
 
   forms: Array<SummarizedItemData>;
 
-  game_indices: Array<PokemonGameIndice>;
+  game_indices: Array<GameIndice>;
 
   /** The pokemon height in decimeters */
   height: number;
@@ -253,7 +248,7 @@ type PokemonEvolutionChainChainDetailTrigger = {
 export type PokemonEvolutionChainChainDetail = {
   gender: null;
   held_item: null;
-  item: null;
+  item: SummarizedItemData | null;
   known_move: null;
   known_move_type: null;
   location: null;
@@ -267,7 +262,7 @@ export type PokemonEvolutionChainChainDetail = {
   relative_physical_stats: null;
   time_of_day: "";
   trade_species: null;
-  trigger: PokemonEvolutionChainChainDetailTrigger;
+  trigger: PokemonEvolutionChainChainDetailTrigger | null;
 };
 
 type PokemonEvolutionChainChain = {

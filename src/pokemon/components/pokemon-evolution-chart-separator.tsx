@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { useMemo } from "react";
 import { ReactComponent as RightArrowGrey } from "../../icons/right-arrow-grey.svg";
+import { useGetLocalizedItemName } from "../../item/hooks/useGetLocalizedItemName";
 import { theme } from "../../theme";
 import { PokemonEvolutionChainChainDetail } from "../typings";
 
@@ -9,11 +10,17 @@ type PokemonEvolutionChartSeparatorProps = {
 };
 
 export const PokemonEvolutionChartSeparator = ({ detail }: PokemonEvolutionChartSeparatorProps) => {
+  const { data: itemName } = useGetLocalizedItemName({ itemNameOrId: detail?.item?.name });
+
   const displayedText = useMemo(() => {
     if (detail.min_level) {
       return `(Level ${detail.min_level})`;
     }
-  }, [detail.min_level]);
+
+    if (detail.trigger?.name === "use-item" && itemName) {
+      return `(${itemName?.name})`;
+    }
+  }, [detail, itemName]);
 
   return (
     <Root>

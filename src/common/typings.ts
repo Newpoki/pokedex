@@ -24,3 +24,8 @@ export type Language = {
   name: LanguageName;
   url: string;
 };
+
+export type GameIndice = {
+  game_index: number;
+  version: SummarizedItemData;
+};
