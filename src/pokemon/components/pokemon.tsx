@@ -5,7 +5,7 @@ import { TypeChips } from "../../type/components/type-chips";
 import { useFetchPokemon } from "../hooks/use-fetch-pokemon";
 import { PokemonTypeName } from "../typings";
 import { ReactComponent as BackArrowIcon } from "../../icons/back-arrow.svg";
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { PokemonAbout } from "./pokemon-about";
 import { ReactComponent as PokeballLowOpacityIcon } from "../../icons/pokeball-low-opacity.svg";
 import { ReactComponent as PointsIcon } from "../../icons/points.svg";
@@ -23,7 +23,7 @@ export const Pokemon = () => {
   const params = useParams();
   const navigate = useNavigate();
 
-  const { data: pokemon } = useFetchPokemon(params.idOrName);
+  const { data: pokemon, isError } = useFetchPokemon(params.idOrName);
 
   const pokemonFirstType = useMemo(() => {
     return pokemon?.types[0]?.type?.name;
@@ -32,6 +32,12 @@ export const Pokemon = () => {
   const handleGoBackToList = useCallback(() => {
     navigate("/");
   }, [navigate]);
+
+  useEffect(() => {
+    if (isError) {
+      navigate("/not-found");
+    }
+  }, [isError, navigate]);
 
   return (
     <Root typeName={pokemonFirstType ?? "normal"}>

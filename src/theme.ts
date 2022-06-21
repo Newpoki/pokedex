@@ -66,7 +66,7 @@ export const theme = {
       white: "#FFFFFF",
       defaultInput: "#F2F2F2",
       pressedInput: "#E2E2E2",
-      modal: "17171B80",
+      modal: "#17171B80",
     },
     gradient: {
       vector: "linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 100%)",
