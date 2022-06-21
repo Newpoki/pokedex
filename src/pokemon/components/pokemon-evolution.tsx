@@ -37,10 +37,11 @@ export const PokemonEvolution = ({ pokemon }: PokemonEvolutionProps) => {
         Evolution Chart
       </StyledPokemonCategoryTitle>
 
-      {firstPokemonEvolutionChain?.map((evolutionChain) => {
+      {firstPokemonEvolutionChain?.map((evolutionChain, index) => {
         return (
           <PokemonEvolutionChain
             evolutionChain={evolutionChain}
+            key={`${evolutionChain.species?.name}-${index}`}
             originalPokemonSpecies={originalPokemonSpecies}
           />
         );

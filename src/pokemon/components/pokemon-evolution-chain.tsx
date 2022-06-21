@@ -26,10 +26,11 @@ export const PokemonEvolutionChain = ({
         <PokemonEvolutionChartItem pokemonName={firstEvolutionSpecies.name} />
       </PokemonEvolutionChart>
 
-      {evolutionChain?.evolves_to?.map((secondEvolutionChain) => {
+      {evolutionChain?.evolves_to?.map((secondEvolutionChain, index) => {
         return (
           <PokemonEvolutionChain
             evolutionChain={secondEvolutionChain}
+            key={`${secondEvolutionChain.species?.name}-${index}`}
             originalPokemonSpecies={firstEvolutionSpecies}
           />
         );

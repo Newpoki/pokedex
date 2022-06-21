@@ -51,7 +51,9 @@ export const PokemonItem = ({ className, pokemon }: PokemonItemProps) => {
   );
 };
 
-const Root = styled(NavLink)<{ typeName: PokemonTypeName | undefined }>`
+const Root = styled(NavLink, { shouldForwardProp: (props) => props !== "typeName" })<{
+  typeName: PokemonTypeName | undefined;
+}>`
   border-radius: ${POKEMONS_ITEM_BORDER_RADIUS}px;
   padding: ${theme.spacings.xl}px;
   position: relative;

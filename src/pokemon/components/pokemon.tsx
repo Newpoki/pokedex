@@ -194,7 +194,9 @@ const Menu = styled.ul<{ typeName: PokemonTypeName | undefined }>`
   z-index: 3;
 `;
 
-const MenuItem = styled(NavLink)<{ isActive: boolean }>`
+const MenuItem = styled(NavLink, { shouldForwardProp: (prop) => prop !== "isActive" })<{
+  isActive: boolean;
+}>`
   position: relative;
   color: ${theme.colors.text.white};
   opacity: 0.5;

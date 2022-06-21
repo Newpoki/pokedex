@@ -13,7 +13,7 @@ export const PokemonStatsSkeleton = () => {
       <StyledPokemonDetails>
         {times(14).map((index) => {
           return (
-            <div style={{ display: "flex" }}>
+            <div style={{ display: "flex" }} key={index}>
               <Skeleton width="50xp" height="12px" />
             </div>
           );

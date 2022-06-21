@@ -11,7 +11,7 @@ export const PokemonDataValue = ({ children, className }: PokemonDataValueProps)
   return <Root className={className}>{children}</Root>;
 };
 
-const Root = styled.span`
+const Root = styled.div`
   font-size: 16px;
   color: ${theme.colors.text.grey};
   font-weight: 400;

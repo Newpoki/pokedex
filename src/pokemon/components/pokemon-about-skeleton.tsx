@@ -20,7 +20,7 @@ export const PokemonAboutSkeleton = () => {
       <PokemonDetails>
         {times(5).map((index) => {
           return (
-            <>
+            <Fragment key={index}>
               <PokemonDataLabel>
                 <Skeleton width="70px" height="16px" />
               </PokemonDataLabel>
@@ -28,7 +28,7 @@ export const PokemonAboutSkeleton = () => {
               <PokemonDataValue>
                 <Skeleton width="70px" height="16px" />
               </PokemonDataValue>
-            </>
+            </Fragment>
           );
         })}
       </PokemonDetails>
@@ -38,7 +38,7 @@ export const PokemonAboutSkeleton = () => {
       <PokemonDetails>
         {times(5).map((index) => {
           return (
-            <>
+            <Fragment key={index}>
               <PokemonDataLabel>
                 <Skeleton width="70px" height="16px" />
               </PokemonDataLabel>
@@ -46,7 +46,7 @@ export const PokemonAboutSkeleton = () => {
               <PokemonDataValue>
                 <Skeleton width="70px" height="16px" />
               </PokemonDataValue>
-            </>
+            </Fragment>
           );
         })}
       </PokemonDetails>
@@ -54,7 +54,7 @@ export const PokemonAboutSkeleton = () => {
   );
 };
 
-const Flavor = styled.p`
+const Flavor = styled.div`
   margin-bottom: ${theme.spacings.xxxl}px;
   color: ${theme.colors.text.grey};
   font-size: 16px;
