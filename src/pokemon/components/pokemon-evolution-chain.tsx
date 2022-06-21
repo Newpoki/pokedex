@@ -18,13 +18,25 @@ export const PokemonEvolutionChain = ({
 
   if (!firstEvolutionSpecies) return null;
 
+  if (!evolutionChain.evolution_details.length) {
+    return (
+      <Root>
+        <NoEnoughData>It looks like we do not have enough data about this Pokémon.</NoEnoughData>
+      </Root>
+    );
+  }
+
   return (
     <Root>
-      <PokemonEvolutionChart>
-        <PokemonEvolutionChartItem pokemonName={originalPokemonSpecies.name} />
-        <PokemonEvolutionChartSeparator detail={evolutionChain.evolution_details[0]} />
-        <PokemonEvolutionChartItem pokemonName={firstEvolutionSpecies.name} />
-      </PokemonEvolutionChart>
+      {evolutionChain.evolution_details?.map((detail, index) => {
+        return (
+          <PokemonEvolutionChart key={index}>
+            <PokemonEvolutionChartItem pokemonName={originalPokemonSpecies.name} />
+            <PokemonEvolutionChartSeparator detail={detail} />
+            <PokemonEvolutionChartItem pokemonName={firstEvolutionSpecies.name} />
+          </PokemonEvolutionChart>
+        );
+      })}
 
       {evolutionChain?.evolves_to?.map((secondEvolutionChain, index) => {
         return (
@@ -46,4 +58,8 @@ const PokemonEvolutionChart = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-bottom: ${theme.spacings.xxxl}px;
+`;
+
+const NoEnoughData = styled.p`
+  color: ${theme.colors.text.black};
 `;

@@ -241,10 +241,10 @@ type PokemonEvolutionChainChainDetailTrigger = {
 };
 
 export type PokemonEvolutionChainChainDetail = {
-  gender: null;
-  held_item: null;
+  gender: 1 | 2;
+  held_item: SummarizedItemData | null;
   item: SummarizedItemData | null;
-  known_move: null;
+  known_move: SummarizedItemData;
   known_move_type: { name: PokemonTypeName; url: string } | null;
   location: SummarizedItemData | null;
   min_affection: null;
@@ -254,9 +254,9 @@ export type PokemonEvolutionChainChainDetail = {
   needs_overworld_rain: boolean;
   party_species: null;
   party_type: null;
-  relative_physical_stats: null;
+  relative_physical_stats: -1 | 0 | 1 | null;
   time_of_day: "day" | "night";
-  trade_species: null;
+  trade_species: SummarizedItemData | null;
   trigger: PokemonEvolutionChainChainDetailTrigger | null;
   turn_upside_down: boolean;
 };

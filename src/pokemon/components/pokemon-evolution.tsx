@@ -31,25 +31,36 @@ export const PokemonEvolution = ({ pokemon }: PokemonEvolutionProps) => {
 
   if (!originalPokemonSpecies) return null;
 
+  console.log({ firstPokemonEvolutionChain });
+
   return (
     <>
       <StyledPokemonCategoryTitle pokemonTypeName={pokemonFirstTypeName}>
         Evolution Chart
       </StyledPokemonCategoryTitle>
 
-      {firstPokemonEvolutionChain?.map((evolutionChain, index) => {
-        return (
-          <PokemonEvolutionChain
-            evolutionChain={evolutionChain}
-            key={`${evolutionChain.species?.name}-${index}`}
-            originalPokemonSpecies={originalPokemonSpecies}
-          />
-        );
-      })}
+      {!firstPokemonEvolutionChain?.length && (
+        <NoEvolution>This pokemon does not evolve.</NoEvolution>
+      )}
+
+      {!!firstPokemonEvolutionChain?.length &&
+        firstPokemonEvolutionChain?.map((evolutionChain, index) => {
+          return (
+            <PokemonEvolutionChain
+              evolutionChain={evolutionChain}
+              key={`${evolutionChain.species?.name}-${index}`}
+              originalPokemonSpecies={originalPokemonSpecies}
+            />
+          );
+        })}
     </>
   );
 };
 
 const StyledPokemonCategoryTitle = styled(PokemonCategoryTitle)`
   margin-bottom: ${theme.spacings.xxl}px;
+`;
+
+const NoEvolution = styled.p`
+  color: ${theme.colors.text.black};
 `;
