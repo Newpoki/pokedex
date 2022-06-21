@@ -1,4 +1,4 @@
-import { GameIndice, Language, SummarizedItemData } from "../common/typings";
+import { Language, SummarizedItemData } from "../common/typings";
 import { PokemonType, PokemonTypeName } from "../pokemon/typings";
 
 type TypeName = {
@@ -12,6 +12,11 @@ type TypePokemon = {
   slot: 1 | 2;
 };
 
+type TypeGameVersion = {
+  game_index: number;
+  generation: SummarizedItemData;
+};
+
 export type Type = {
   damage_relations: {
     double_damage_from: Array<PokemonType["type"]>;
@@ -22,7 +27,7 @@ export type Type = {
     no_damage_to: Array<PokemonType["type"]>;
   };
 
-  game_indices: Array<GameIndice>;
+  game_indices: Array<TypeGameVersion>;
 
   generation: SummarizedItemData;
 
