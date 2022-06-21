@@ -11,7 +11,13 @@ import { ReactComponent as PokeballLowOpacityIcon } from "../../icons/pokeball-l
 import { ReactComponent as PointsIcon } from "../../icons/points.svg";
 import { ReactComponent as PokemonBackgroundCircle } from "../../icons/pokemon-background-circle.svg";
 import { PokemonStats } from "./pokemon-stats";
+import { Skeleton } from "../../common/components/Skeleton";
+import { PokemonAboutSkeleton } from "./pokemon-about-skeleton";
+import { PokemonStatsSkeleton } from "./pokemon-stats-skeleton";
 import { PokemonEvolution } from "./pokemon-evolution";
+import { PokemonEvolutionSkeleton } from "./pokemon-evolution-skeleton";
+
+const POKEMON_SPRITE_SIZE = 125;
 
 export const Pokemon = () => {
   const params = useParams();
@@ -28,17 +34,24 @@ export const Pokemon = () => {
   }, [navigate]);
 
   return (
-    <Root typeName={pokemonFirstType}>
-      {pokemon && (
-        <>
-          <UpperPart>
-            <StyledBackArrowIcon onClick={handleGoBackToList} />
-            <SpriteAndMainData>
-              <SpriteWrapper>
-                <Sprite src={pokemon?.sprites.other["official-artwork"].front_default} />
-                <StyledPokemonBackgroundCircle />
-              </SpriteWrapper>
+    <Root typeName={pokemonFirstType ?? "normal"}>
+      <>
+        <UpperPart>
+          <StyledBackArrowIcon onClick={handleGoBackToList} />
+          <SpriteAndMainData>
+            <SpriteWrapper>
+              {pokemon && <Sprite src={pokemon?.sprites.other["official-artwork"].front_default} />}
+              {!pokemon && (
+                <Skeleton
+                  shape="round"
+                  width={`${POKEMON_SPRITE_SIZE}px`}
+                  height={`${POKEMON_SPRITE_SIZE}px`}
+                />
+              )}
+              <StyledPokemonBackgroundCircle />
+            </SpriteWrapper>
 
+            {pokemon && (
               <MainData>
                 <Id>#{pokemon.id}</Id>
                 <Name>{pokemon.name}</Name>
@@ -47,40 +60,51 @@ export const Pokemon = () => {
 
                 <StyledPointsIcon />
               </MainData>
-            </SpriteAndMainData>
-          </UpperPart>
+            )}
+          </SpriteAndMainData>
+        </UpperPart>
 
-          <Menu typeName={pokemonFirstType}>
-            <MenuItem to="" isActive={params["*"] === ""}>
-              {params["*"] === "" && <StyledPokeballLowOpacityIcon />}
-              About
-            </MenuItem>
+        <Menu typeName={pokemonFirstType}>
+          <MenuItem to="" isActive={params["*"] === ""}>
+            {params["*"] === "" && <StyledPokeballLowOpacityIcon />}
+            About
+          </MenuItem>
 
-            <MenuItem to="stats" isActive={params["*"] === "stats"}>
-              {params["*"] === "stats" && <StyledPokeballLowOpacityIcon />}
-              Stats
-            </MenuItem>
+          <MenuItem to="stats" isActive={params["*"] === "stats"}>
+            {params["*"] === "stats" && <StyledPokeballLowOpacityIcon />}
+            Stats
+          </MenuItem>
 
-            <MenuItem to="evolutions" isActive={params["*"] === "evolutions"}>
-              {params["*"] === "evolutions" && <StyledPokeballLowOpacityIcon />}
-              Evolution
-            </MenuItem>
-          </Menu>
+          <MenuItem to="evolutions" isActive={params["*"] === "evolutions"}>
+            {params["*"] === "evolutions" && <StyledPokeballLowOpacityIcon />}
+            Evolution
+          </MenuItem>
+        </Menu>
 
-          <LowerPart>
-            <Routes>
-              <Route element={<PokemonStats pokemon={pokemon} />} path="stats" />
-              <Route element={<PokemonEvolution pokemon={pokemon} />} path="evolutions" />
-              <Route element={<PokemonAbout pokemon={pokemon} />} path="" />
-            </Routes>
-          </LowerPart>
-        </>
-      )}
+        <LowerPart>
+          <Routes>
+            <>
+              <Route
+                element={pokemon ? <PokemonStats pokemon={pokemon} /> : <PokemonStatsSkeleton />}
+                path="stats"
+              />
+              <Route
+                element={
+                  pokemon ? <PokemonEvolution pokemon={pokemon} /> : <PokemonEvolutionSkeleton />
+                }
+                path="evolutions"
+              />
+              <Route
+                element={pokemon ? <PokemonAbout pokemon={pokemon} /> : <PokemonAboutSkeleton />}
+                path=""
+              />
+            </>
+          </Routes>
+        </LowerPart>
+      </>
     </Root>
   );
 };
-
-const POKEMON_SPRITE_SIZE = 125;
 
 const Root = styled.div<{ typeName: PokemonTypeName | undefined }>`
   position: relative;
@@ -88,6 +112,7 @@ const Root = styled.div<{ typeName: PokemonTypeName | undefined }>`
     typeName ? theme.colors.backgroundTypes[typeName] : "transparent"};
   display: flex;
   flex-direction: column;
+  transition: 0.3s background-color;
 `;
 
 const UpperPart = styled.div`

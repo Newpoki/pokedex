@@ -65,6 +65,12 @@ export const PokemonStats = ({ pokemon }: PokemonStatsProps) => {
           minStat="Min"
           isSummary
         />
+
+        <Informations>
+          The ranges shown on the right are for a level 100 Pokémon. Maximum values are based on a
+          beneficial nature, 252 EVs, 31 IVs; minimum values are based on a hindering nature, 0 EVs,
+          0 IVs.
+        </Informations>
       </StyledPokemonDetails>
     </>
   );
@@ -76,4 +82,10 @@ const StyledPokemonCategoryTitle = styled(PokemonCategoryTitle)`
 
 const StyledPokemonDetails = styled(PokemonDetails)`
   grid-template-columns: 50px auto;
+`;
+
+const Informations = styled.p`
+  color: ${theme.colors.text.grey};
+  font-size: 12px;
+  font-weight: 500;
 `;

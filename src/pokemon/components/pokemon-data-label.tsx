@@ -1,8 +1,9 @@
 import styled from "@emotion/styled";
+import { ReactNode } from "react";
 import { theme } from "../../theme";
 
 type PokemonDataLabelProps = {
-  children: string;
+  children: ReactNode;
   className?: string;
 };
 

@@ -10,6 +10,7 @@ import { POKEMONS_ITEMS_HEIGHT, POKEMONS_ITEM_BORDER_RADIUS } from "../pokemons-
 import { PokemonItemLoading } from "./pokemon-item-loading";
 import { NavLink } from "react-router-dom";
 import { TypeChips } from "../../type/components/type-chips";
+import { formatPokemonId } from "../../pokemon/utils/format-pokemon-id";
 
 type PokemonItemProps = {
   className?: string;
@@ -31,7 +32,7 @@ export const PokemonItem = ({ className, pokemon }: PokemonItemProps) => {
 
   return (
     <Root className={className} to={`/pokemon/${pokemon.name}`} typeName={pokemonFirstType}>
-      <Id># {data.id}</Id>
+      <Id>{formatPokemonId(data.id)}</Id>
 
       <Name>{data.name}</Name>
 
