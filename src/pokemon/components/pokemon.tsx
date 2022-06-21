@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { NavLink, Route, Routes, useNavigate, useParams } from "react-router-dom";
+import { Navigate, NavLink, Route, Routes, useNavigate, useParams } from "react-router-dom";
 import { theme } from "../../theme";
 import { TypeChips } from "../../type/components/type-chips";
 import { useFetchPokemon } from "../hooks/use-fetch-pokemon";
@@ -71,8 +71,8 @@ export const Pokemon = () => {
         </UpperPart>
 
         <Menu typeName={pokemonFirstType}>
-          <MenuItem to="" isActive={params["*"] === ""}>
-            {params["*"] === "" && <StyledPokeballLowOpacityIcon />}
+          <MenuItem to="about" isActive={params["*"] === "about"}>
+            {params["*"] === "about" && <StyledPokeballLowOpacityIcon />}
             About
           </MenuItem>
 
@@ -102,8 +102,9 @@ export const Pokemon = () => {
               />
               <Route
                 element={pokemon ? <PokemonAbout pokemon={pokemon} /> : <PokemonAboutSkeleton />}
-                path=""
+                path="about"
               />
+              <Route element={<Navigate to="about" replace />} path="*" />
             </>
           </Routes>
         </LowerPart>

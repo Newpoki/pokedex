@@ -9,6 +9,7 @@ const App = () => {
         // The fetched data in this App aren't updated a lot, so we can assume that we want to cache them
         staleTime: 60000 * 24,
         refetchOnWindowFocus: false,
+        retry: 1,
       },
     },
   });
