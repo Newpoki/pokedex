@@ -1,5 +1,5 @@
 import { LanguageName } from "../../common/typings";
-import { useFetchItem } from "./useFetchItem";
+import { useFetchItem } from "./use-fetch-item";
 
 type UseGetLocalizedItemName = {
   itemNameOrId: string | undefined;
@@ -10,13 +10,9 @@ export const useGetLocalizedItemName = ({
   itemNameOrId,
   languageName = "en",
 }: UseGetLocalizedItemName) => {
-  const { data: eggGroup, ...others } = useFetchItem(itemNameOrId);
+  const { data: item, ...others } = useFetchItem(itemNameOrId);
 
-  const localizedItemName = eggGroup?.names.find(
-    (itemName) => itemName.language.name === languageName
-  );
-
-  console.log({ localizedItemName });
+  const localizedItemName = item?.names.find((itemName) => itemName.language.name === languageName);
 
   return { ...others, data: localizedItemName };
 };

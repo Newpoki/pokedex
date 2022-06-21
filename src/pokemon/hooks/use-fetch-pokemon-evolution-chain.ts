@@ -10,8 +10,6 @@ export const useFetchPokemonEvolutionChain = (evolutionChainUrl: string | undefi
         return undefined;
       }
 
-      console.log({ evolutionChainUrl });
-
       const response = await fetch(evolutionChainUrl);
       const data = await response.json();
 

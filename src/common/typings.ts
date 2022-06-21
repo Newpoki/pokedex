@@ -29,3 +29,8 @@ export type GameIndice = {
   game_index: number;
   version: SummarizedItemData;
 };
+
+export type LocalizedName = {
+  language: Language;
+  name: string;
+};

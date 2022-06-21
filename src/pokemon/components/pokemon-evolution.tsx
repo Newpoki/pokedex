@@ -5,8 +5,7 @@ import { useFetchPokemonEvolutionChain } from "../hooks/use-fetch-pokemon-evolut
 import { useFetchPokemonSpecies } from "../hooks/use-fetch-pokemon-species";
 import { Pokemon } from "../typings";
 import { PokemonCategoryTitle } from "./pokemon-category-title";
-import { PokemonEvolutionChartItem } from "./pokemon-evolution-chart-item";
-import { PokemonEvolutionChartSeparator } from "./pokemon-evolution-chart-separator";
+import { PokemonEvolutionChain } from "./pokemon-evolution-chain";
 
 type PokemonEvolutionProps = {
   pokemon: Pokemon;
@@ -18,29 +17,16 @@ export const PokemonEvolution = ({ pokemon }: PokemonEvolutionProps) => {
     pokemonSpecies?.evolution_chain?.url
   );
 
-  const { data: firstEvolutionSpecies } = useFetchPokemonSpecies(
-    pokemonEvolutionChain?.chain?.evolves_to?.[0]?.species?.name
-  );
-  const { data: secondEvolutionSpecies } = useFetchPokemonSpecies(
-    pokemonEvolutionChain?.chain?.evolves_to?.[0]?.evolves_to[0]?.species?.name
-  );
-
   const { data: originalPokemonSpecies } = useFetchPokemonSpecies(
-    firstEvolutionSpecies?.evolves_from_species?.name
+    pokemonEvolutionChain?.chain.species.name
   );
-
-  console.log({ pokemonEvolutionChain });
 
   const pokemonFirstTypeName = useMemo(() => {
     return pokemon.types[0].type.name;
   }, [pokemon.types]);
 
-  const firstEvolutionDetail = useMemo(() => {
-    return pokemonEvolutionChain?.chain?.evolves_to?.[0]?.evolution_details?.[0];
-  }, [pokemonEvolutionChain?.chain?.evolves_to]);
-
-  const secondEvolutionDetail = useMemo(() => {
-    return pokemonEvolutionChain?.chain?.evolves_to?.[0]?.evolves_to[0]?.evolution_details?.[0];
+  const firstPokemonEvolutionChain = useMemo(() => {
+    return pokemonEvolutionChain?.chain?.evolves_to;
   }, [pokemonEvolutionChain?.chain?.evolves_to]);
 
   if (!originalPokemonSpecies) return null;
@@ -51,32 +37,18 @@ export const PokemonEvolution = ({ pokemon }: PokemonEvolutionProps) => {
         Evolution Chart
       </StyledPokemonCategoryTitle>
 
-      {firstEvolutionSpecies && firstEvolutionDetail && (
-        <PokemonEvolutionChart>
-          <PokemonEvolutionChartItem pokemonName={originalPokemonSpecies.name} />
-          <PokemonEvolutionChartSeparator detail={firstEvolutionDetail} />
-          <PokemonEvolutionChartItem pokemonName={firstEvolutionSpecies.name} />
-        </PokemonEvolutionChart>
-      )}
-
-      {firstEvolutionSpecies && secondEvolutionSpecies && secondEvolutionDetail && (
-        <PokemonEvolutionChart>
-          <PokemonEvolutionChartItem pokemonName={firstEvolutionSpecies.name} />
-          <PokemonEvolutionChartSeparator detail={secondEvolutionDetail} />
-          <PokemonEvolutionChartItem pokemonName={secondEvolutionSpecies.name} />
-        </PokemonEvolutionChart>
-      )}
+      {firstPokemonEvolutionChain?.map((evolutionChain) => {
+        return (
+          <PokemonEvolutionChain
+            evolutionChain={evolutionChain}
+            originalPokemonSpecies={originalPokemonSpecies}
+          />
+        );
+      })}
     </>
   );
 };
 
 const StyledPokemonCategoryTitle = styled(PokemonCategoryTitle)`
   margin-bottom: ${theme.spacings.xxl}px;
-`;
-
-const PokemonEvolutionChart = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: ${theme.spacings.xxxl}px;
 `;

@@ -1,4 +1,4 @@
-import { Language, SummarizedItemData } from "../common/typings";
+import { Language, LocalizedName, SummarizedItemData } from "../common/typings";
 
 type GrowthRateDescription = {
   description: string;
@@ -16,6 +16,6 @@ export type GrowthRate = {
   id: number;
   levels: Array<GrowthRateLevel>;
   name: string;
-  names: Array<GrowthRateName>;
+  names: Array<LocalizedName>;
   pokemon_species: Array<SummarizedItemData>;
 };

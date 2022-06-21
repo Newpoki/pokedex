@@ -1,4 +1,4 @@
-import { GameIndice, Language, SummarizedItemData } from "../common/typings";
+import { GameIndice, Language, LocalizedName, SummarizedItemData } from "../common/typings";
 
 type ItemEffectEntry = {
   effect: string;
@@ -10,11 +10,6 @@ type ItemFlavorTextEntry = {
   language: Language;
   text: string;
   version_group: SummarizedItemData;
-};
-
-type ItemName = {
-  language: Language;
-  name: string;
 };
 
 type ItemSprites = {
@@ -35,6 +30,6 @@ export type Item = {
   id: number;
   machines: Array<any>;
   name: string;
-  names: Array<ItemName>;
+  names: Array<LocalizedName>;
   sprites: ItemSprites;
 };

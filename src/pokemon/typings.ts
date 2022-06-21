@@ -1,4 +1,4 @@
-import { GameIndice, Language, SummarizedItemData } from "../common/typings";
+import { GameIndice, Language, LocalizedName, SummarizedItemData } from "../common/typings";
 
 type PokemonSpritesVersionBase = {
   back_default?: string | null;
@@ -177,11 +177,6 @@ type PokemonSpeciesGenera = {
   language: Language;
 };
 
-type PokemonSpeciesNames = {
-  language: Language;
-  name: string;
-};
-
 type PokemonSpeciesPalParkEncounter = {
   area: SummarizedItemData;
   base_score: number;
@@ -220,7 +215,7 @@ export type PokemonSpecies = {
   is_legendary: boolean;
   is_mythical: boolean;
   name: string;
-  names: Array<PokemonSpeciesNames>;
+  names: Array<LocalizedName>;
   order: number;
   pal_park_encounters: Array<PokemonSpeciesPalParkEncounter>;
   pokedex_numbers: Array<PokemonSpeciesPokedexNumber>;
@@ -250,22 +245,23 @@ export type PokemonEvolutionChainChainDetail = {
   held_item: null;
   item: SummarizedItemData | null;
   known_move: null;
-  known_move_type: null;
-  location: null;
+  known_move_type: { name: PokemonTypeName; url: string } | null;
+  location: SummarizedItemData | null;
   min_affection: null;
   min_beauty: null;
   min_happiness: null;
-  min_level: 16;
-  needs_overworld_rain: false;
+  min_level: number;
+  needs_overworld_rain: boolean;
   party_species: null;
   party_type: null;
   relative_physical_stats: null;
-  time_of_day: "";
+  time_of_day: "day" | "night";
   trade_species: null;
   trigger: PokemonEvolutionChainChainDetailTrigger | null;
+  turn_upside_down: boolean;
 };
 
-type PokemonEvolutionChainChain = {
+export type PokemonEvolutionChainChain = {
   evolution_details: Array<PokemonEvolutionChainChainDetail>;
   evolves_to: Array<PokemonEvolutionChainChain>;
   is_baby: boolean;
