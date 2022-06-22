@@ -104,4 +104,7 @@ export const theme = {
     xxl: 24,
     xxxl: 28,
   },
+  breakpoints: {
+    md: 1200,
+  },
 };

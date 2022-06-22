@@ -51,7 +51,9 @@ export const PokemonEvolutionChain = ({
   );
 };
 
-const Root = styled.div``;
+const Root = styled.div`
+  max-width: 800px;
+`;
 
 const PokemonEvolutionChart = styled.div`
   display: flex;

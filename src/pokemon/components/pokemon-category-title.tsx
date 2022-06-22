@@ -24,4 +24,8 @@ const Root = styled.h2<{ pokemonTypeName: PokemonTypeName | undefined }>`
   color: ${({ pokemonTypeName }) =>
     pokemonTypeName ? theme.colors.types[pokemonTypeName] : theme.colors.text.black};
   font-size: 16px;
+
+  @media screen and (min-width: ${theme.breakpoints.md}px) {
+    font-size: 24px;
+  }
 `;

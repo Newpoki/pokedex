@@ -147,10 +147,20 @@ const Root = styled.div`
 
 const StyledRightArrowGrey = styled(RightArrowGrey)`
   margin-bottom: ${theme.spacings.s}px;
+
+  @media screen and (min-width: ${theme.breakpoints.md}px) {
+    width: 36px;
+    height: 36px;
+  }
 `;
 
 const EvolutionCondition = styled.span`
   color: ${theme.colors.text.black};
   font-weight: 700;
   text-align: center;
+  font-size: 16px;
+
+  @media screen and (min-width: ${theme.breakpoints.md}px) {
+    font-size: 24px;
+  }
 `;

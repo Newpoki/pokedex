@@ -16,8 +16,12 @@ import { PokemonAboutSkeleton } from "./pokemon-about-skeleton";
 import { PokemonStatsSkeleton } from "./pokemon-stats-skeleton";
 import { PokemonEvolution } from "./pokemon-evolution";
 import { PokemonEvolutionSkeleton } from "./pokemon-evolution-skeleton";
+import { formatPokemonId } from "../utils/format-pokemon-id";
+import { keyframes } from "@emotion/react";
 
 const POKEMON_SPRITE_SIZE = 125;
+
+const DESKTOP_POKEMON_SPRITE_SIZE = 200;
 
 export const Pokemon = () => {
   const params = useParams();
@@ -41,7 +45,7 @@ export const Pokemon = () => {
 
   return (
     <Root typeName={pokemonFirstType ?? "normal"}>
-      <>
+      <UpperPartAndMenu>
         <UpperPart>
           <StyledBackArrowIcon onClick={handleGoBackToList} />
           <SpriteAndMainData>
@@ -59,10 +63,12 @@ export const Pokemon = () => {
 
             {pokemon && (
               <MainData>
-                <Id>#{pokemon.id}</Id>
-                <Name>{pokemon.name}</Name>
+                <IdAndName>
+                  <Id>{formatPokemonId(pokemon.id)}</Id>
+                  <Name>{pokemon.name}</Name>
+                </IdAndName>
 
-                <TypeChips types={pokemon.types.map((type) => type.type)} />
+                <StyledTypeChips types={pokemon.types.map((type) => type.type)} />
 
                 <StyledPointsIcon />
               </MainData>
@@ -86,29 +92,29 @@ export const Pokemon = () => {
             Evolution
           </MenuItem>
         </Menu>
+      </UpperPartAndMenu>
 
-        <LowerPart>
-          <Routes>
-            <>
-              <Route
-                element={pokemon ? <PokemonStats pokemon={pokemon} /> : <PokemonStatsSkeleton />}
-                path="stats"
-              />
-              <Route
-                element={
-                  pokemon ? <PokemonEvolution pokemon={pokemon} /> : <PokemonEvolutionSkeleton />
-                }
-                path="evolutions"
-              />
-              <Route
-                element={pokemon ? <PokemonAbout pokemon={pokemon} /> : <PokemonAboutSkeleton />}
-                path="about"
-              />
-              <Route element={<Navigate to="about" replace />} path="*" />
-            </>
-          </Routes>
-        </LowerPart>
-      </>
+      <LowerPart>
+        <Routes>
+          <>
+            <Route
+              element={pokemon ? <PokemonStats pokemon={pokemon} /> : <PokemonStatsSkeleton />}
+              path="stats"
+            />
+            <Route
+              element={
+                pokemon ? <PokemonEvolution pokemon={pokemon} /> : <PokemonEvolutionSkeleton />
+              }
+              path="evolutions"
+            />
+            <Route
+              element={pokemon ? <PokemonAbout pokemon={pokemon} /> : <PokemonAboutSkeleton />}
+              path="about"
+            />
+            <Route element={<Navigate to="about" replace />} path="*" />
+          </>
+        </Routes>
+      </LowerPart>
     </Root>
   );
 };
@@ -120,6 +126,12 @@ const Root = styled.div<{ typeName: PokemonTypeName | undefined }>`
   display: flex;
   flex-direction: column;
   transition: 0.3s background-color;
+  min-height: 100vh;
+  width: 100vw;
+
+  @media screen and (min-width: ${theme.breakpoints.md}px) {
+    flex-direction: row;
+  }
 `;
 
 const UpperPart = styled.div`
@@ -127,10 +139,21 @@ const UpperPart = styled.div`
   padding-bottom: ${theme.spacings.l}px;
 `;
 
+const UpperPartAndMenu = styled.div`
+  @media screen and (min-width: ${theme.breakpoints.md}px) {
+    width: 500px;
+  }
+`;
+
 const StyledBackArrowIcon = styled(BackArrowIcon)`
   width: 20px;
   position: relative;
   cursor: pointer;
+
+  @media screen and (min-width: ${theme.breakpoints.md}px) {
+    width: 36px;
+    height: 36px;
+  }
 `;
 
 const SpriteAndMainData = styled.div`
@@ -139,9 +162,21 @@ const SpriteAndMainData = styled.div`
   justify-content: flex-start;
   position: relative;
   margin-bottom: 40px;
+
+  @media screen and (min-width: ${theme.breakpoints.md}px) {
+    flex-direction: column;
+  }
 `;
 
 const MainData = styled.div``;
+
+const IdAndName = styled.div`
+  @media screen and (min-width: ${theme.breakpoints.md}px) {
+    display: flex;
+    align-items: baseline;
+    flex-direction: row-reverse;
+  }
+`;
 
 const Id = styled.h2`
   margin-top: 0;
@@ -149,6 +184,10 @@ const Id = styled.h2`
   color: ${theme.colors.text.number};
   margin-bottom: ${theme.spacings.xs}px;
   font-weight: 700;
+
+  @media screen and (min-width: ${theme.breakpoints.md}px) {
+    font-size: 24px;
+  }
 `;
 
 const Name = styled.h1`
@@ -156,30 +195,72 @@ const Name = styled.h1`
   text-transform: capitalize;
   color: ${theme.colors.text.white};
   margin-bottom: ${theme.spacings.s}px;
+  font-size: 32px;
+
+  @media screen and (min-width: ${theme.breakpoints.md}px) {
+    font-size: 40px;
+    margin-right: ${theme.spacings.l}px;
+  }
+`;
+
+const StyledTypeChips = styled(TypeChips)`
+  @media screen and (min-width: ${theme.breakpoints.md}px) {
+    & span {
+      font-size: 20px;
+    }
+
+    & li {
+      padding: ${theme.spacings.s}px;
+    }
+  }
 `;
 
 const StyledPointsIcon = styled(PointsIcon)`
   position: absolute;
   right: -24px;
   bottom: -20px;
+  width: 65px;
+  height: 65px;
+
+  @media screen and (min-width: ${theme.breakpoints.md}px) {
+    font-size: 24px;
+    top: 0;
+    width: 125px;
+    height: 125px;
+    right: -50px;
+  }
 `;
 
 const SpriteWrapper = styled.div`
   display: flex;
   margin-right: ${theme.spacings.l}px;
   position: relative;
+
+  @media screen and (min-width: ${theme.breakpoints.md}px) {
+    margin-bottom: ${theme.spacings.xxxl}px;
+    margin-right: 0;
+  }
 `;
 
 const Sprite = styled.img`
   width: ${POKEMON_SPRITE_SIZE}px;
   /* In order to be displayed above the pokemon background circle icon */
   z-index: 2;
+
+  @media screen and (min-width: ${theme.breakpoints.md}px) {
+    width: ${DESKTOP_POKEMON_SPRITE_SIZE}px;
+  }
 `;
 
 const StyledPokemonBackgroundCircle = styled(PokemonBackgroundCircle)`
   position: absolute;
   width: ${POKEMON_SPRITE_SIZE}px;
   height: ${POKEMON_SPRITE_SIZE}px;
+
+  @media screen and (min-width: ${theme.breakpoints.md}px) {
+    width: ${DESKTOP_POKEMON_SPRITE_SIZE}px;
+    height: ${DESKTOP_POKEMON_SPRITE_SIZE}px;
+  }
 `;
 
 const Menu = styled.ul<{ typeName: PokemonTypeName | undefined }>`
@@ -195,9 +276,7 @@ const Menu = styled.ul<{ typeName: PokemonTypeName | undefined }>`
   z-index: 3;
 `;
 
-const MenuItem = styled(NavLink, { shouldForwardProp: (prop) => prop !== "isActive" })<{
-  isActive: boolean;
-}>`
+const MenuItem = styled(NavLink)<{ isActive: boolean }>`
   position: relative;
   color: ${theme.colors.text.white};
   opacity: 0.5;
@@ -205,13 +284,28 @@ const MenuItem = styled(NavLink, { shouldForwardProp: (prop) => prop !== "isActi
   font-weight: 400;
   padding: 0 ${theme.spacings.l}px;
   transition: 0.3s;
+  font-size: 16px;
 
   ${({ isActive }) =>
     isActive &&
     `
       opacity: 1;
       font-weight: 700;
-    `}
+  `};
+
+  @media screen and (min-width: ${theme.breakpoints.md}px) {
+    font-size: 24px;
+  }
+`;
+
+const appearAnimation = keyframes`
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
 `;
 
 const StyledPokeballLowOpacityIcon = styled(PokeballLowOpacityIcon)`
@@ -221,16 +315,12 @@ const StyledPokeballLowOpacityIcon = styled(PokeballLowOpacityIcon)`
   left: 50%;
   transform: translateX(-50%);
   opacity: 0;
-  animation: 0.3s appear ease-in-out forwards;
+  animation: 0.3s ${appearAnimation} ease-in-out forwards;
 
-  @keyframes appear {
-    0% {
-      opacity: 0;
-    }
-
-    100% {
-      opacity: 1;
-    }
+  @media screen and (min-width: ${theme.breakpoints.md}px) {
+    top: -185%;
+    width: 130px;
+    height: 130px;
   }
 `;
 
@@ -247,4 +337,9 @@ const LowerPart = styled.div`
   padding: 40px;
   padding-bottom: 0;
   flex-direction: column;
+
+  @media screen and (min-width: ${theme.breakpoints.md}px) {
+    border-bottom-left-radius: 30px;
+    border-top-right-radius: 0;
+  }
 `;

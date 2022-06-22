@@ -77,6 +77,11 @@ const BaseStat = styled.span<{ isSummary: boolean }>`
 const PercentBarWrapper = styled.div<{ value: number }>`
   width: ${({ value }) => value}px;
   max-width: 150px;
+
+  @media screen and (min-width: ${theme.breakpoints.md}px) {
+    width: ${({ value }) => value * 3}px;
+    max-width: 300px;
+  }
 `;
 
 const PercentBar = styled.div<{ pokemonTypeName: PokemonTypeName }>`
@@ -93,6 +98,10 @@ const PercentBar = styled.div<{ pokemonTypeName: PokemonTypeName }>`
     100% {
       width: 100%;
     }
+  }
+
+  @media screen and (min-width: ${theme.breakpoints.md}px) {
+    height: 6px;
   }
 `;
 

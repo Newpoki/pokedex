@@ -145,6 +145,10 @@ const Flavor = styled.p`
   color: ${theme.colors.text.grey};
   font-size: 16px;
   font-weight: 400px;
+
+  @media screen and (min-width: ${theme.breakpoints.md}px) {
+    font-size: 24px;
+  }
 `;
 
 const StyledPokemonCategoryTitle = styled(PokemonCategoryTitle)`
@@ -154,11 +158,11 @@ const StyledPokemonCategoryTitle = styled(PokemonCategoryTitle)`
 const PokemonAbility = styled.span<{ isHiddenAbility: boolean }>`
   display: block;
   text-transform: capitalize;
-  ${({ isHiddenAbility }) =>
-    isHiddenAbility &&
-    `
-      font-size: 11px;
-    `}
+  font-size: ${({ isHiddenAbility }) => (isHiddenAbility ? 11 : 16)}px;
+
+  @media screen and (min-width: ${theme.breakpoints.md}px) {
+    font-size: ${({ isHiddenAbility }) => (isHiddenAbility ? 19 : 24)}px;
+  }
 `;
 
 const StyledTypeChips = styled(TypeChips)`
@@ -177,4 +181,8 @@ const PokemonEV = styled.p`
 
 const HatchCounterSteps = styled.span`
   font-size: 11px;
+
+  @media screen and (min-width: ${theme.breakpoints.md}px) {
+    font-size: 19px;
+  }
 `;

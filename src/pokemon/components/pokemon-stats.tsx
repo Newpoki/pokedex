@@ -32,7 +32,7 @@ export const PokemonStats = ({ pokemon }: PokemonStatsProps) => {
         Base Stats
       </StyledPokemonCategoryTitle>
 
-      <StyledPokemonDetails>
+      <StyledPokemonStats>
         {pokemon.stats.map((stat) => {
           const baseStat = stat.base_stat;
 
@@ -65,13 +65,13 @@ export const PokemonStats = ({ pokemon }: PokemonStatsProps) => {
           minStat="Min"
           isSummary
         />
+      </StyledPokemonStats>
 
-        <Informations>
-          The ranges shown on the right are for a level 100 Pokémon. Maximum values are based on a
-          beneficial nature, 252 EVs, 31 IVs; minimum values are based on a hindering nature, 0 EVs,
-          0 IVs.
-        </Informations>
-      </StyledPokemonDetails>
+      <Informations>
+        The ranges shown on the right are for a level 100 Pokémon. Maximum values are based on a
+        beneficial nature, 252 EVs, 31 IVs; minimum values are based on a hindering nature, 0 EVs, 0
+        IVs.
+      </Informations>
     </>
   );
 };
@@ -80,12 +80,20 @@ const StyledPokemonCategoryTitle = styled(PokemonCategoryTitle)`
   margin-bottom: ${theme.spacings.xxl}px;
 `;
 
-const StyledPokemonDetails = styled(PokemonDetails)`
+const StyledPokemonStats = styled(PokemonDetails)`
   grid-template-columns: 50px auto;
+
+  @media screen and (min-width: ${theme.breakpoints.md}px) {
+    grid-template-columns: 150px auto;
+  }
 `;
 
 const Informations = styled.p`
   color: ${theme.colors.text.grey};
   font-size: 12px;
   font-weight: 500;
+
+  @media screen and (min-width: ${theme.breakpoints.md}px) {
+    font-size: 18px;
+  }
 `;

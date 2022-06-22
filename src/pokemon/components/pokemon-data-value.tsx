@@ -16,4 +16,8 @@ const Root = styled.div`
   color: ${theme.colors.text.grey};
   font-weight: 400;
   text-transform: capitalize;
+
+  @media screen and (min-width: ${theme.breakpoints.md}px) {
+    font-size: 24px;
+  }
 `;

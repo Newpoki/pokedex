@@ -15,4 +15,8 @@ const Root = styled.div`
   font-size: 12px;
   font-weight: 500;
   color: ${theme.colors.text.black};
+
+  @media screen and (min-width: ${theme.breakpoints.md}px) {
+    font-size: 20px;
+  }
 `;
