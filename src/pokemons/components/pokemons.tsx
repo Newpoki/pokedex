@@ -31,7 +31,7 @@ export const Pokemons = () => {
         // As we're in a grid display, using a loader would make it go to the next row and
         // it's a weird behavior. So we rely on the isLoading flag to display a loader.
       >
-        <List>
+        <List data-cy="pokemons-list">
           {(isFetching || isLoading) &&
             times(10).map((index) => {
               return <PokemonItemLoading key={index} />;
