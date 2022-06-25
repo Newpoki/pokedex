@@ -6,6 +6,9 @@ import { mockedType } from "./data/type/type";
 
 import { mockedEggGroup } from "./data/egg-group/egg-group";
 import { mockedItem } from "./data/item/item";
+import { mockedLocationArea } from "./data/location-area/location-area";
+import { mockedLocation } from "./data/location/location";
+import { mockedRegion } from "./data/region/region";
 
 export const handlers = [
   /* Pokemons */
@@ -59,4 +62,13 @@ export const handlers = [
 
   /* Items */
   mockedItem.default.handler(),
+
+  /* Location Areas */
+  mockedLocationArea.default.handler(),
+
+  /* Locations */
+  mockedLocation.default.handler(),
+
+  /* Regions */
+  mockedRegion.default.handler(),
 ];

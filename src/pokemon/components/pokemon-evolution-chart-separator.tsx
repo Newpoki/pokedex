@@ -4,7 +4,7 @@ import { ReactComponent as RightArrowGrey } from "../../icons/right-arrow-grey.s
 import { useGetLocalizedItemName } from "../../item/hooks/use-get-localized-item-name";
 import { useFetchLocation } from "../../location/hooks/use-fetch-location";
 import { useGetLocalizedLocationName } from "../../location/hooks/use-get-localized-location-name";
-import { useGetLocalizedRegionName } from "../../location/hooks/use-get-localized-region";
+import { useGetLocalizedRegionName } from "../../location/hooks/use-get-localized-region-name";
 import { useGetLocalizedMoveName } from "../../move/hooks/use-get-localized-move-name";
 import { theme } from "../../theme";
 import { useGetLocalizedTypeName } from "../../type/hooks/use-get-localized-type";

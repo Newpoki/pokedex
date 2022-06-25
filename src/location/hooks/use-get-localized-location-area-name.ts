@@ -2,15 +2,15 @@ import { LanguageName } from "../../common/typings";
 import { useFetchLocationArea } from "./use-fetch-location-area";
 
 type UseGetLocalizedLocationAreaName = {
-  locationAreaNameOrId: string | undefined;
+  locationAreaUrl: string | undefined;
   languageName?: LanguageName;
 };
 
 export const useGetLocalizedLocationAreaName = ({
-  locationAreaNameOrId,
+  locationAreaUrl,
   languageName = "en",
 }: UseGetLocalizedLocationAreaName) => {
-  const { data: locationArea, ...others } = useFetchLocationArea(locationAreaNameOrId);
+  const { data: locationArea, ...others } = useFetchLocationArea(locationAreaUrl);
 
   const localizedLocationAreaName = locationArea?.names.find(
     (locationAreaName) => locationAreaName.language.name === languageName

@@ -1,31 +1,20 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import { createMockWrapper } from "../../../mocks/mock-wrapper";
-import { useGetLocalizedItemName } from "../use-get-localized-item-name";
+import { useGetLocalizedLocationName } from "../use-get-localized-location-name";
 import { LanguageName } from "../../../common/typings";
-import { mockedItem } from "../../../mocks/data/item/item";
+import { mockedLocation } from "../../../mocks/data/location/location";
 
-describe("useGetLocalizedItemName", () => {
-  const languageNames: Array<LanguageName> = [
-    "ja-Hrkt",
-    "ko",
-    "fr",
-    "de",
-    "es",
-    "it",
-    "en",
-    "ja",
-    "zh-Hant",
-    "zh-Hans",
-  ];
+describe("useGetLocalizedLocationName", () => {
+  const languageNames: Array<LanguageName> = ["en", "fr"];
 
-  const itemNameOrId = mockedItem.default.data.name;
+  const locationNameOrId = mockedLocation.default.data.name;
 
   describe("API call was a success", () => {
     describe("A language name is provided", () => {
       languageNames.forEach((languageName) => {
-        it("should return the correct localized item name", async () => {
+        it("should return the correct localized location name", async () => {
           const { result } = renderHook(
-            () => useGetLocalizedItemName({ itemNameOrId, languageName }),
+            () => useGetLocalizedLocationName({ locationNameOrId, languageName }),
             {
               wrapper: createMockWrapper(),
             }
@@ -34,8 +23,8 @@ describe("useGetLocalizedItemName", () => {
           await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
           const actual = result.current.data;
-          const expected = mockedItem.default.data.names.find(
-            (itemName) => itemName.language.name === languageName
+          const expected = mockedLocation.default.data.names.find(
+            (locationName) => locationName.language.name === languageName
           );
 
           expect(actual).toEqual(expected);
@@ -44,8 +33,8 @@ describe("useGetLocalizedItemName", () => {
     });
 
     describe("No language is provided", () => {
-      it("should return the english item name", async () => {
-        const { result } = renderHook(() => useGetLocalizedItemName({ itemNameOrId }), {
+      it("should return the english location name", async () => {
+        const { result } = renderHook(() => useGetLocalizedLocationName({ locationNameOrId }), {
           wrapper: createMockWrapper(),
         });
 
@@ -53,8 +42,8 @@ describe("useGetLocalizedItemName", () => {
 
         const actual = result.current.data;
 
-        const expected = mockedItem.default.data.names.find(
-          (itemName) => itemName.language.name === "en"
+        const expected = mockedLocation.default.data.names.find(
+          (locationName) => locationName.language.name === "en"
         );
 
         expect(actual).toEqual(expected);

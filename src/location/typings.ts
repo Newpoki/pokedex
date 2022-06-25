@@ -1,14 +1,13 @@
-import {
-  GameIndice,
-  Language,
-  LanguageName,
-  LocalizedName,
-  SummarizedItemData,
-} from "../common/typings";
+import { LocalizedName, SummarizedItemData } from "../common/typings";
+
+type LocationGameIndice = {
+  game_index: number;
+  generation: SummarizedItemData;
+};
 
 export type Location = {
   areas: Array<SummarizedItemData>;
-  game_indices: Array<GameIndice>;
+  game_indices: Array<LocationGameIndice>;
   id: number;
   name: string;
   names: Array<LocalizedName>;
@@ -22,15 +21,21 @@ type LocationAreaEncounterMethodRateVersionDetail = {
 
 type LocationAreaEncounterMethodRate = {
   encounter_method: SummarizedItemData;
-  version_details: LocationAreaEncounterMethodRateVersionDetail;
+  version_details: Array<LocationAreaEncounterMethodRateVersionDetail>;
 };
 
-type LocationAreaPokemonEncounterVersionDetail = {
+type LocationAreaPokemonEncounterVersionDetailEncounterDetail = {
   chance: number;
-  condition_values: SummarizedItemData;
+  condition_values: Array<SummarizedItemData>;
   max_level: number;
   method: SummarizedItemData;
   min_level: number;
+};
+
+type LocationAreaPokemonEncounterVersionDetail = {
+  encounter_details: Array<LocationAreaPokemonEncounterVersionDetailEncounterDetail>;
+  max_chance: number;
+  version: SummarizedItemData;
 };
 
 type LocationAreaPokemonEncounter = {
@@ -45,7 +50,7 @@ export type LocationArea = {
   location: SummarizedItemData;
   name: string;
   names: Array<LocalizedName>;
-  pokemon_encounters: LocationAreaPokemonEncounter;
+  pokemon_encounters: Array<LocationAreaPokemonEncounter>;
 };
 
 export type Region = {
