@@ -32,15 +32,26 @@ type MoveStatChange = {
   stat: SummarizedItemData;
 };
 
+type MoveContestCombo = {
+  use_after: Array<SummarizedItemData> | null;
+  use_before: Array<SummarizedItemData> | null;
+};
+
+type MoveContestCombos = {
+  normal: MoveContestCombo;
+  super: MoveContestCombo;
+};
+
 export type Move = {
   accuracy: number;
-  contest_comboos: any;
+  contest_combos: MoveContestCombos | null;
   contest_effect: {
     url: string;
   };
   contest_type: SummarizedItemData;
   damage_class: SummarizedItemData;
-  effect_change: number;
+  effect_chance: number | null;
+  effect_changes: Array<any>;
   effect_entries: Array<MoveEffectEntry>;
   flavor_text_entries: Array<MoveFlavorTextEntry>;
   generation: SummarizedItemData;

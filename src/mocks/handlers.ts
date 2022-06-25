@@ -9,6 +9,7 @@ import { mockedItem } from "./data/item/item";
 import { mockedLocationArea } from "./data/location-area/location-area";
 import { mockedLocation } from "./data/location/location";
 import { mockedRegion } from "./data/region/region";
+import { mockedMove } from "./data/move/move";
 
 export const handlers = [
   /* Pokemons */
@@ -71,4 +72,7 @@ export const handlers = [
 
   /* Regions */
   mockedRegion.default.handler(),
+
+  /* Moves */
+  mockedMove.default.handler(),
 ];
