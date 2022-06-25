@@ -10,6 +10,7 @@ import { mockedLocationArea } from "./data/location-area/location-area";
 import { mockedLocation } from "./data/location/location";
 import { mockedRegion } from "./data/region/region";
 import { mockedMove } from "./data/move/move";
+import { mockedPokemonEvolutionChain } from "./data/pokemon-evolution-chain/pokemon-evolution-chain";
 
 export const handlers = [
   /* Pokemons */
@@ -75,4 +76,7 @@ export const handlers = [
 
   /* Moves */
   mockedMove.default.handler(),
+
+  /* Pokemon evolution chains */
+  mockedPokemonEvolutionChain.default.handler(),
 ];
