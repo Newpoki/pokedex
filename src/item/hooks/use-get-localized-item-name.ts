@@ -14,5 +14,7 @@ export const useGetLocalizedItemName = ({
 
   const localizedItemName = item?.names.find((itemName) => itemName.language.name === languageName);
 
-  return { ...others, data: localizedItemName };
+  const data = localizedItemName ?? item?.names.find((itemName) => itemName.language.name === "en");
+
+  return { ...others, data };
 };

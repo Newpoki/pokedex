@@ -1,4 +1,4 @@
-import { GameIndice, Language, LocalizedName, SummarizedItemData } from "../common/typings";
+import { Language, LocalizedName, SummarizedItemData } from "../common/typings";
 
 type ItemEffectEntry = {
   effect: string;
@@ -16,8 +16,13 @@ type ItemSprites = {
   default: string;
 };
 
+type ItemGameIndice = {
+  game_index: number;
+  generation: SummarizedItemData;
+};
+
 export type Item = {
-  attributes: SummarizedItemData;
+  attributes: Array<SummarizedItemData>;
   baby_trigger_for: any;
   category: SummarizedItemData;
   cost: number;
@@ -25,7 +30,7 @@ export type Item = {
   flavor_text_entries: Array<ItemFlavorTextEntry>;
   fling_effect: any;
   fling_power: number;
-  game_indices: Array<GameIndice>;
+  game_indices: Array<ItemGameIndice>;
   held_by_pokemon: Array<any>;
   id: number;
   machines: Array<any>;

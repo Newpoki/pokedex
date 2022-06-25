@@ -5,6 +5,7 @@ import { mockedPokemons } from "./data/pokemons/pokemons";
 import { mockedType } from "./data/type/type";
 
 import { mockedEggGroup } from "./data/egg-group/egg-group";
+import { mockedItem } from "./data/item/item";
 
 export const handlers = [
   /* Pokemons */
@@ -55,4 +56,7 @@ export const handlers = [
   mockedEggGroup.water1.handler(),
   mockedEggGroup.water2.handler(),
   mockedEggGroup.water3.handler(),
+
+  /* Items */
+  mockedItem.default.handler(),
 ];
