@@ -64,6 +64,7 @@
 
     --transparent: "transparent";
     --white: 0 0% 100%;
+    --black: 240 8% 10%;
 
     /** BACKGROUNDS */
 
@@ -74,8 +75,6 @@
 
     /** TEXTS */
 
-    --color-white: 0 0% 100%;
-    --color-black: 240 8% 10%;
     --color-grey: 240 1% 46%;
 
     --color-number: hsla(
