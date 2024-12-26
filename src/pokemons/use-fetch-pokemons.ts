@@ -1,4 +1,4 @@
-import { PaginationResponse } from "@/api/api-types";
+import { APIPaginationResponse } from "@/api/api-types";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { PokemonsListResults } from "./pokemons-types";
@@ -9,7 +9,7 @@ export const useFetchPokemons = () => {
     queryKey: ["pokemons", "list"],
     queryFn: async () => {
       const response =
-        await fetchPokemonAPI<PaginationResponse<PokemonsListResults>>(
+        await fetchPokemonAPI<APIPaginationResponse<PokemonsListResults>>(
           "/pokemon",
         );
 

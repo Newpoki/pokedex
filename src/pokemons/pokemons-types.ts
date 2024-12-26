@@ -1,4 +1,3 @@
-export type PokemonsListResults = {
-  name: string;
-  url: string;
-};
+import { NamedAPIRessource } from "@/api/api-types";
+
+export type PokemonsListResults = NamedAPIRessource;
