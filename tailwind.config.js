@@ -5,6 +5,7 @@ export default {
     backgroundColor: {
       transparent: "var(--transparent)",
       white: "hsl(var(--white))",
+      black: "hsl(var(--black))",
 
       bug: "hsl(var(--bgcolor-bug))",
       dark: "hsl(var(--bgcolor-dark))",
@@ -40,6 +41,7 @@ export default {
     colors: {
       transparent: "var(--transparent)",
       white: "var(--white)",
+      black: "var(--color-black)",
       number: "var(--color-number)",
 
       bug: "hsl(var(--color-bug))",
