@@ -3,8 +3,11 @@ import SortIcon from "@/assets/icons/sort.svg";
 import FiltersIcon from "@/assets/icons/filters.svg";
 import DownHalfPokeballPattern from "@/assets/patterns/down-half-pokeball.svg";
 import { SearchInput } from "@/components/ui/search-input";
+import { useFetchPokemons } from "@/pokemons/use-fetch-pokemons";
 
 export const Home = () => {
+  const { data } = useFetchPokemons();
+
   return (
     <div className="p-10">
       <DownHalfPokeballPattern className="absolute left-0 top-0 h-auto w-full" />
@@ -24,6 +27,8 @@ export const Home = () => {
 
         <SearchInput placeholder="What Pokémon are you looking for?" />
       </main>
+
+      {data?.results?.map((pokemon) => <p>{pokemon.name}</p>)}
     </div>
   );
 };
