@@ -10,8 +10,8 @@ export type APIRessource = {
   url: string;
 };
 
-export type NamedAPIRessource = APIRessource & {
-  name: string;
+export type NamedAPIRessource<TName = string> = APIRessource & {
+  name: TName;
 };
 
 export type Description = {

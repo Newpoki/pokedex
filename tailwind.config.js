@@ -68,7 +68,7 @@ export default {
       weightHeavy: "hsl(var(--color-height-heavy))",
     },
     fontFamily: {
-      sans: ["SF Pro display", "sans-serif"],
+      sans: ["SF Pro Display", "sans"],
     },
     fontSize: {
       xs: [
