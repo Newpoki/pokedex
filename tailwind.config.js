@@ -6,6 +6,7 @@ export default {
       transparent: "var(--transparent)",
       white: "hsl(var(--white))",
       black: "hsl(var(--black))",
+      grey: "hsl(var(--grey))",
 
       bug: "hsl(var(--bgcolor-bug))",
       dark: "hsl(var(--bgcolor-dark))",
@@ -42,6 +43,7 @@ export default {
       transparent: "var(--transparent)",
       white: "var(--white)",
       black: "var(--color-black)",
+      grey: "var(--color-grey)",
       number: "var(--color-number)",
 
       bug: "hsl(var(--color-bug))",
@@ -73,6 +75,36 @@ export default {
     },
     fontFamily: {
       sans: ["SF Pro display", "sans-serif"],
+    },
+    fontSize: {
+      xs: [
+        12,
+        {
+          lineHeight: "14.32px",
+          fontWeight: "500",
+        },
+      ],
+      sm: [
+        16,
+        {
+          lineHeight: "19.09px",
+          fontWeight: "400",
+        },
+      ],
+      md: [
+        26,
+        {
+          lineHeight: "31.03px",
+          fontWeight: "700",
+        },
+      ],
+      lg: [
+        32,
+        {
+          lineHeight: "38.19px",
+          fontWeight: "700",
+        },
+      ],
     },
     extend: {},
   },
