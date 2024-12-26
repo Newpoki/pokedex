@@ -1,3 +1,100 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    /** POKEMON TYPES */
+
+    --color-bug: 77 58% 44%;
+    --bgcolor-bug: 106 54% 65%;
+
+    --color-dark: 248 4% 36%;
+    --bgcolor-dark: 247 4% 45%;
+
+    --color-dragon: 209 86% 41%;
+    --bgcolor-dragon: 226 33% 59%;
+
+    --color-electric: 52 84% 57%;
+    --bgcolor-electric: 45 86% 64%;
+
+    --color-fairy: 318 78% 68%;
+    --bgcolor-fairy: 336 63% 79%;
+
+    --color-fighting: 345 60% 54%;
+    --bgcolor-fighting: 345 80% 60%;
+
+    --color-fire: 25 98% 57%;
+    --bgcolor-fire: 29 100% 67%;
+
+    --color-flying: 221 44% 62%;
+    --bgcolor-flying: 221 63% 70%;
+
+    --color-ghost: 226 35% 51%;
+    --bgcolor-ghost: 256 37% 59%;
+
+    --color-grass: 113 41% 53%;
+    --bgcolor-grass: 119 29% 64%;
+
+    --color-ground: 19 69% 57%;
+    --bgcolor-ground: 19 92% 64%;
+
+    --color-ice: 172 53% 59%;
+    --bgcolor-ice: 185 55% 72%;
+
+    --color-normal: 225 7% 64%;
+    --bgcolor-normal: 225 12% 74%;
+
+    --color-poison: 281 55% 56%;
+    --bgcolor-poison: 310 20% 53%;
+
+    --color-psychic: 359 77% 64%;
+    --bgcolor-psychic: 359 100% 70%;
+
+    --color-rock: 43 29% 62%;
+    --bgcolor-rock: 43 42% 71%;
+
+    --color-steel: 200 40% 43%;
+    --bgcolor-steel: 200 40% 50%;
+
+    --color-water: 211 66% 57%;
+    --bgcolor-water: 208 90% 65%;
+
+    /** COMMONS */
+
+    --transparent: "transparent";
+    --white: 0 0% 100%;
+
+    /** BACKGROUNDS */
+
+    --bgcolor-default-input: 0 0% 95%;
+    --bgcolor-pressed-input: 0 0% 89%;
+
+    --bgcolor-modal: 240 8% 10%;
+
+    /** TEXTS */
+
+    --color-white: 0 0% 100%;
+    --color-black: 240 8% 10%;
+    --color-grey: 240 1% 46%;
+
+    --color-number: hsla(
+      240,
+      8%,
+      10%,
+      60%
+    ); /** This color needs to use HSLA as we force transparency */
+
+    /** HEIGHTS */
+
+    --color-height-short: 326 100% 89%;
+    --color-height-medium: 215 34% 76%;
+    --color-height-tall: 231 9% 69%;
+
+    /** WEIGHTS */
+
+    --color-weight-light: 99 45% 65%;
+    --color-weight-normal: 199 66% 60%;
+    --color-weight-heavy: 195 29% 50%;
+  }
+}

@@ -1,7 +1,7 @@
 export const App = () => {
   return (
     <div>
-      <p>app</p>
+      <p className="text-number">app</p>
     </div>
   );
 };
