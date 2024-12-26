@@ -29,8 +29,6 @@ export const PokemonsListCard = ({ name }: PokemonsListCardProps) => {
     return sprite ?? pokemon.sprites.front_default;
   }, [pokemon.sprites.front_default, pokemon.sprites.other]);
 
-  console.log({ pokemon });
-
   return (
     <div
       className="relative rounded-[10px] p-5"

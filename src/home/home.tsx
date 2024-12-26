@@ -4,11 +4,16 @@ import FiltersIcon from "@/assets/icons/filters.svg";
 import DownHalfPokeballPattern from "@/assets/patterns/down-half-pokeball.svg";
 import { SearchInput } from "@/components/ui/search-input";
 import { useFetchPokemons } from "@/pokemons/use-fetch-pokemons";
-import { PokemonsListCard } from "@/pokemons/pokemons-list-card";
-import { Suspense } from "react";
+import { PokemonsList } from "@/pokemons/pokemons-list";
+import { useCallback } from "react";
 
 export const Home = () => {
-  const { data } = useFetchPokemons();
+  const { data, status, hasNextPage, isFetchingNextPage, fetchNextPage } =
+    useFetchPokemons();
+
+  const handleFetchNextPage = useCallback(() => {
+    void fetchNextPage();
+  }, [fetchNextPage]);
 
   return (
     <div className="p-10">
@@ -33,16 +38,18 @@ export const Home = () => {
         />
 
         {/* TODO: Display Skeleton instead of optional chaining */}
-        <ul className="flex flex-col gap-8">
-          {data?.results.map((pokemon) => (
-            <li key={pokemon.name}>
-              {/* // TODO: USe skeleton */}
-              <Suspense fallback={null}>
-                <PokemonsListCard name={pokemon.name} />
-              </Suspense>
-            </li>
-          ))}
-        </ul>
+        {status === "pending" ? (
+          <div>loading</div>
+        ) : status === "error" ? (
+          <div>error</div>
+        ) : (
+          <PokemonsList
+            data={data}
+            hasNextPage={hasNextPage}
+            isFetchingNextPage={isFetchingNextPage}
+            onFetchNextPage={handleFetchNextPage}
+          />
+        )}
       </main>
     </div>
   );
