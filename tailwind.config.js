@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: ["class"],
   content: ["./src/**/*.{html,ts,tsx}"],
   theme: {
     backgroundColor: {
@@ -7,7 +8,6 @@ export default {
       white: "hsl(var(--white))",
       black: "hsl(var(--black))",
       grey: "hsl(var(--grey))",
-
       bug: "hsl(var(--bgcolor-bug))",
       dark: "hsl(var(--bgcolor-dark))",
       dragon: "hsl(var(--bgcolor-dragon))",
@@ -26,26 +26,22 @@ export default {
       rock: "var(--bgcolor-rock)",
       steel: "var(--bgcolor-steel)",
       water: "var(--bgcolor-water)",
-
-      defaultInput: "hsl(var(--bgcolor-default-input))",
-      pressedInput: "hsl(var(--bgcolor-pressed-input))",
+      "default-input": "hsl(var(--bgcolor-default-input))",
+      "pressed-input": "hsl(var(--bgcolor-pressed-input))",
       modal: "hsl(var(--bgcolor-modal))",
-
       heightShort: "hsl(var(--color-height-short))",
       heightMedium: "hsl(var(--color-height-medium))",
       heightTall: "hsl(var(--color-height-tall))",
-
       weightLight: "hsl(var(--color-height-short))",
       weightNormal: "hsl(var(--color-height-normal))",
       weightHeavy: "hsl(var(--color-height-heavy))",
     },
     colors: {
       transparent: "var(--transparent)",
-      white: "var(--white)",
-      black: "var(--color-black)",
-      grey: "var(--color-grey)",
+      white: "hsl(var(--white))",
+      black: "hsl(var(--black))",
+      grey: "hsl(var(--grey))",
       number: "var(--color-number)",
-
       bug: "hsl(var(--color-bug))",
       dark: "hsl(var(--color-dark))",
       dragon: "hsl(var(--color-dragon))",
@@ -64,11 +60,9 @@ export default {
       rock: "var(--color-rock)",
       steel: "var(--color-steel)",
       water: "var(--color-water)",
-
       heightShort: "hsl(var(--color-height-short))",
       heightMedium: "hsl(var(--color-height-medium))",
       heightTall: "hsl(var(--color-height-tall))",
-
       weightLight: "hsl(var(--color-height-short))",
       weightNormal: "hsl(var(--color-height-normal))",
       weightHeavy: "hsl(var(--color-height-heavy))",
@@ -106,7 +100,13 @@ export default {
         },
       ],
     },
-    extend: {},
+    extend: {
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+    },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animate")],
 };

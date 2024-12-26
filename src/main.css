@@ -65,6 +65,7 @@
     --transparent: "transparent";
     --white: 0 0% 100%;
     --black: 240 8% 10%;
+    --grey: 240 1% 46%;
 
     /** BACKGROUNDS */
 
@@ -74,8 +75,6 @@
     --bgcolor-modal: 240 8% 10%;
 
     /** TEXTS */
-
-    --color-grey: 240 1% 46%;
 
     --color-number: hsla(
       240,
@@ -117,4 +116,10 @@
   src: url("./assets/fonts/sf-pro-display-bold") format("woff2");
   font-weight: 700;
   font-style: normal;
+}
+
+@layer base {
+  body {
+    @apply text-sm;
+  }
 }
