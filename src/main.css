@@ -98,3 +98,24 @@
     --color-weight-heavy: 195 29% 50%;
   }
 }
+
+@font-face {
+  font-family: "SF Pro display";
+  src: url("./assets/fonts/sf-pro-display-regular") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SF Pro display";
+  src: url("./assets/fonts/sf-pro-display-medium") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SF Pro display";
+  src: url("./assets/fonts/sf-pro-display-bold") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}

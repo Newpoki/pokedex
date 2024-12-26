@@ -84,6 +84,9 @@ export default {
       "gradient-pokemon-circle":
         "linear-gradient(334.58deg, rgba(255, 255, 255, 0.35) 16.24%, rgba(255, 255, 255, 0) 44.6%)",
     },
+    fontFamily: {
+      sans: ["SF Pro display", "sans-serif"],
+    },
     extend: {},
   },
   plugins: [],
