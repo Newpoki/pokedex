@@ -30,7 +30,7 @@ export const PokemonsListCard = ({ name }: PokemonsListCardProps) => {
   }, [pokemon.sprites.front_default, pokemon.sprites.other]);
 
   return (
-    <div
+    <li
       className="relative rounded-[10px] p-5"
       style={{
         backgroundColor: `hsl(var(--bgcolor-${firstPokemonType}))`,
@@ -59,6 +59,6 @@ export const PokemonsListCard = ({ name }: PokemonsListCardProps) => {
 
       <DotVectorPattern className="absolute left-[90px] top-1 h-8 w-[74px]" />
       <PokeballPattern className="absolute right-0 top-0 h-[145px] w-[145px]" />
-    </div>
+    </li>
   );
 };

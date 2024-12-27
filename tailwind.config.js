@@ -100,6 +100,9 @@ export default {
         },
       ],
     },
+    boxShadow: {
+      default: "0px 10px 20px 0px",
+    },
     extend: {
       borderRadius: {
         lg: "var(--radius)",

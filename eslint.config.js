@@ -33,6 +33,7 @@ export default tseslint.config(
         { allowConstantExport: true },
       ],
       "@typescript-eslint/no-unnecessary-condition": "error",
+      "react-refresh/only-export-components": "off",
     },
   },
 );
