@@ -3,8 +3,9 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { PokemonsListFilters, PokemonsListResults } from "./pokemons-types";
 import { fetchPokemonAPI } from "@/api/api";
 import { API_BASE_URL } from "@/api/api-constants";
+import { useMemo } from "react";
 
-const POKEMON_PER_PAGE = 60;
+const POKEMON_PER_PAGE = 100;
 
 export type FetchPokemonsAPIResponse =
   APIPaginationResponse<PokemonsListResults>;
@@ -12,55 +13,90 @@ export type FetchPokemonsAPIResponse =
 type UseFetchPokemonsParams = {
   filters: PokemonsListFilters;
 };
+
+const parseLimitAndOffsetFromURL = (url: string) => {
+  const matches = url.match(/[?&]offset=(\d+).*?[?&]limit=(\d+)/);
+
+  const [_completeMatch, matchedOffset, matchedLimit] = matches ?? [];
+
+  return matchedOffset == null || matchedLimit == null
+    ? null
+    : {
+        offset: parseInt(matchedOffset, 10),
+        limit: parseInt(matchedLimit, 10),
+      };
+};
+
+// TODO: Add some heacvy tests
 export const useFetchPokemons = ({ filters }: UseFetchPokemonsParams) => {
   // Removing 1 because ranges starts at 1 as it represents the pokemon ids
-  const initialOffset = filters.idsRange[0] - 1;
+  const initialOffset =
+    filters.sort.direction === "ASC"
+      ? filters.idsRange[0] - 1
+      : filters.idsRange[1] - POKEMON_PER_PAGE;
 
-  const initialLimit =
-    initialOffset + POKEMON_PER_PAGE > filters.idsRange[1]
-      ? filters.idsRange[1]
+  const initialLimit = useMemo(() => {
+    if (filters.sort.direction === "ASC") {
+      return initialOffset + POKEMON_PER_PAGE > filters.idsRange[1]
+        ? filters.idsRange[1]
+        : POKEMON_PER_PAGE;
+    }
+
+    return initialOffset + POKEMON_PER_PAGE > filters.idsRange[1]
+      ? filters.idsRange[1] - initialOffset
       : POKEMON_PER_PAGE;
+  }, [filters.idsRange, filters.sort.direction, initialOffset]);
 
   const query = useInfiniteQuery({
-    queryKey: ["pokemons", "list", filters.idsRange],
+    queryKey: ["pokemons", "list", filters.idsRange, filters.sort.direction],
     queryFn: async (context) => {
       const response = await fetchPokemonAPI<FetchPokemonsAPIResponse>(
         context.pageParam,
       );
 
+      if (filters.sort.direction === "DESC") {
+        return { ...response, results: [...response.results].reverse() };
+      }
+
       return response;
     },
-    getNextPageParam: (lastPage) => {
-      if (lastPage.next == null) {
+
+    getNextPageParam: (lastPage, _allPages, lastPageParam) => {
+      if (filters.sort.direction === "ASC") {
+        if (lastPage.next == null) {
+          return null;
+        }
+
+        const parsedURL = parseLimitAndOffsetFromURL(lastPage.next);
+
+        if (parsedURL == null || parsedURL.offset === filters.idsRange[1]) {
+          return null;
+        }
+
+        const limit =
+          parsedURL.offset + POKEMON_PER_PAGE > filters.idsRange[1]
+            ? filters.idsRange[1] - parsedURL.offset
+            : parsedURL.limit;
+
+        return `${API_BASE_URL}/pokemon/?offset=${parsedURL.offset}&limit=${limit}`;
+      }
+
+      const parsedURL = parseLimitAndOffsetFromURL(lastPageParam);
+
+      if (parsedURL == null || parsedURL.offset === filters.idsRange[0] - 1) {
         return null;
       }
 
-      const matches = lastPage.next.match(/[?&]offset=(\d+).*?[?&]limit=(\d+)/);
+      const offset =
+        parsedURL.offset - POKEMON_PER_PAGE <= filters.idsRange[0]
+          ? filters.idsRange[0] - 1
+          : parsedURL.offset - POKEMON_PER_PAGE;
 
-      const nextUrlOffset =
-        matches && matches[1] ? parseInt(matches[1], 10) : null;
-      const nextUrlLimit =
-        matches && matches[2] ? parseInt(matches[2], 10) : null;
+      const limit = parsedURL.offset - offset;
 
-      if (
-        nextUrlOffset == null ||
-        nextUrlLimit == null ||
-        // We don't want to fetch more if the next offset overlapse the ids range
-        nextUrlOffset === filters.idsRange[1]
-      ) {
-        return null;
-      }
-
-      // Reducing limit so that we never overflow on the range ids limit
-      // Returning null ensure the "hasNextPage" will be false
-      const limit =
-        nextUrlOffset + POKEMON_PER_PAGE > filters.idsRange[1]
-          ? filters.idsRange[1] - nextUrlOffset
-          : nextUrlLimit;
-
-      return lastPage.next.replace(`${nextUrlLimit}`, `${limit}`);
+      return `${API_BASE_URL}/pokemon/?offset=${offset}&limit=${limit}`;
     },
-    initialPageParam: `${API_BASE_URL}/pokemon/?limit=${initialLimit}&offset=${initialOffset}`,
+    initialPageParam: `${API_BASE_URL}/pokemon/?offset=${initialOffset}&limit=${initialLimit}`,
   });
 
   return query;

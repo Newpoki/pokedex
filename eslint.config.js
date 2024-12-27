@@ -34,6 +34,12 @@ export default tseslint.config(
       ],
       "@typescript-eslint/no-unnecessary-condition": "error",
       "react-refresh/only-export-components": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          destructuredArrayIgnorePattern: "^_",
+        },
+      ],
     },
   },
 );
