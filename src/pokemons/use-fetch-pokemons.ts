@@ -1,11 +1,8 @@
 import { APIPaginationResponse } from "@/api/api-types";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { PokemonsListFilters, PokemonsListResults } from "./pokemons-types";
 import { fetchPokemonAPI } from "@/api/api";
-import { API_BASE_URL } from "@/api/api-constants";
-import { useMemo } from "react";
-
-const POKEMON_PER_PAGE = 100;
+import { Pokemon, PokemonType } from "@/pokemon/pokemon-types";
 
 export type FetchPokemonsAPIResponse =
   APIPaginationResponse<PokemonsListResults>;
@@ -14,94 +11,60 @@ type UseFetchPokemonsParams = {
   filters: PokemonsListFilters;
 };
 
-const parseLimitAndOffsetFromURL = (url: string) => {
-  const matches = url.match(/[?&]offset=(\d+).*?[?&]limit=(\d+)/);
-
-  const [_completeMatch, matchedOffset, matchedLimit] = matches ?? [];
-
-  return matchedOffset == null || matchedLimit == null
-    ? null
-    : {
-        offset: parseInt(matchedOffset, 10),
-        limit: parseInt(matchedLimit, 10),
-      };
-};
-
-// TODO: Add some heacvy tests
 export const useFetchPokemons = ({ filters }: UseFetchPokemonsParams) => {
-  // Removing 1 because ranges starts at 1 as it represents the pokemon ids
-  const initialOffset = useMemo(() => {
-    if (filters.sort.direction === "ASC") {
-      return filters.idsRange[0] - 1;
-    }
+  const queryClient = useQueryClient();
 
-    return filters.idsRange[1] - POKEMON_PER_PAGE >= filters.idsRange[0] - 1
-      ? filters.idsRange[1] - POKEMON_PER_PAGE
-      : filters.idsRange[0] - 1;
-  }, [filters.idsRange, filters.sort.direction]);
+  const query = useQuery({
+    queryKey: ["pokemons", "list", filters.idsRange[1], filters.idsRange[0]],
+    queryFn: async () => {
+      // Removing 1 from offset as the offset starts at 1
+      const offset = filters.idsRange[0] - 1;
+      const limit = filters.idsRange[1] - offset;
 
-  const initialLimit = useMemo(() => {
-    if (filters.sort.direction === "ASC") {
-      return initialOffset + POKEMON_PER_PAGE >= filters.idsRange[1]
-        ? filters.idsRange[1] - initialOffset
-        : POKEMON_PER_PAGE;
-    }
-
-    return initialOffset + POKEMON_PER_PAGE > filters.idsRange[1]
-      ? filters.idsRange[1] - filters.idsRange[0] + 1
-      : filters.idsRange[1] - initialOffset;
-  }, [filters.idsRange, filters.sort.direction, initialOffset]);
-
-  const query = useInfiniteQuery({
-    queryKey: ["pokemons", "list", filters.idsRange, filters.sort.direction],
-    queryFn: async (context) => {
       const response = await fetchPokemonAPI<FetchPokemonsAPIResponse>(
-        context.pageParam,
+        `/pokemon/?offset=${offset}&limit=${limit}`,
       );
 
-      if (filters.sort.direction === "DESC") {
-        return { ...response, results: [...response.results].reverse() };
-      }
+      const pokemonsData = response.results.map((pokemon) => {
+        const cachedPokemonData = queryClient.ensureQueryData({
+          queryKey: ["pokemon", pokemon.name],
+          //   TODO: Create reusable function here and for use-fetch-pokemon
+          queryFn: async () => {
+            const response = await fetchPokemonAPI<Pokemon>(
+              `/pokemon/${pokemon.name}`,
+            );
 
-      return response;
+            return response;
+          },
+        });
+
+        return cachedPokemonData;
+      });
+
+      return await Promise.all(pokemonsData);
     },
+    select: (data) => {
+      const filtered = data.reduce<Pokemon[]>((acc, pokemon) => {
+        const matchesAtLeastOneTypeFromFilters = pokemon.types.some(
+          (pokemonType: PokemonType) =>
+            filters.types.findIndex(
+              (typeName) => typeName === pokemonType.type.name,
+            ) !== -1,
+        );
 
-    getNextPageParam: (lastPage, _allPages, lastPageParam) => {
-      if (filters.sort.direction === "ASC") {
-        if (lastPage.next == null) {
-          return null;
+        if (!matchesAtLeastOneTypeFromFilters) {
+          return acc;
         }
 
-        const parsedURL = parseLimitAndOffsetFromURL(lastPage.next);
+        acc.push(pokemon);
 
-        if (parsedURL == null || parsedURL.offset === filters.idsRange[1]) {
-          return null;
-        }
+        return acc;
+      }, []);
 
-        const limit =
-          parsedURL.offset + POKEMON_PER_PAGE > filters.idsRange[1]
-            ? filters.idsRange[1] - parsedURL.offset
-            : parsedURL.limit;
+      const sortDirection = filters.sort.direction;
 
-        return `${API_BASE_URL}/pokemon/?offset=${parsedURL.offset}&limit=${limit}`;
-      }
-
-      const parsedURL = parseLimitAndOffsetFromURL(lastPageParam);
-
-      if (parsedURL == null || parsedURL.offset === filters.idsRange[0] - 1) {
-        return null;
-      }
-
-      const offset =
-        parsedURL.offset - POKEMON_PER_PAGE <= filters.idsRange[0]
-          ? filters.idsRange[0] - 1
-          : parsedURL.offset - POKEMON_PER_PAGE;
-
-      const limit = parsedURL.offset - offset;
-
-      return `${API_BASE_URL}/pokemon/?offset=${offset}&limit=${limit}`;
+      return sortDirection === "ASC" ? filtered : [...filtered].reverse();
     },
-    initialPageParam: `${API_BASE_URL}/pokemon/?offset=${initialOffset}&limit=${initialLimit}`,
   });
 
   return query;

@@ -1,4 +1,5 @@
 import { NamedAPIRessource } from "@/api/api-types";
+import { TypeName } from "@/type/type-types";
 
 export type PokemonsListResults = NamedAPIRessource;
 
@@ -14,4 +15,5 @@ export type PokemonListFiltersSort = {
 export type PokemonsListFilters = {
   idsRange: [number, number];
   sort: PokemonListFiltersSort;
+  types: TypeName[];
 };

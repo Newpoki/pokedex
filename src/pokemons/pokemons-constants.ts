@@ -7,4 +7,5 @@ export const POKEMONS_LIST_DEFAULT_FILTERS = {
     direction: "ASC",
     property: "id",
   },
+  types: [],
 } as const satisfies PokemonsListFilters;

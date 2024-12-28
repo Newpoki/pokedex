@@ -1,62 +1,29 @@
-import { Fragment, Suspense, useEffect } from "react";
+import { Suspense } from "react";
 import { PokemonsListCard } from "./pokemons-list-card";
-import { useInView } from "react-intersection-observer";
-import { InfiniteData } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import { PokemonsListCardSkeleton } from "./pokemons-list-card-skeleton";
-import { FetchPokemonsAPIResponse } from "../use-fetch-pokemons";
+import { Pokemon } from "@/pokemon/pokemon-types";
 
 type PokemonsListProps = {
-  data: InfiniteData<FetchPokemonsAPIResponse, unknown>;
-  hasNextPage: boolean;
-  isFetchingNextPage: boolean;
-  onFetchNextPage: () => void;
+  data: Pokemon[];
 };
 
-export const PokemonsList = ({
-  data,
-  hasNextPage,
-  isFetchingNextPage,
-  onFetchNextPage,
-}: PokemonsListProps) => {
-  const { ref: listEndRef, inView } = useInView();
-
-  useEffect(() => {
-    if (inView) {
-      onFetchNextPage();
-    }
-  }, [inView, onFetchNextPage]);
-
+export const PokemonsList = ({ data }: PokemonsListProps) => {
   return (
-    <>
-      <ul className="pokemons-list">
-        {data.pages.map((page) => {
-          return (
-            <Fragment key={page.next}>
-              {page.results.map((pokemon) => {
-                return (
-                  <ErrorBoundary
-                    fallback={<div>Something went wrong</div>}
-                    key={pokemon.name}
-                  >
-                    <Suspense fallback={<PokemonsListCardSkeleton />}>
-                      <PokemonsListCard name={pokemon.name} />
-                    </Suspense>
-                  </ErrorBoundary>
-                );
-              })}
-            </Fragment>
-          );
-        })}
-
-        {(hasNextPage || isFetchingNextPage) && (
-          <li>
-            <PokemonsListCardSkeleton />
-          </li>
-        )}
-      </ul>
-
-      <div ref={listEndRef} className="opacity-0" />
-    </>
+    <ul className="pokemons-list">
+      {data.map((pokemon) => {
+        return (
+          <ErrorBoundary
+            // TODO: Check better fallback
+            fallback={<div>Something went wrong</div>}
+            key={pokemon.name}
+          >
+            <Suspense fallback={<PokemonsListCardSkeleton />}>
+              <PokemonsListCard name={pokemon.name} />
+            </Suspense>
+          </ErrorBoundary>
+        );
+      })}
+    </ul>
   );
 };

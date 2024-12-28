@@ -14,12 +14,7 @@ export const Pokemons = () => {
     POKEMONS_LIST_DEFAULT_FILTERS,
   );
 
-  const { data, status, hasNextPage, isFetchingNextPage, fetchNextPage } =
-    useFetchPokemons({ filters });
-
-  const handleFetchNextPage = useCallback(() => {
-    void fetchNextPage();
-  }, [fetchNextPage]);
+  const { data, status } = useFetchPokemons({ filters });
 
   const handleFiltersChange = useCallback(
     (newFilters: Partial<PokemonsListFilters>) => {
@@ -55,12 +50,7 @@ export const Pokemons = () => {
         ) : status === "error" ? (
           <PokemonsListError />
         ) : (
-          <PokemonsList
-            data={data}
-            hasNextPage={hasNextPage}
-            isFetchingNextPage={isFetchingNextPage}
-            onFetchNextPage={handleFetchNextPage}
-          />
+          <PokemonsList data={data} />
         )}
       </main>
     </div>
