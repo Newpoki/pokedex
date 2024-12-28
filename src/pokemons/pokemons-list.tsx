@@ -4,6 +4,7 @@ import { useInView } from "react-intersection-observer";
 import { InfiniteData } from "@tanstack/react-query";
 import { FetchPokemonsAPIResponse } from "./use-fetch-pokemons";
 import { ErrorBoundary } from "react-error-boundary";
+import { PokemonsListCardSkeleton } from "./pokemons-list-card-skeleton";
 
 type PokemonsListProps = {
   data: InfiniteData<FetchPokemonsAPIResponse, unknown>;
@@ -19,7 +20,7 @@ export const PokemonsList = ({
 
   onFetchNextPage,
 }: PokemonsListProps) => {
-  const { ref: loadMoreButtonRef, inView } = useInView();
+  const { ref: listEndRef, inView } = useInView();
 
   useEffect(() => {
     if (inView) {
@@ -28,37 +29,35 @@ export const PokemonsList = ({
   }, [inView, onFetchNextPage]);
 
   return (
-    <ul className="flex flex-col gap-8">
-      {data.pages.map((page) => {
-        return (
-          <Fragment key={page.next}>
-            {page.results.map((pokemon) => {
-              return (
-                <ErrorBoundary
-                  fallback={<div>Something went wrong</div>}
-                  key={pokemon.name}
-                >
-                  {/* // TODO: USe skeleton */}
-                  <Suspense fallback={null}>
-                    <PokemonsListCard name={pokemon.name} />
-                  </Suspense>
-                </ErrorBoundary>
-              );
-            })}
-          </Fragment>
-        );
-      })}
+    <>
+      <ul className="pokemons-list-card">
+        {data.pages.map((page) => {
+          return (
+            <Fragment key={page.next}>
+              {page.results.map((pokemon) => {
+                return (
+                  <ErrorBoundary
+                    fallback={<div>Something went wrong</div>}
+                    key={pokemon.name}
+                  >
+                    <Suspense fallback={<PokemonsListCardSkeleton />}>
+                      <PokemonsListCard name={pokemon.name} />
+                    </Suspense>
+                  </ErrorBoundary>
+                );
+              })}
+            </Fragment>
+          );
+        })}
 
-      <button
-        ref={loadMoreButtonRef}
-        disabled={!hasNextPage || isFetchingNextPage}
-      >
-        {isFetchingNextPage
-          ? "Loading more..."
-          : hasNextPage
-            ? "Load Newer"
-            : "Nothing more to load"}
-      </button>
-    </ul>
+        {(hasNextPage || isFetchingNextPage) && (
+          <li>
+            <PokemonsListCardSkeleton />
+          </li>
+        )}
+      </ul>
+
+      <div ref={listEndRef} className="opacity-0" />
+    </>
   );
 };

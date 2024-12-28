@@ -121,3 +121,9 @@
     @apply font-sans text-sm text-black;
   }
 }
+
+@layer components {
+  .pokemons-list-card {
+    @apply flex flex-col gap-8;
+  }
+}

@@ -6,6 +6,7 @@ import { useCallback, useState } from "react";
 import { PokemonsHeader } from "@/pokemons/header/pokemons-header";
 import { PokemonsListFilters } from "@/pokemons/pokemons-types";
 import { POKEMONS_LIST_DEFAULT_FILTERS } from "@/pokemons/pokemons-constants";
+import { PokemonsListCardSkeleton } from "@/pokemons/pokemons-list-card-skeleton";
 
 export const Home = () => {
   const [filters, setFilters] = useState<PokemonsListFilters>(
@@ -47,10 +48,16 @@ export const Home = () => {
           className="mb-11"
         />
 
-        {/* TODO: Display Skeleton instead of optional chaining */}
         {status === "pending" ? (
-          <div>loading</div>
+          <ul className="pokemons-list-card">
+            {Array(10)
+              .fill(null)
+              .map((_value, index) => (
+                <PokemonsListCardSkeleton key={index} />
+              ))}
+          </ul>
         ) : status === "error" ? (
+          // TODO: Create real error screen
           <div>error</div>
         ) : (
           <PokemonsList

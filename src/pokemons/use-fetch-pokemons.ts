@@ -5,7 +5,7 @@ import { fetchPokemonAPI } from "@/api/api";
 import { API_BASE_URL } from "@/api/api-constants";
 import { useMemo } from "react";
 
-const POKEMON_PER_PAGE = 100;
+const POKEMON_PER_PAGE = 70;
 
 export type FetchPokemonsAPIResponse =
   APIPaginationResponse<PokemonsListResults>;
