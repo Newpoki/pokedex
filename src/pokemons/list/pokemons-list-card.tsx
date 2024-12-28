@@ -38,6 +38,7 @@ export const PokemonsListCard = ({ name }: PokemonsListCardProps) => {
       }}
     >
       <h2 className="text-xs font-bold text-number">{displayedId}</h2>
+      {/* TODO: Get name from species data */}
       <h3 className="mb-1 text-md capitalize text-white">{pokemon.name}</h3>
 
       <ul className="flex items-center gap-1">

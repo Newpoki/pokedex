@@ -5,7 +5,7 @@ import { fetchPokemonAPI } from "@/api/api";
 import { API_BASE_URL } from "@/api/api-constants";
 import { useMemo } from "react";
 
-const POKEMON_PER_PAGE = 70;
+const POKEMON_PER_PAGE = 100;
 
 export type FetchPokemonsAPIResponse =
   APIPaginationResponse<PokemonsListResults>;
@@ -30,21 +30,26 @@ const parseLimitAndOffsetFromURL = (url: string) => {
 // TODO: Add some heacvy tests
 export const useFetchPokemons = ({ filters }: UseFetchPokemonsParams) => {
   // Removing 1 because ranges starts at 1 as it represents the pokemon ids
-  const initialOffset =
-    filters.sort.direction === "ASC"
-      ? filters.idsRange[0] - 1
-      : filters.idsRange[1] - POKEMON_PER_PAGE;
+  const initialOffset = useMemo(() => {
+    if (filters.sort.direction === "ASC") {
+      return filters.idsRange[0] - 1;
+    }
+
+    return filters.idsRange[1] - POKEMON_PER_PAGE >= filters.idsRange[0] - 1
+      ? filters.idsRange[1] - POKEMON_PER_PAGE
+      : filters.idsRange[0] - 1;
+  }, [filters.idsRange, filters.sort.direction]);
 
   const initialLimit = useMemo(() => {
     if (filters.sort.direction === "ASC") {
-      return initialOffset + POKEMON_PER_PAGE > filters.idsRange[1]
-        ? filters.idsRange[1]
+      return initialOffset + POKEMON_PER_PAGE >= filters.idsRange[1]
+        ? filters.idsRange[1] - initialOffset
         : POKEMON_PER_PAGE;
     }
 
     return initialOffset + POKEMON_PER_PAGE > filters.idsRange[1]
-      ? filters.idsRange[1] - initialOffset
-      : POKEMON_PER_PAGE;
+      ? filters.idsRange[1] - filters.idsRange[0] + 1
+      : filters.idsRange[1] - initialOffset;
   }, [filters.idsRange, filters.sort.direction, initialOffset]);
 
   const query = useInfiniteQuery({

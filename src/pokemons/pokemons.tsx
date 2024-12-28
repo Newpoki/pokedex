@@ -44,6 +44,7 @@ export const Pokemons = () => {
           Search for Pokémon by name or using the Nation Pokédex number.
         </p>
 
+        {/* TODO: Display popover that says "Press enter to go to "XXX" page or pokemon with id #XXX */}
         <SearchInput
           placeholder="What Pokémon are you looking for?"
           className="mb-11"
