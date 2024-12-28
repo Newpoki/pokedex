@@ -3,18 +3,18 @@ import { TypeName } from "@/type/type-types";
 
 export type PokemonsListResults = NamedAPIRessource;
 
-export type PokemonListFiltersSortDirection = "ASC" | "DESC";
+export type PokemonsListFiltersSortDirection = "ASC" | "DESC";
 
-export type PokemonListFiltersSortProperty = "id";
+export type PokemonsListFiltersSortProperty = "id" | "name";
 
-export type PokemonListFiltersSort = {
-  direction: PokemonListFiltersSortDirection;
-  property: PokemonListFiltersSortProperty;
+export type PokemonsListFiltersSort = {
+  direction: PokemonsListFiltersSortDirection;
+  property: PokemonsListFiltersSortProperty;
 };
 
 export type PokemonsListFilters = {
   idsRange: [number, number];
-  sort: PokemonListFiltersSort;
+  sort: PokemonsListFiltersSort;
   types: TypeName[];
   search: string;
 };

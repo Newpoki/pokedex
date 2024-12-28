@@ -10,7 +10,7 @@ import SortIcon from "@/assets/icons/sort.svg";
 import { useCallback, useState } from "react";
 import { cn } from "@/lib/utils";
 
-const SNAP_POINTS = ["350px"] as const satisfies (string | number)[];
+const SNAP_POINTS = ["460px", "520px"] as const satisfies (string | number)[];
 
 import { PokemonsListFilters } from "@/pokemons/pokemons-types";
 import { PokemonHeaderSortDrawerButton } from "./pokemon-header-sort-drawer-button";
@@ -23,6 +23,8 @@ type PokemonsHeaderSortDrawerProps = {
 const SORT_OPTIONS = [
   { label: "Smallest number first", direction: "ASC", property: "id" },
   { label: "Highest number first", direction: "DESC", property: "id" },
+  { label: "A-Z", direction: "ASC", property: "name" },
+  { label: "Z-A", direction: "DESC", property: "name" },
 ] as const;
 
 export const PokemonsHeaderSortDrawer = ({
@@ -66,8 +68,9 @@ export const PokemonsHeaderSortDrawer = ({
 
           <ul className="flex flex-col gap-5">
             {SORT_OPTIONS.map((option) => {
-              // WARNING: Use option.property if there is not only "id"
-              const isSelected = option.direction === selectedSort.direction;
+              const isSelected =
+                option.direction === selectedSort.direction &&
+                option.property === selectedSort.property;
 
               return (
                 <li key={`${option.direction}-${option.property}`}>

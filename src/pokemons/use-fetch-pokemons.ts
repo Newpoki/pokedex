@@ -2,8 +2,11 @@ import { APIPaginationResponse } from "@/api/api-types";
 import { useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { PokemonsListFilters, PokemonsListResults } from "./pokemons-types";
 import { fetchPokemonAPI } from "@/api/api";
-import { PokemonAPIResponse, PokemonType } from "@/pokemon/pokemon-types";
+import { Pokemon } from "@/pokemon/pokemon-types";
 import { fetchPokemonData } from "@/pokemon/utils/fetch-pokemon-data";
+import { getSortedPokemonsList } from "./utils/get-sorted-pokemons-list";
+import { useMemo } from "react";
+import { getFilteredPokemonsList } from "./utils/get-filtered-pokemons-list";
 
 export type FetchPokemonsAPIResponse =
   APIPaginationResponse<PokemonsListResults>;
@@ -16,7 +19,14 @@ export const useFetchPokemons = ({ filters }: UseFetchPokemonsParams) => {
   const queryClient = useQueryClient();
 
   const query = useSuspenseQuery({
-    queryKey: ["pokemons", "list", filters.idsRange[1], filters.idsRange[0]],
+    queryKey: [
+      "pokemons",
+      "list",
+      filters.idsRange[1],
+      filters.idsRange[0],
+      filters.sort,
+      filters,
+    ],
     queryFn: async () => {
       // Removing 1 from offset as the offset starts at 1
       const offset = filters.idsRange[0] - 1;
@@ -26,7 +36,7 @@ export const useFetchPokemons = ({ filters }: UseFetchPokemonsParams) => {
         `/pokemon/?offset=${offset}&limit=${limit}`,
       );
 
-      const pokemonsData = response.results.map((pokemon) => {
+      const pokemonsData = response.results.map<Promise<Pokemon>>((pokemon) => {
         const cachedPokemonData = queryClient.ensureQueryData({
           queryKey: ["pokemon", pokemon.name],
           queryFn: async () => {
@@ -39,55 +49,30 @@ export const useFetchPokemons = ({ filters }: UseFetchPokemonsParams) => {
         return cachedPokemonData;
       });
 
-      return await Promise.all(pokemonsData);
-    },
-    select: (data) => {
-      const filtered = data.reduce<PokemonAPIResponse[]>(
-        (acc, { pokemon, displayedName }) => {
-          const matchesAtLeastOneTypeFromFilters =
-            filters.types.length === 0
-              ? true
-              : pokemon.types.some(
-                  (pokemonType: PokemonType) =>
-                    filters.types.findIndex(
-                      (typeName) => typeName === pokemonType.type.name,
-                    ) !== -1,
-                );
+      const data = await Promise.all(pokemonsData);
 
-          if (!matchesAtLeastOneTypeFromFilters) {
-            return acc;
-          }
+      // IMPORTANT
+      // This should take place in the select, but as we have a lot of re-render where it's called
+      // And we're doing heavy computation, we must keep this part within the queryFN.
+      // This way, filtering and sorting is not re-poerformed unless the query keys change
+      const filteredData = getFilteredPokemonsList({ data, filters });
 
-          const matchesSearch =
-            filters.search === ""
-              ? true
-              : displayedName
-                  .toLocaleLowerCase()
-                  .includes(filters.search.toLocaleLowerCase()) ||
-                `${pokemon.id}` === filters.search;
-
-          if (!matchesSearch) {
-            return acc;
-          }
-
-          acc.push(pokemon);
-
-          return acc;
-        },
-        [],
-      );
-
-      const sortDirection = filters.sort.direction;
-
-      const sortedArray =
-        sortDirection === "ASC" ? filtered : [...filtered].reverse();
+      const sortedData = getSortedPokemonsList({
+        data: filteredData,
+        sort: filters.sort,
+      });
 
       return {
-        count: sortedArray.length,
-        results: sortedArray,
+        count: sortedData.length,
+        results: sortedData,
       };
     },
   });
 
-  return query;
+  return useMemo(
+    () => ({
+      data: query.data,
+    }),
+    [query.data],
+  );
 };
