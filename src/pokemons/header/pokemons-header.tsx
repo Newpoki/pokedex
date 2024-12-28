@@ -1,7 +1,7 @@
-import FiltersIcon from "@/assets/icons/filters.svg";
 import { PokemonsHeaderGenerationsDrawer } from "./generation/pokemons-header-generations-drawer";
 import { PokemonsListFilters } from "../pokemons-types";
 import { PokemonsHeaderSortDrawer } from "./sort/pokemons-header-sort-drawer";
+import { PokemonsHeaderFiltersDrawer } from "./filters/pokemons-header-filters-drawer";
 
 type PokemonsHeaderProps = {
   filters: PokemonsListFilters;
@@ -24,7 +24,7 @@ export const PokemonsHeader = ({
         onFiltersChange={onFiltersChange}
       />
 
-      <FiltersIcon className="h-6 w-6 text-black" />
+      <PokemonsHeaderFiltersDrawer />
     </header>
   );
 };
