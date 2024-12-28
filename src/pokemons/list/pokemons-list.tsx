@@ -5,13 +5,15 @@ import { PokemonsListCardSkeleton } from "./pokemons-list-card-skeleton";
 import { useWindowVirtualizer } from "@tanstack/react-virtual";
 import { useFetchPokemons } from "../use-fetch-pokemons";
 import { PokemonsListFilters } from "../pokemons-types";
+import { PokemonsListNoResults } from "./pokemons-list-no-results";
 
 type PokemonsListProps = {
   filters: PokemonsListFilters;
+  onFiltersReset: () => void;
 };
 
 export const PokemonsList = forwardRef<HTMLDivElement, PokemonsListProps>(
-  ({ filters }, ref) => {
+  ({ filters, onFiltersReset }, ref) => {
     const { data } = useFetchPokemons({ filters });
 
     const listRef = useRef<HTMLDivElement | null>(null);
@@ -23,6 +25,10 @@ export const PokemonsList = forwardRef<HTMLDivElement, PokemonsListProps>(
       gap: 16,
       scrollMargin: listRef.current?.offsetTop ?? 0,
     });
+
+    if (data.count === 0) {
+      return <PokemonsListNoResults onFiltersReset={onFiltersReset} />;
+    }
 
     return (
       <div ref={ref}>
@@ -42,25 +48,25 @@ export const PokemonsList = forwardRef<HTMLDivElement, PokemonsListProps>(
             }
 
             return (
-              <ErrorBoundary
-                // TODO: Check better fallback
-                fallback={<div>Something went wrong</div>}
+              <div
                 key={pokemon.name}
+                className="absolute left-0 top-0 w-full"
+                style={{
+                  height: `${item.size}px`,
+                  transform: `translateY(${
+                    item.start - virtualizer.options.scrollMargin
+                  }px)`,
+                }}
               >
-                <Suspense fallback={<PokemonsListCardSkeleton />}>
-                  <div
-                    className="absolute left-0 top-0 w-full"
-                    style={{
-                      height: `${item.size}px`,
-                      transform: `translateY(${
-                        item.start - virtualizer.options.scrollMargin
-                      }px)`,
-                    }}
-                  >
+                <ErrorBoundary
+                  // TODO: Check better fallback
+                  fallback={<div>Something went wrong</div>}
+                >
+                  <Suspense fallback={<PokemonsListCardSkeleton />}>
                     <PokemonsListCard name={pokemon.name} />
-                  </div>
-                </Suspense>
-              </ErrorBoundary>
+                  </Suspense>
+                </ErrorBoundary>
+              </div>
             );
           })}
         </ul>

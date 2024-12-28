@@ -22,6 +22,7 @@ export const PokemonHeaderSortDrawerButton = ({
       variant={isSelected ? "primary" : "secondary"}
       className="w-full"
       onClick={handleClick}
+      type="button"
     >
       {option.label}
     </Button>

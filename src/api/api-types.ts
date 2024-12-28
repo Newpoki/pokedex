@@ -14,6 +14,19 @@ export type NamedAPIRessource<TName = string> = APIRessource & {
   name: TName;
 };
 
+export type LanguageCode =
+  | "ja-Hrkt"
+  | "roomaji"
+  | "ko"
+  | "zh-Hant"
+  | "fr"
+  | "de"
+  | "es"
+  | "it"
+  | "en"
+  | "ja"
+  | "zh-Hans";
+
 export type Description = {
   /** The localized description for an API resource in a specific language. */
   description: string;
@@ -27,7 +40,7 @@ export type Effect = {
   effect: string;
 
   /** The language this effect is in. */
-  language: NamedAPIRessource;
+  language: NamedAPIRessource<LanguageCode>;
 };
 
 export type Encounter = {
@@ -54,7 +67,7 @@ export type FlavorText = {
   flavor_text: string;
 
   /** The language this name is in. */
-  language: NamedAPIRessource;
+  language: NamedAPIRessource<LanguageCode>;
 
   /** The game version this flavor text is extracted from. */
   version: NamedAPIRessource;
@@ -81,7 +94,7 @@ export type Name = {
   name: string;
 
   /** The language this name is in. */
-  language: NamedAPIRessource;
+  language: NamedAPIRessource<LanguageCode>;
 };
 
 export type VerboseEffect = {
@@ -92,7 +105,7 @@ export type VerboseEffect = {
   short_effect: NamedAPIRessource;
 
   /** The language this effect is in. */
-  language: NamedAPIRessource;
+  language: NamedAPIRessource<LanguageCode>;
 };
 
 export type VersionEncounterDetail = {
@@ -119,7 +132,7 @@ export type VersionGroupFlavorText = {
   text: string;
 
   /** The language this name is in. */
-  language: NamedAPIRessource;
+  language: NamedAPIRessource<LanguageCode>;
 
   /** The version group which uses this flavor text. */
   version_group: NamedAPIRessource;

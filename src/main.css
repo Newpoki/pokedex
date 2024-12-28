@@ -118,7 +118,11 @@
 
 @layer base {
   body {
-    @apply font-sans text-sm text-black;
+    @apply flex h-[100dvh] flex-col font-sans text-sm text-black;
+  }
+
+  #root {
+    @apply flex flex-1 flex-col;
   }
 }
 

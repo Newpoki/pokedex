@@ -9,7 +9,7 @@ type PokemonsListCardProps = {
 };
 
 export const PokemonsListCard = ({ name }: PokemonsListCardProps) => {
-  const { pokemon } = useFetchPokemon({ name });
+  const { pokemon, displayedName } = useFetchPokemon({ name });
 
   const firstPokemonType = pokemon.types[0]?.type.name;
 
@@ -38,8 +38,7 @@ export const PokemonsListCard = ({ name }: PokemonsListCardProps) => {
       }}
     >
       <h2 className="text-xs font-bold text-number">{displayedId}</h2>
-      {/* TODO: Get name from species data */}
-      <h3 className="mb-1 text-md capitalize text-white">{pokemon.name}</h3>
+      <h3 className="mb-1 text-md text-white">{displayedName}</h3>
 
       <ul className="flex items-center gap-1">
         {pokemon.types.map((type) => {

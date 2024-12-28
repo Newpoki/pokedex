@@ -2,7 +2,8 @@ import { APIPaginationResponse } from "@/api/api-types";
 import { useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { PokemonsListFilters, PokemonsListResults } from "./pokemons-types";
 import { fetchPokemonAPI } from "@/api/api";
-import { Pokemon, PokemonType } from "@/pokemon/pokemon-types";
+import { PokemonAPIResponse, PokemonType } from "@/pokemon/pokemon-types";
+import { fetchPokemonData } from "@/pokemon/utils/fetch-pokemon-data";
 
 export type FetchPokemonsAPIResponse =
   APIPaginationResponse<PokemonsListResults>;
@@ -28,11 +29,8 @@ export const useFetchPokemons = ({ filters }: UseFetchPokemonsParams) => {
       const pokemonsData = response.results.map((pokemon) => {
         const cachedPokemonData = queryClient.ensureQueryData({
           queryKey: ["pokemon", pokemon.name],
-          //   TODO: Create reusable function here and for use-fetch-pokemon
           queryFn: async () => {
-            const response = await fetchPokemonAPI<Pokemon>(
-              `/pokemon/${pokemon.name}`,
-            );
+            const response = await fetchPokemonData({ name: pokemon.name });
 
             return response;
           },
@@ -44,25 +42,40 @@ export const useFetchPokemons = ({ filters }: UseFetchPokemonsParams) => {
       return await Promise.all(pokemonsData);
     },
     select: (data) => {
-      const filtered = data.reduce<Pokemon[]>((acc, pokemon) => {
-        const matchesAtLeastOneTypeFromFilters =
-          filters.types.length === 0
-            ? true
-            : pokemon.types.some(
-                (pokemonType: PokemonType) =>
-                  filters.types.findIndex(
-                    (typeName) => typeName === pokemonType.type.name,
-                  ) !== -1,
-              );
+      const filtered = data.reduce<PokemonAPIResponse[]>(
+        (acc, { pokemon, displayedName }) => {
+          const matchesAtLeastOneTypeFromFilters =
+            filters.types.length === 0
+              ? true
+              : pokemon.types.some(
+                  (pokemonType: PokemonType) =>
+                    filters.types.findIndex(
+                      (typeName) => typeName === pokemonType.type.name,
+                    ) !== -1,
+                );
 
-        if (!matchesAtLeastOneTypeFromFilters) {
+          if (!matchesAtLeastOneTypeFromFilters) {
+            return acc;
+          }
+
+          const matchesSearch =
+            filters.search === ""
+              ? true
+              : displayedName
+                  .toLocaleLowerCase()
+                  .includes(filters.search.toLocaleLowerCase()) ||
+                `${pokemon.id}` === filters.search;
+
+          if (!matchesSearch) {
+            return acc;
+          }
+
+          acc.push(pokemon);
+
           return acc;
-        }
-
-        acc.push(pokemon);
-
-        return acc;
-      }, []);
+        },
+        [],
+      );
 
       const sortDirection = filters.sort.direction;
 

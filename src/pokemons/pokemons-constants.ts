@@ -8,4 +8,5 @@ export const POKEMONS_LIST_DEFAULT_FILTERS = {
     property: "id",
   },
   types: [],
+  search: "",
 } as const satisfies PokemonsListFilters;

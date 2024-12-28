@@ -39,6 +39,7 @@ export const PokemonsHeaderGenerationsDrawerButton = ({
       className="relative"
       size="card"
       onClick={handleToggleGeneration}
+      type="button"
     >
       <DotVectorGrey className="absolute left-4 top-3 h-9 w-20" />
 

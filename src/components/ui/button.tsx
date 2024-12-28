@@ -14,6 +14,7 @@ const buttonVariants = cva(
         secondary: "bg-default-input text-grey",
       },
       size: {
+        small: "p-3",
         normal: "p-5",
         card: "px-4 pb-5 pt-8",
       },
