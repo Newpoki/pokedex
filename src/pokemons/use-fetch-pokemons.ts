@@ -1,5 +1,5 @@
 import { APIPaginationResponse } from "@/api/api-types";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { PokemonsListFilters, PokemonsListResults } from "./pokemons-types";
 import { fetchPokemonAPI } from "@/api/api";
 import { Pokemon, PokemonType } from "@/pokemon/pokemon-types";
@@ -14,7 +14,7 @@ type UseFetchPokemonsParams = {
 export const useFetchPokemons = ({ filters }: UseFetchPokemonsParams) => {
   const queryClient = useQueryClient();
 
-  const query = useQuery({
+  const query = useSuspenseQuery({
     queryKey: ["pokemons", "list", filters.idsRange[1], filters.idsRange[0]],
     queryFn: async () => {
       // Removing 1 from offset as the offset starts at 1
@@ -45,12 +45,15 @@ export const useFetchPokemons = ({ filters }: UseFetchPokemonsParams) => {
     },
     select: (data) => {
       const filtered = data.reduce<Pokemon[]>((acc, pokemon) => {
-        const matchesAtLeastOneTypeFromFilters = pokemon.types.some(
-          (pokemonType: PokemonType) =>
-            filters.types.findIndex(
-              (typeName) => typeName === pokemonType.type.name,
-            ) !== -1,
-        );
+        const matchesAtLeastOneTypeFromFilters =
+          filters.types.length === 0
+            ? true
+            : pokemon.types.some(
+                (pokemonType: PokemonType) =>
+                  filters.types.findIndex(
+                    (typeName) => typeName === pokemonType.type.name,
+                  ) !== -1,
+              );
 
         if (!matchesAtLeastOneTypeFromFilters) {
           return acc;
@@ -63,7 +66,13 @@ export const useFetchPokemons = ({ filters }: UseFetchPokemonsParams) => {
 
       const sortDirection = filters.sort.direction;
 
-      return sortDirection === "ASC" ? filtered : [...filtered].reverse();
+      const sortedArray =
+        sortDirection === "ASC" ? filtered : [...filtered].reverse();
+
+      return {
+        count: sortedArray.length,
+        results: sortedArray,
+      };
     },
   });
 

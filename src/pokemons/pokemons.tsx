@@ -1,20 +1,18 @@
 import DownHalfPokeballPattern from "@/assets/patterns/down-half-pokeball.svg";
 import { SearchInput } from "@/components/ui/search-input";
-import { useFetchPokemons } from "@/pokemons/use-fetch-pokemons";
-import { useCallback, useState } from "react";
+import { Suspense, useCallback, useState } from "react";
 import { PokemonsHeader } from "@/pokemons/header/pokemons-header";
 import { PokemonsListFilters } from "@/pokemons/pokemons-types";
 import { POKEMONS_LIST_DEFAULT_FILTERS } from "@/pokemons/pokemons-constants";
 import { PokemonsListError } from "@/pokemons/list/pokemons-list-error";
 import { PokemonsListSkeleton } from "./list/pokemons-list-skeleton";
 import { PokemonsList } from "./list/pokemons-list";
+import { ErrorBoundary } from "react-error-boundary";
 
 export const Pokemons = () => {
   const [filters, setFilters] = useState<PokemonsListFilters>(
     POKEMONS_LIST_DEFAULT_FILTERS,
   );
-
-  const { data, status } = useFetchPokemons({ filters });
 
   const handleFiltersChange = useCallback(
     (newFilters: Partial<PokemonsListFilters>) => {
@@ -45,13 +43,11 @@ export const Pokemons = () => {
           className="mb-11"
         />
 
-        {status === "pending" ? (
-          <PokemonsListSkeleton />
-        ) : status === "error" ? (
-          <PokemonsListError />
-        ) : (
-          <PokemonsList data={data} />
-        )}
+        <ErrorBoundary FallbackComponent={PokemonsListError}>
+          <Suspense fallback={<PokemonsListSkeleton />}>
+            <PokemonsList filters={filters} />
+          </Suspense>
+        </ErrorBoundary>
       </main>
     </div>
   );
