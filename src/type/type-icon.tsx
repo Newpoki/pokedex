@@ -42,13 +42,13 @@ const mapping: Record<
   water: WaterIcon,
 } as const;
 
-type TypeIconProps = {
+type TypeIconProps = React.SVGAttributes<SVGElement> & {
   className?: string;
   name: TypeName;
 };
 
-export const TypeIcon = ({ className, name }: TypeIconProps) => {
+export const TypeIcon = ({ name, ...others }: TypeIconProps) => {
   const Icon = mapping[name];
 
-  return <Icon className={className} />;
+  return <Icon {...others} />;
 };

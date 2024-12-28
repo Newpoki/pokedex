@@ -24,7 +24,10 @@ export const PokemonsHeader = ({
         onFiltersChange={onFiltersChange}
       />
 
-      <PokemonsHeaderFiltersDrawer />
+      <PokemonsHeaderFiltersDrawer
+        filters={filters}
+        onFiltersChange={onFiltersChange}
+      />
     </header>
   );
 };

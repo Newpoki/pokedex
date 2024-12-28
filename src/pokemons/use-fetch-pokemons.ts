@@ -52,9 +52,9 @@ export const useFetchPokemons = ({ filters }: UseFetchPokemonsParams) => {
       const data = await Promise.all(pokemonsData);
 
       // IMPORTANT
-      // This should take place in the select, but as we have a lot of re-render where it's called
+      // This should take place in the select, but as we have a lot of re-render where the hook is called
       // And we're doing heavy computation, we must keep this part within the queryFN.
-      // This way, filtering and sorting is not re-poerformed unless the query keys change
+      // This way, filtering and sorting is not re-performed unless the query keys change
       const filteredData = getFilteredPokemonsList({ data, filters });
 
       const sortedData = getSortedPokemonsList({

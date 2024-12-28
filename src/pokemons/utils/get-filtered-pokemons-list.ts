@@ -27,7 +27,7 @@ export const getFilteredPokemonsList = ({
       return acc;
     }
 
-    const matchesAtLeastOneTypeFromFilters =
+    const matchesTypes =
       filters.types.length === 0
         ? true
         : pokemon.types.some(
@@ -37,7 +37,7 @@ export const getFilteredPokemonsList = ({
               ) !== -1,
           );
 
-    if (!matchesAtLeastOneTypeFromFilters) {
+    if (!matchesTypes) {
       return acc;
     }
 
