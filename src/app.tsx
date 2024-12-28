@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Home } from "./home/home";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Pokemons } from "./pokemons/pokemons";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -18,7 +18,7 @@ const queryClient = new QueryClient({
 export const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <Home />
+      <Pokemons />
 
       <ReactQueryDevtools />
     </QueryClientProvider>

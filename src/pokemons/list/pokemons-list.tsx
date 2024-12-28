@@ -2,9 +2,9 @@ import { Fragment, Suspense, useEffect } from "react";
 import { PokemonsListCard } from "./pokemons-list-card";
 import { useInView } from "react-intersection-observer";
 import { InfiniteData } from "@tanstack/react-query";
-import { FetchPokemonsAPIResponse } from "./use-fetch-pokemons";
 import { ErrorBoundary } from "react-error-boundary";
 import { PokemonsListCardSkeleton } from "./pokemons-list-card-skeleton";
+import { FetchPokemonsAPIResponse } from "../use-fetch-pokemons";
 
 type PokemonsListProps = {
   data: InfiniteData<FetchPokemonsAPIResponse, unknown>;

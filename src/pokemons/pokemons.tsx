@@ -1,14 +1,15 @@
 import DownHalfPokeballPattern from "@/assets/patterns/down-half-pokeball.svg";
 import { SearchInput } from "@/components/ui/search-input";
 import { useFetchPokemons } from "@/pokemons/use-fetch-pokemons";
-import { PokemonsList } from "@/pokemons/pokemons-list";
 import { useCallback, useState } from "react";
 import { PokemonsHeader } from "@/pokemons/header/pokemons-header";
 import { PokemonsListFilters } from "@/pokemons/pokemons-types";
 import { POKEMONS_LIST_DEFAULT_FILTERS } from "@/pokemons/pokemons-constants";
-import { PokemonsListCardSkeleton } from "@/pokemons/pokemons-list-card-skeleton";
+import { PokemonsListError } from "@/pokemons/list/pokemons-list-error";
+import { PokemonsListSkeleton } from "./list/pokemons-list-skeleton";
+import { PokemonsList } from "./list/pokemons-list";
 
-export const Home = () => {
+export const Pokemons = () => {
   const [filters, setFilters] = useState<PokemonsListFilters>(
     POKEMONS_LIST_DEFAULT_FILTERS,
   );
@@ -49,16 +50,9 @@ export const Home = () => {
         />
 
         {status === "pending" ? (
-          <ul className="pokemons-list-card">
-            {Array(10)
-              .fill(null)
-              .map((_value, index) => (
-                <PokemonsListCardSkeleton key={index} />
-              ))}
-          </ul>
+          <PokemonsListSkeleton />
         ) : status === "error" ? (
-          // TODO: Create real error screen
-          <div>error</div>
+          <PokemonsListError />
         ) : (
           <PokemonsList
             data={data}
