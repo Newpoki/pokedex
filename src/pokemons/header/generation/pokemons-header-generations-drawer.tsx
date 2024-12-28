@@ -7,11 +7,8 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import GenerationIcon from "@/assets/icons/generation.svg";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { cn } from "@/lib/utils";
-
-const SNAP_POINTS = ["460px", 1] as const satisfies (string | number)[];
-
 import FirstGenerationsIllustration from "@/assets/generations/first-generations.svg";
 import SecondGenerationsIllustration from "@/assets/generations/second-generations.svg";
 import ThirdGenerationsIllustration from "@/assets/generations/third-generations.svg";
@@ -35,6 +32,8 @@ const GENERATIONS_DATA = [
   { Icon: EighthGenerationsIllustration, label: "Generation VIII", id: 8 },
 ] as const;
 
+const SNAP_POINTS = ["460px", 1] as const satisfies (string | number)[];
+
 type PokemonsHeaderGenerationsDrawerProps = {
   filters: PokemonsListFilters;
   onFiltersChange: (newFilters: Partial<PokemonsListFilters>) => void;
@@ -44,22 +43,14 @@ export const PokemonsHeaderGenerationsDrawer = ({
   filters,
   onFiltersChange,
 }: PokemonsHeaderGenerationsDrawerProps) => {
-  // Using intermediary local state allow to update the real filters
-  // only once user is done, avoiding heavy layout recomputation on the main page
-  // When user might still change the selected generation
-  const [selectedRange, setSelectedRange] = useState(filters.idsRange);
-
   const [snap, setSnap] = useState<number | string | null>(SNAP_POINTS[0]);
 
-  const handleCommitRangesChange = useCallback(() => {
-    onFiltersChange({ idsRange: selectedRange });
-  }, [onFiltersChange, selectedRange]);
-
-  useEffect(() => {
-    // As filters.idsRange can be updated from other part of the app
-    // We have to keep this local state up to date
-    setSelectedRange(filters.idsRange);
-  }, [filters.idsRange]);
+  const handleRangeChange = useCallback(
+    (newRange: PokemonsListFilters["idsRange"]) => {
+      onFiltersChange({ idsRange: newRange });
+    },
+    [onFiltersChange],
+  );
 
   return (
     <Drawer
@@ -67,7 +58,6 @@ export const PokemonsHeaderGenerationsDrawer = ({
       activeSnapPoint={snap}
       setActiveSnapPoint={setSnap}
       fadeFromIndex={0}
-      onClose={handleCommitRangesChange}
     >
       <DrawerTrigger>
         <GenerationIcon className="h-6 w-6 text-black" />
@@ -88,8 +78,8 @@ export const PokemonsHeaderGenerationsDrawer = ({
           <ul className="grid grid-cols-2 gap-3">
             {GENERATIONS_DATA.map(({ Icon, id, label }) => {
               const isSelected =
-                GENERATION_RANGES[id][0] === selectedRange[0] &&
-                GENERATION_RANGES[id][1] === selectedRange[1];
+                GENERATION_RANGES[id][0] === filters.idsRange[0] &&
+                GENERATION_RANGES[id][1] === filters.idsRange[1];
 
               return (
                 <li key={id}>
@@ -97,7 +87,7 @@ export const PokemonsHeaderGenerationsDrawer = ({
                     Icon={Icon}
                     label={label}
                     id={id}
-                    onFiltersChange={setSelectedRange}
+                    onFiltersChange={handleRangeChange}
                     isSelected={isSelected}
                   />
                 </li>
