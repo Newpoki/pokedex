@@ -17,7 +17,6 @@ export const PokemonsList = ({
   data,
   hasNextPage,
   isFetchingNextPage,
-
   onFetchNextPage,
 }: PokemonsListProps) => {
   const { ref: listEndRef, inView } = useInView();
@@ -30,7 +29,7 @@ export const PokemonsList = ({
 
   return (
     <>
-      <ul className="pokemons-list-card">
+      <ul className="pokemons-list">
         {data.pages.map((page) => {
           return (
             <Fragment key={page.next}>
