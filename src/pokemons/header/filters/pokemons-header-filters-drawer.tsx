@@ -27,6 +27,7 @@ import {
 } from "@/weight/weight-constants";
 import { PokemonsHeaderFiltersDrawerWeightButton } from "./pokemons-header-filters-drawer-weight-button";
 import { WeightCategory } from "@/weight/weight-types";
+import { PokemonsHeaderFiltersDrawerNumberRange } from "./pokemons-header-filters-drawer-number-range";
 
 const SNAP_POINTS = ["460px", 1] as const satisfies (string | number)[];
 
@@ -92,6 +93,13 @@ export const PokemonsHeaderFiltersDrawer = ({
     [onFiltersChange],
   );
 
+  const handleChangeIdsRange = useCallback(
+    (range: [number, number]) => {
+      onFiltersChange({ idsRange: range });
+    },
+    [onFiltersChange],
+  );
+
   return (
     <Drawer
       snapPoints={SNAP_POINTS}
@@ -115,7 +123,6 @@ export const PokemonsHeaderFiltersDrawer = ({
               and more!
             </DrawerDescription>
           </DrawerHeader>
-
           <PokemonsHeaderFiltersDrawerHorizontalList label="Types">
             {TYPE_NAMES.map((typeName) => {
               const isSelected =
@@ -133,7 +140,6 @@ export const PokemonsHeaderFiltersDrawer = ({
               );
             })}
           </PokemonsHeaderFiltersDrawerHorizontalList>
-
           <PokemonsHeaderFiltersDrawerHorizontalList label="Height">
             {HEIGHT_CATEGORY_NAMES.map((heightCategory) => {
               const heightRange = HEIGHT_CATEGORY_RANGES[heightCategory];
@@ -152,7 +158,6 @@ export const PokemonsHeaderFiltersDrawer = ({
               );
             })}
           </PokemonsHeaderFiltersDrawerHorizontalList>
-
           <PokemonsHeaderFiltersDrawerHorizontalList label="Weight">
             {WEIGHT_CATEGORY_NAMES.map((weightCategory) => {
               const weightRange = WEIGHT_CATEGORY_RANGES[weightCategory];
@@ -171,6 +176,11 @@ export const PokemonsHeaderFiltersDrawer = ({
               );
             })}
           </PokemonsHeaderFiltersDrawerHorizontalList>
+
+          <PokemonsHeaderFiltersDrawerNumberRange
+            filters={filters}
+            onChange={handleChangeIdsRange}
+          />
         </div>
       </DrawerContent>
     </Drawer>
