@@ -14,6 +14,13 @@ import { PokemonsHeaderFiltersDrawerTypeButton } from "./pokemons-header-filters
 import { PokemonsListFilters } from "@/pokemons/pokemons-types";
 import { TypeName } from "@/type/type-types";
 import { PokemonsHeaderFiltersDrawerHorizontalList } from "./pokemons-header-filters-drawer-horizontal-list";
+import {
+  HEIGHT_CATEGORY_NAMES,
+  HEIGHT_CATEGORY_RANGES,
+} from "@/height/height-constants";
+import { PokemonsHeaderFiltersDrawerHeightButton } from "./pokemons-header-filters-drawer-height-button";
+import { HeightCategory } from "@/height/height-types";
+import { POKEMONS_LIST_DEFAULT_FILTERS } from "@/pokemons/pokemons-constants";
 
 const SNAP_POINTS = ["460px", 1] as const satisfies (string | number)[];
 
@@ -43,6 +50,23 @@ export const PokemonsHeaderFiltersDrawer = ({
       });
     },
     [filters.types, onFiltersChange],
+  );
+
+  const handleToggleFiltersCategoryRange = useCallback(
+    (heightCategory: HeightCategory, isSelected: boolean) => {
+      if (isSelected) {
+        onFiltersChange({
+          heightRange: HEIGHT_CATEGORY_RANGES[heightCategory],
+        });
+
+        return;
+      }
+
+      onFiltersChange({
+        heightRange: POKEMONS_LIST_DEFAULT_FILTERS.heightRange,
+      });
+    },
+    [onFiltersChange],
   );
 
   return (
@@ -82,6 +106,25 @@ export const PokemonsHeaderFiltersDrawer = ({
                   isSelected={isSelected}
                   key={typeName}
                   onClick={handleToggleFiltersTypes}
+                />
+              );
+            })}
+          </PokemonsHeaderFiltersDrawerHorizontalList>
+
+          <PokemonsHeaderFiltersDrawerHorizontalList label="Height">
+            {HEIGHT_CATEGORY_NAMES.map((heightCategory) => {
+              const heightRange = HEIGHT_CATEGORY_RANGES[heightCategory];
+
+              const isSelected =
+                filters.heightRange[0] === heightRange[0] &&
+                filters.heightRange[1] === heightRange[1];
+
+              return (
+                <PokemonsHeaderFiltersDrawerHeightButton
+                  heightCategory={heightCategory}
+                  isSelected={isSelected}
+                  key={heightCategory}
+                  onClick={handleToggleFiltersCategoryRange}
                 />
               );
             })}

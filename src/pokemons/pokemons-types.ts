@@ -17,4 +17,5 @@ export type PokemonsListFilters = {
   sort: PokemonsListFiltersSort;
   types: TypeName[];
   search: string;
+  heightRange: [number, number];
 };

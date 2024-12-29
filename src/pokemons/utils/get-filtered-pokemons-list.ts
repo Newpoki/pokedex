@@ -37,6 +37,14 @@ export const getFilteredPokemonsList = ({
               ) !== -1,
           );
 
+    const isMatchingHeight =
+      pokemon.height > filters.heightRange[0] &&
+      pokemon.height <= filters.heightRange[1];
+
+    if (!isMatchingHeight) {
+      return acc;
+    }
+
     if (!matchesTypes) {
       return acc;
     }
