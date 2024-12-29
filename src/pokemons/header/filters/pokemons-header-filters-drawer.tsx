@@ -2,6 +2,7 @@ import {
   Drawer,
   DrawerContent,
   DrawerDescription,
+  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
@@ -28,17 +29,20 @@ import {
 import { PokemonsHeaderFiltersDrawerWeightButton } from "./pokemons-header-filters-drawer-weight-button";
 import { WeightCategory } from "@/weight/weight-types";
 import { PokemonsHeaderFiltersDrawerNumberRange } from "./pokemons-header-filters-drawer-number-range";
+import { Button } from "@/components/ui/button";
 
 const SNAP_POINTS = ["460px", 1] as const satisfies (string | number)[];
 
 type PokemonsHeaderFiltersDrawerProps = {
   filters: PokemonsListFilters;
   onFiltersChange: (newFilters: Partial<PokemonsListFilters>) => void;
+  onFiltersReset: () => void;
 };
 
 export const PokemonsHeaderFiltersDrawer = ({
   filters,
   onFiltersChange,
+  onFiltersReset,
 }: PokemonsHeaderFiltersDrawerProps) => {
   const [snap, setSnap] = useState<number | string | null>(SNAP_POINTS[0]);
 
@@ -112,7 +116,7 @@ export const PokemonsHeaderFiltersDrawer = ({
       </DrawerTrigger>
       <DrawerContent>
         <div
-          className={cn("flex-1 overflow-y-hidden py-8", {
+          className={cn("flex flex-1 flex-col overflow-y-hidden py-8", {
             "overflow-y-auto": snap === 1,
           })}
         >
@@ -181,6 +185,21 @@ export const PokemonsHeaderFiltersDrawer = ({
             filters={filters}
             onChange={handleChangeIdsRange}
           />
+
+          <DrawerFooter className="mt-auto px-10">
+            <Button
+              className="w-full"
+              type="button"
+              onClick={onFiltersReset}
+              variant="secondary"
+            >
+              Reset
+            </Button>
+
+            <Button className="w-full" type="button">
+              Apply
+            </Button>
+          </DrawerFooter>
         </div>
       </DrawerContent>
     </Drawer>

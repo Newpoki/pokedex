@@ -72,7 +72,7 @@ const DrawerFooter = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn("flex flex-col gap-4", className)} {...props} />
+  <div className={cn("flex flex-row gap-4", className)} {...props} />
 );
 DrawerFooter.displayName = "DrawerFooter";
 

@@ -33,6 +33,7 @@ export const Pokemons = () => {
         <PokemonsHeader
           filters={filters}
           onFiltersChange={handleFiltersChange}
+          onFiltersReset={handleFiltersResets}
         />
 
         <h1 className="mb-3 text-lg">Pokédex</h1>

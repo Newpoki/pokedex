@@ -43,7 +43,7 @@ export const PokemonsHeaderFiltersDrawerNumberRange = ({
   }, [filters.idsRange]);
 
   return (
-    <section className="flex w-full flex-col gap-7 px-10">
+    <section className="mb-20 flex w-full flex-col gap-7 px-10">
       <h3 className="text-sm font-bold">Number Range</h3>
 
       <SliderRange
