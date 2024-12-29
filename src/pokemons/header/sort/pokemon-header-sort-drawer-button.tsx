@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { PokemonsListFiltersSort } from "@/pokemons/pokemons-types";
+import { PokemonsListSort } from "@/pokemons/pokemons-types";
 import { useCallback } from "react";
 
 type PokemonHeaderSortDrawerButtonProps = {
   isSelected: boolean;
-  option: PokemonsListFiltersSort & { label: string };
-  onClick: (sort: PokemonsListFiltersSort) => void;
+  option: PokemonsListSort & { label: string };
+  onClick: (sort: PokemonsListSort) => void;
 };
 
 export const PokemonHeaderSortDrawerButton = ({

@@ -4,19 +4,21 @@ import { ErrorBoundary } from "react-error-boundary";
 import { PokemonsListCardSkeleton } from "./pokemons-list-card-skeleton";
 import { useWindowVirtualizer } from "@tanstack/react-virtual";
 import { useFetchPokemons } from "../use-fetch-pokemons";
-import { PokemonsListFilters } from "../pokemons-types";
+import { PokemonsListFilters, PokemonsListSort } from "../pokemons-types";
 import { PokemonsListNoResults } from "./pokemons-list-no-results";
 
 type PokemonsListProps = {
   filters: PokemonsListFilters;
+  sort: PokemonsListSort;
   onFiltersReset: () => void;
 };
 
 export const PokemonsList = ({
   filters,
+  sort,
   onFiltersReset,
 }: PokemonsListProps) => {
-  const { data } = useFetchPokemons({ filters });
+  const { data } = useFetchPokemons({ filters, sort });
 
   const listRef = useRef<HTMLDivElement | null>(null);
 

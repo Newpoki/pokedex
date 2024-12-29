@@ -1,9 +1,9 @@
 import { Pokemon } from "@/pokemon/pokemon-types";
-import { PokemonsListFiltersSort } from "../pokemons-types";
+import { PokemonsListSort } from "../pokemons-types";
 
 type GetSortedPokemonsListParams = {
   data: Pokemon[];
-  sort: PokemonsListFiltersSort;
+  sort: PokemonsListSort;
 };
 
 // TODO: Add tests

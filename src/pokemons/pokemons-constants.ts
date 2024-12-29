@@ -1,14 +1,10 @@
 import { GENERATION_RANGES } from "@/generations/generations-constants";
-import { PokemonsListFilters } from "./pokemons-types";
+import { PokemonsListFilters, PokemonsListSort } from "./pokemons-types";
 import { HEIGHT_CATEGORY_RANGES } from "@/height/height-constants";
 import { WEIGHT_CATEGORY_RANGES } from "@/weight/weight-constants";
 
 export const POKEMONS_LIST_DEFAULT_FILTERS = {
   idsRange: [GENERATION_RANGES["1"][0], GENERATION_RANGES["8"][1]],
-  sort: {
-    direction: "ASC",
-    property: "id",
-  },
   types: [],
   search: "",
   heightRange: [
@@ -20,3 +16,8 @@ export const POKEMONS_LIST_DEFAULT_FILTERS = {
     WEIGHT_CATEGORY_RANGES.heavy[1],
   ],
 } as const satisfies PokemonsListFilters;
+
+export const POKEMONS_LIST_DEFAULT_SORT = {
+  direction: "ASC",
+  property: "id",
+} as const satisfies PokemonsListSort;

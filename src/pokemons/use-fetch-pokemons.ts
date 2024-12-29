@@ -1,6 +1,10 @@
 import { APIPaginationResponse } from "@/api/api-types";
 import { useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
-import { PokemonsListFilters, PokemonsListResults } from "./pokemons-types";
+import {
+  PokemonsListFilters,
+  PokemonsListSort,
+  PokemonsListResults,
+} from "./pokemons-types";
 import { fetchPokemonAPI } from "@/api/api";
 import { Pokemon } from "@/pokemon/pokemon-types";
 import { fetchPokemonData } from "@/pokemon/utils/fetch-pokemon-data";
@@ -13,9 +17,10 @@ export type FetchPokemonsAPIResponse =
 
 type UseFetchPokemonsParams = {
   filters: PokemonsListFilters;
+  sort: PokemonsListSort;
 };
 
-export const useFetchPokemons = ({ filters }: UseFetchPokemonsParams) => {
+export const useFetchPokemons = ({ filters, sort }: UseFetchPokemonsParams) => {
   const queryClient = useQueryClient();
 
   const query = useSuspenseQuery({
@@ -24,8 +29,8 @@ export const useFetchPokemons = ({ filters }: UseFetchPokemonsParams) => {
       "list",
       filters.idsRange[1],
       filters.idsRange[0],
-      filters.sort,
       filters,
+      sort,
     ],
     queryFn: async () => {
       // Removing 1 from offset as the offset starts at 1
@@ -59,7 +64,7 @@ export const useFetchPokemons = ({ filters }: UseFetchPokemonsParams) => {
 
       const sortedData = getSortedPokemonsList({
         data: filteredData,
-        sort: filters.sort,
+        sort,
       });
 
       return {

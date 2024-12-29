@@ -7,14 +7,13 @@ export type PokemonsListFiltersSortDirection = "ASC" | "DESC";
 
 export type PokemonsListFiltersSortProperty = "id" | "name";
 
-export type PokemonsListFiltersSort = {
+export type PokemonsListSort = {
   direction: PokemonsListFiltersSortDirection;
   property: PokemonsListFiltersSortProperty;
 };
 
 export type PokemonsListFilters = {
   idsRange: [number, number];
-  sort: PokemonsListFiltersSort;
   types: TypeName[];
   search: string;
   heightRange: [number, number];

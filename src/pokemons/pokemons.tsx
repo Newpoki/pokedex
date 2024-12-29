@@ -1,8 +1,14 @@
 import DownHalfPokeballPattern from "@/assets/patterns/down-half-pokeball.svg";
 import { Suspense, useCallback, useState } from "react";
 import { PokemonsHeader } from "@/pokemons/header/pokemons-header";
-import { PokemonsListFilters } from "@/pokemons/pokemons-types";
-import { POKEMONS_LIST_DEFAULT_FILTERS } from "@/pokemons/pokemons-constants";
+import {
+  PokemonsListFilters,
+  PokemonsListSort,
+} from "@/pokemons/pokemons-types";
+import {
+  POKEMONS_LIST_DEFAULT_FILTERS,
+  POKEMONS_LIST_DEFAULT_SORT,
+} from "@/pokemons/pokemons-constants";
 import { PokemonsListError } from "@/pokemons/list/pokemons-list-error";
 import { PokemonsListSkeleton } from "./list/pokemons-list-skeleton";
 import { PokemonsList } from "./list/pokemons-list";
@@ -12,6 +18,10 @@ import { PokemonsSearchInput } from "./pokemons-search-input";
 export const Pokemons = () => {
   const [filters, setFilters] = useState<PokemonsListFilters>(
     POKEMONS_LIST_DEFAULT_FILTERS,
+  );
+
+  const [sort, setSort] = useState<PokemonsListSort>(
+    POKEMONS_LIST_DEFAULT_SORT,
   );
 
   const handleFiltersChange = useCallback(
@@ -32,6 +42,8 @@ export const Pokemons = () => {
       <main className="relative flex flex-1 flex-col">
         <PokemonsHeader
           filters={filters}
+          sort={sort}
+          onSortChange={setSort}
           onFiltersChange={handleFiltersChange}
           onFiltersReset={handleFiltersResets}
         />
@@ -50,6 +62,7 @@ export const Pokemons = () => {
         <ErrorBoundary FallbackComponent={PokemonsListError}>
           <Suspense fallback={<PokemonsListSkeleton />}>
             <PokemonsList
+              sort={sort}
               filters={filters}
               onFiltersReset={handleFiltersResets}
             />

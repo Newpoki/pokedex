@@ -9,15 +9,12 @@ import {
 import SortIcon from "@/assets/icons/sort.svg";
 import { useCallback, useState } from "react";
 import { cn } from "@/lib/utils";
-import {
-  PokemonsListFilters,
-  PokemonsListFiltersSort,
-} from "@/pokemons/pokemons-types";
+import { PokemonsListSort } from "@/pokemons/pokemons-types";
 import { PokemonHeaderSortDrawerButton } from "./pokemon-header-sort-drawer-button";
 
 type PokemonsHeaderSortDrawerProps = {
-  filters: PokemonsListFilters;
-  onFiltersChange: (newFilters: Partial<PokemonsListFilters>) => void;
+  sort: PokemonsListSort;
+  onSortChange: (sort: PokemonsListSort) => void;
 };
 
 const SNAP_POINTS = ["460px", "520px"] as const satisfies (string | number)[];
@@ -30,16 +27,16 @@ const SORT_OPTIONS = [
 ] as const;
 
 export const PokemonsHeaderSortDrawer = ({
-  filters,
-  onFiltersChange,
+  sort,
+  onSortChange,
 }: PokemonsHeaderSortDrawerProps) => {
   const [snap, setSnap] = useState<number | string | null>(SNAP_POINTS[0]);
 
   const handleSortChange = useCallback(
-    (newSort: PokemonsListFiltersSort) => {
-      onFiltersChange({ sort: newSort });
+    (newSort: PokemonsListSort) => {
+      onSortChange(newSort);
     },
-    [onFiltersChange],
+    [onSortChange],
   );
 
   return (
@@ -68,8 +65,8 @@ export const PokemonsHeaderSortDrawer = ({
           <ul className="flex flex-col gap-5">
             {SORT_OPTIONS.map((option) => {
               const isSelected =
-                option.direction === filters.sort.direction &&
-                option.property === filters.sort.property;
+                option.direction === sort.direction &&
+                option.property === sort.property;
 
               return (
                 <li key={`${option.direction}-${option.property}`}>
