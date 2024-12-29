@@ -5,7 +5,6 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-  DrawerTrigger,
 } from "@/components/ui/drawer";
 import { useCallback, useState } from "react";
 import FiltersIcon from "@/assets/icons/filters.svg";
@@ -13,23 +12,20 @@ import { cn } from "@/lib/utils";
 import { TYPE_NAMES } from "@/type/type-constants";
 import { PokemonsHeaderFiltersDrawerTypeButton } from "./pokemons-header-filters-drawer-type-button";
 import { PokemonsListFilters } from "@/pokemons/pokemons-types";
-import { TypeName } from "@/type/type-types";
 import { PokemonsHeaderFiltersDrawerHorizontalList } from "./pokemons-header-filters-drawer-horizontal-list";
 import {
   HEIGHT_CATEGORY_NAMES,
   HEIGHT_CATEGORY_RANGES,
 } from "@/height/height-constants";
 import { PokemonsHeaderFiltersDrawerHeightButton } from "./pokemons-header-filters-drawer-height-button";
-import { HeightCategory } from "@/height/height-types";
-import { POKEMONS_LIST_DEFAULT_FILTERS } from "@/pokemons/pokemons-constants";
 import {
   WEIGHT_CATEGORY_NAMES,
   WEIGHT_CATEGORY_RANGES,
 } from "@/weight/weight-constants";
 import { PokemonsHeaderFiltersDrawerWeightButton } from "./pokemons-header-filters-drawer-weight-button";
-import { WeightCategory } from "@/weight/weight-types";
 import { PokemonsHeaderFiltersDrawerNumberRange } from "./pokemons-header-filters-drawer-number-range";
 import { Button } from "@/components/ui/button";
+import { usePokemonHeaderFiltersDrawer } from "./use-pokemon-header-filters-drawer";
 
 const SNAP_POINTS = ["460px", 1] as const satisfies (string | number)[];
 
@@ -39,70 +35,40 @@ type PokemonsHeaderFiltersDrawerProps = {
   onFiltersReset: () => void;
 };
 
-export const PokemonsHeaderFiltersDrawer = ({
-  filters,
-  onFiltersChange,
-  onFiltersReset,
-}: PokemonsHeaderFiltersDrawerProps) => {
+export const PokemonsHeaderFiltersDrawer = (
+  props: PokemonsHeaderFiltersDrawerProps,
+) => {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
   const [snap, setSnap] = useState<number | string | null>(SNAP_POINTS[0]);
 
-  const handleToggleFiltersTypes = useCallback(
-    (typeName: TypeName, isSelected: boolean) => {
-      if (isSelected) {
-        onFiltersChange({ types: [...filters.types, typeName] });
+  const {
+    localFilters,
+    onFiltersTypeChange,
+    onFiltersHeightRangeChange,
+    onFiltersWeightRangeChange,
+    onFiltersIdsRangeChange,
+    onFiltersChange,
+    onFiltersReset,
+    onLocalFiltersReset,
+  } = usePokemonHeaderFiltersDrawer(props);
 
-        return;
-      }
+  const handleOpenDrawer = useCallback(() => {
+    setIsDrawerOpen(true);
+  }, []);
 
-      onFiltersChange({
-        types: filters.types.filter(
-          (filterTypeName) => filterTypeName !== typeName,
-        ),
-      });
-    },
-    [filters.types, onFiltersChange],
-  );
+  const handleApplyFilters = useCallback(() => {
+    onFiltersChange();
 
-  const handleToggleFiltersHeightRange = useCallback(
-    (heightCategory: HeightCategory, isSelected: boolean) => {
-      if (isSelected) {
-        onFiltersChange({
-          heightRange: HEIGHT_CATEGORY_RANGES[heightCategory],
-        });
+    setIsDrawerOpen(false);
+    setSnap(SNAP_POINTS[0]);
+  }, [onFiltersChange]);
 
-        return;
-      }
-
-      onFiltersChange({
-        heightRange: POKEMONS_LIST_DEFAULT_FILTERS.heightRange,
-      });
-    },
-    [onFiltersChange],
-  );
-
-  const handleToggleFiltersWeightRange = useCallback(
-    (weightCategory: WeightCategory, isSelected: boolean) => {
-      if (isSelected) {
-        onFiltersChange({
-          weightRange: WEIGHT_CATEGORY_RANGES[weightCategory],
-        });
-
-        return;
-      }
-
-      onFiltersChange({
-        weightRange: POKEMONS_LIST_DEFAULT_FILTERS.weightRange,
-      });
-    },
-    [onFiltersChange],
-  );
-
-  const handleChangeIdsRange = useCallback(
-    (range: [number, number]) => {
-      onFiltersChange({ idsRange: range });
-    },
-    [onFiltersChange],
-  );
+  const handleCloseDrawer = useCallback(() => {
+    setIsDrawerOpen(false);
+    setSnap(SNAP_POINTS[0]);
+    onLocalFiltersReset();
+  }, [onLocalFiltersReset]);
 
   return (
     <Drawer
@@ -110,10 +76,13 @@ export const PokemonsHeaderFiltersDrawer = ({
       activeSnapPoint={snap}
       setActiveSnapPoint={setSnap}
       fadeFromIndex={0}
+      onClose={handleCloseDrawer}
+      open={isDrawerOpen}
     >
-      <DrawerTrigger>
+      <button onClick={handleOpenDrawer}>
         <FiltersIcon className="h-6 w-6 text-black" />
-      </DrawerTrigger>
+      </button>
+
       <DrawerContent>
         <div
           className={cn("flex flex-1 flex-col overflow-y-hidden py-8", {
@@ -130,7 +99,7 @@ export const PokemonsHeaderFiltersDrawer = ({
           <PokemonsHeaderFiltersDrawerHorizontalList label="Types">
             {TYPE_NAMES.map((typeName) => {
               const isSelected =
-                filters.types.findIndex(
+                localFilters.types.findIndex(
                   (filterTypeName) => filterTypeName === typeName,
                 ) !== -1;
 
@@ -139,51 +108,53 @@ export const PokemonsHeaderFiltersDrawer = ({
                   typeName={typeName}
                   isSelected={isSelected}
                   key={typeName}
-                  onClick={handleToggleFiltersTypes}
+                  onClick={onFiltersTypeChange}
                 />
               );
             })}
           </PokemonsHeaderFiltersDrawerHorizontalList>
+
           <PokemonsHeaderFiltersDrawerHorizontalList label="Height">
             {HEIGHT_CATEGORY_NAMES.map((heightCategory) => {
               const heightRange = HEIGHT_CATEGORY_RANGES[heightCategory];
 
               const isSelected =
-                filters.heightRange[0] === heightRange[0] &&
-                filters.heightRange[1] === heightRange[1];
+                localFilters.heightRange[0] === heightRange[0] &&
+                localFilters.heightRange[1] === heightRange[1];
 
               return (
                 <PokemonsHeaderFiltersDrawerHeightButton
                   heightCategory={heightCategory}
                   isSelected={isSelected}
                   key={heightCategory}
-                  onClick={handleToggleFiltersHeightRange}
+                  onClick={onFiltersHeightRangeChange}
                 />
               );
             })}
           </PokemonsHeaderFiltersDrawerHorizontalList>
+
           <PokemonsHeaderFiltersDrawerHorizontalList label="Weight">
             {WEIGHT_CATEGORY_NAMES.map((weightCategory) => {
               const weightRange = WEIGHT_CATEGORY_RANGES[weightCategory];
 
               const isSelected =
-                filters.weightRange[0] === weightRange[0] &&
-                filters.weightRange[1] === weightRange[1];
+                localFilters.weightRange[0] === weightRange[0] &&
+                localFilters.weightRange[1] === weightRange[1];
 
               return (
                 <PokemonsHeaderFiltersDrawerWeightButton
                   weightCategory={weightCategory}
                   isSelected={isSelected}
                   key={weightCategory}
-                  onClick={handleToggleFiltersWeightRange}
+                  onClick={onFiltersWeightRangeChange}
                 />
               );
             })}
           </PokemonsHeaderFiltersDrawerHorizontalList>
 
           <PokemonsHeaderFiltersDrawerNumberRange
-            filters={filters}
-            onChange={handleChangeIdsRange}
+            filters={localFilters}
+            onChange={onFiltersIdsRangeChange}
           />
 
           <DrawerFooter className="mt-auto px-10">
@@ -196,7 +167,11 @@ export const PokemonsHeaderFiltersDrawer = ({
               Reset
             </Button>
 
-            <Button className="w-full" type="button">
+            <Button
+              className="w-full"
+              type="button"
+              onClick={handleApplyFilters}
+            >
               Apply
             </Button>
           </DrawerFooter>
