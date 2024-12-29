@@ -43,7 +43,7 @@ export const PokemonsList = ({
         }}
       >
         {virtualizer.getVirtualItems().map((item) => {
-          const pokemon = data.results[item.index]?.pokemon;
+          const pokemon = data.results[item.index];
 
           if (pokemon == null) {
             return null;

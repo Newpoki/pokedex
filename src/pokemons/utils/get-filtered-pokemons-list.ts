@@ -11,14 +11,12 @@ export const getFilteredPokemonsList = ({
   data,
   filters,
 }: GetFilteredPokemonsListParams) => {
-  return data.reduce<Pokemon[]>((acc, item) => {
-    const { pokemon, displayedName } = item;
-
+  return data.reduce<Pokemon[]>((acc, pokemon) => {
     // Important to first search for the displayed name. Might be the easiest to do
     const matchesSearch =
       filters.search === ""
         ? true
-        : displayedName
+        : pokemon.displayName
             .toLocaleLowerCase()
             .includes(filters.search.toLocaleLowerCase()) ||
           `${pokemon.id}` === filters.search;
@@ -57,7 +55,7 @@ export const getFilteredPokemonsList = ({
       return acc;
     }
 
-    acc.push(item);
+    acc.push(pokemon);
 
     return acc;
   }, []);

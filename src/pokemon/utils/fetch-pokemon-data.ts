@@ -1,5 +1,5 @@
 import { fetchPokemonAPI } from "@/api/api";
-import { PokemonAPIResponse } from "../pokemon-types";
+import { Pokemon, PokemonAPIResponse } from "../pokemon-types";
 import { PokemonSpecies } from "@/pokemon-species/pokemon-species.types";
 import { LanguageCode } from "@/api/api-types";
 
@@ -26,7 +26,11 @@ export const fetchPokemonData = async ({ name }: FetchPokemonDataParams) => {
   }, {});
 
   // TODO: Handle user language selection
-  const displayedName = mappedNamePerLanguage["en"] ?? name;
+  const displayName = mappedNamePerLanguage["en"] ?? name;
 
-  return { pokemon: pokemonData, species: pokemonSpeciesData, displayedName };
+  return {
+    ...pokemonData,
+    speciesData: pokemonSpeciesData,
+    displayName,
+  } satisfies Pokemon;
 };

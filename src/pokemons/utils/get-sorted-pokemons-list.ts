@@ -17,7 +17,7 @@ export const getSortedPokemonsList = ({
 
   return data.sort((a, b) =>
     sort.direction === "ASC"
-      ? a.displayedName.localeCompare(b.displayedName)
-      : b.displayedName.localeCompare(a.displayedName),
+      ? a.displayName.localeCompare(b.displayName)
+      : b.displayName.localeCompare(a.displayName),
   );
 };

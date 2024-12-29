@@ -201,16 +201,12 @@ export type PokemonAPIResponse = {
   types: PokemonType[];
 };
 
-// TODO: Instead of an object with pokemon, species and displayedName, Omit and Extend from PokemonAPIREsponse
-export type Pokemon = {
-  /** The pokemon data */
-  pokemon: PokemonAPIResponse;
-
+export type Pokemon = PokemonAPIResponse & {
   /** A Pokémon Species forms the basis for at least one Pokémon.
    *  Attributes of a Pokémon species are shared across all varieties of Pokémon within the species.
    *  A good example is Wormadam; Wormadam is the species which can be found in three different varieties, Wormadam-Trash, Wormadam-Sandy and Wormadam-Plant.*/
-  species: PokemonSpecies;
+  speciesData: PokemonSpecies;
 
   /** The pokemon displayed name in user language */
-  displayedName: string;
+  displayName: string;
 };
