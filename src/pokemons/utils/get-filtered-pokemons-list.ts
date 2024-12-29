@@ -45,6 +45,14 @@ export const getFilteredPokemonsList = ({
       return acc;
     }
 
+    const isMatchingWeight =
+      pokemon.weight > filters.weightRange[0] &&
+      pokemon.weight <= filters.weightRange[1];
+
+    if (!isMatchingWeight) {
+      return acc;
+    }
+
     if (!matchesTypes) {
       return acc;
     }

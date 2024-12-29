@@ -21,6 +21,12 @@ import {
 import { PokemonsHeaderFiltersDrawerHeightButton } from "./pokemons-header-filters-drawer-height-button";
 import { HeightCategory } from "@/height/height-types";
 import { POKEMONS_LIST_DEFAULT_FILTERS } from "@/pokemons/pokemons-constants";
+import {
+  WEIGHT_CATEGORY_NAMES,
+  WEIGHT_CATEGORY_RANGES,
+} from "@/weight/weight-constants";
+import { PokemonsHeaderFiltersDrawerWeightButton } from "./pokemons-header-filters-drawer-weight-button";
+import { WeightCategory } from "@/weight/weight-types";
 
 const SNAP_POINTS = ["460px", 1] as const satisfies (string | number)[];
 
@@ -52,7 +58,7 @@ export const PokemonsHeaderFiltersDrawer = ({
     [filters.types, onFiltersChange],
   );
 
-  const handleToggleFiltersCategoryRange = useCallback(
+  const handleToggleFiltersHeightRange = useCallback(
     (heightCategory: HeightCategory, isSelected: boolean) => {
       if (isSelected) {
         onFiltersChange({
@@ -64,6 +70,23 @@ export const PokemonsHeaderFiltersDrawer = ({
 
       onFiltersChange({
         heightRange: POKEMONS_LIST_DEFAULT_FILTERS.heightRange,
+      });
+    },
+    [onFiltersChange],
+  );
+
+  const handleToggleFiltersWeightRange = useCallback(
+    (weightCategory: WeightCategory, isSelected: boolean) => {
+      if (isSelected) {
+        onFiltersChange({
+          weightRange: WEIGHT_CATEGORY_RANGES[weightCategory],
+        });
+
+        return;
+      }
+
+      onFiltersChange({
+        weightRange: POKEMONS_LIST_DEFAULT_FILTERS.weightRange,
       });
     },
     [onFiltersChange],
@@ -124,7 +147,26 @@ export const PokemonsHeaderFiltersDrawer = ({
                   heightCategory={heightCategory}
                   isSelected={isSelected}
                   key={heightCategory}
-                  onClick={handleToggleFiltersCategoryRange}
+                  onClick={handleToggleFiltersHeightRange}
+                />
+              );
+            })}
+          </PokemonsHeaderFiltersDrawerHorizontalList>
+
+          <PokemonsHeaderFiltersDrawerHorizontalList label="Weight">
+            {WEIGHT_CATEGORY_NAMES.map((weightCategory) => {
+              const weightRange = WEIGHT_CATEGORY_RANGES[weightCategory];
+
+              const isSelected =
+                filters.weightRange[0] === weightRange[0] &&
+                filters.weightRange[1] === weightRange[1];
+
+              return (
+                <PokemonsHeaderFiltersDrawerWeightButton
+                  weightCategory={weightCategory}
+                  isSelected={isSelected}
+                  key={weightCategory}
+                  onClick={handleToggleFiltersWeightRange}
                 />
               );
             })}

@@ -18,4 +18,5 @@ export type PokemonsListFilters = {
   types: TypeName[];
   search: string;
   heightRange: [number, number];
+  weightRange: [number, number];
 };
