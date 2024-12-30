@@ -6,6 +6,7 @@ import { useWindowVirtualizer } from "@tanstack/react-virtual";
 import { useFetchPokemons } from "../use-fetch-pokemons";
 import { PokemonsListFilters, PokemonsListSort } from "../pokemons-types";
 import { PokemonsListNoResults } from "./pokemons-list-no-results";
+import { Link } from "@tanstack/react-router";
 
 type PokemonsListProps = {
   filters: PokemonsListFilters;
@@ -52,7 +53,9 @@ export const PokemonsList = ({
           }
 
           return (
-            <div
+            <Link
+              to="/pokemon/$name"
+              params={{ name: pokemon.name }}
               key={pokemon.name}
               className="absolute left-0 top-0 w-full"
               style={{
@@ -70,7 +73,7 @@ export const PokemonsList = ({
                   <PokemonsListCard name={pokemon.name} />
                 </Suspense>
               </ErrorBoundary>
-            </div>
+            </Link>
           );
         })}
       </ul>
