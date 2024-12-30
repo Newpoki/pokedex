@@ -7,10 +7,10 @@ import {
 } from "./pokemons-types";
 import { fetchPokemonAPI } from "@/api/api";
 import { Pokemon } from "@/pokemon/pokemon-types";
-import { fetchPokemonData } from "@/pokemon/utils/fetch-pokemon-data";
 import { getSortedPokemonsList } from "./utils/get-sorted-pokemons-list";
 import { useMemo } from "react";
 import { getFilteredPokemonsList } from "./utils/get-filtered-pokemons-list";
+import { pokemonQueryOptions } from "@/pokemon/pokemon-query-options";
 
 export type FetchPokemonsAPIResponse =
   APIPaginationResponse<PokemonsListResults>;
@@ -42,14 +42,9 @@ export const useFetchPokemons = ({ filters, sort }: UseFetchPokemonsParams) => {
       );
 
       const pokemonsData = response.results.map<Promise<Pokemon>>((pokemon) => {
-        const cachedPokemonData = queryClient.ensureQueryData({
-          queryKey: ["pokemon", pokemon.name],
-          queryFn: async () => {
-            const response = await fetchPokemonData({ name: pokemon.name });
-
-            return response;
-          },
-        });
+        const cachedPokemonData = queryClient.ensureQueryData(
+          pokemonQueryOptions(pokemon.name),
+        );
 
         return cachedPokemonData;
       });

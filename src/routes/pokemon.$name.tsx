@@ -1,10 +1,19 @@
-import { fetchPokemonData } from "@/pokemon/utils/fetch-pokemon-data";
-import { queryOptions } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
+import LeftArrowIcon from "@/assets/icons/left-arrow.svg";
+import { pokemonQueryOptions } from "@/pokemon/pokemon-query-options";
 
 const RouteComponent = () => {
+  const params = Route.useParams();
+
+  const { data: pokemon } = useSuspenseQuery(pokemonQueryOptions(params.name));
+
   return (
     <div>
+      <header className="p-10">
+        <LeftArrowIcon className="h-6 w-6 text-white" />
+        {pokemon.displayName}
+      </header>
       <p>pokemon</p>
     </div>
   );
@@ -13,17 +22,7 @@ const RouteComponent = () => {
 export const Route = createFileRoute("/pokemon/$name")({
   loader: (options) =>
     options.context.queryClient.ensureQueryData(
-      // TODO: Mutualize this and use it within the useFetchPokemons
-      queryOptions({
-        queryKey: ["pokemon", options.params.name],
-        queryFn: async () => {
-          const response = await fetchPokemonData({
-            name: options.params.name,
-          });
-
-          return response;
-        },
-      }),
+      pokemonQueryOptions(options.params.name),
     ),
   component: RouteComponent,
 });

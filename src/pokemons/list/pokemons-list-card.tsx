@@ -1,15 +1,16 @@
-import { useFetchPokemon } from "@/pokemon/use-fetch-pokemon";
 import { useMemo } from "react";
 import { PokemonListCardType } from "./pokemons-list-card-type";
 import DotVectorPattern from "@/assets/patterns/dot-vector.svg";
 import PokeballPattern from "@/assets/patterns/pokeball.svg";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { pokemonQueryOptions } from "@/pokemon/pokemon-query-options";
 
 type PokemonsListCardProps = {
   name: string;
 };
 
 export const PokemonsListCard = ({ name }: PokemonsListCardProps) => {
-  const pokemon = useFetchPokemon({ name });
+  const { data: pokemon } = useSuspenseQuery(pokemonQueryOptions(name));
 
   const firstPokemonType = pokemon.types[0]?.type.name;
 
