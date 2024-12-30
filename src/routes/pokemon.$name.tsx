@@ -1,5 +1,5 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
 import LeftArrowIcon from "@/assets/icons/left-arrow.svg";
 import { pokemonQueryOptions } from "@/pokemon/pokemon-query-options";
 import { getPokemonFirstTypeName } from "@/pokemon/utils/get-pokemon-first-type";
@@ -8,6 +8,7 @@ import { getPokemonDisplayedId } from "@/pokemon/utils/get-pokemon-displayed-id"
 import { TypeChip } from "@/type/type-chip";
 import CirclePattern from "@/assets/patterns/circle-pattern.svg";
 import FiveRowsDotPattern from "@/assets/patterns/five-rows-dot-pattern.svg";
+import { PokemonTabs } from "@/pokemon/pokemon-tabs";
 
 const RouteComponent = () => {
   const params = Route.useParams();
@@ -76,14 +77,10 @@ const RouteComponent = () => {
       </header>
 
       <div className="flex flex-1 flex-col">
-        <nav className="flex items-center justify-between px-10 py-4">
-          <span>About</span>
-          <span>Stats</span>
-          <span>Evolution</span>
-        </nav>
+        <PokemonTabs />
 
         <div className="flex-1 rounded-t-[30px] bg-white p-10">
-          <p>blabla</p>
+          <Outlet />
         </div>
       </div>
     </div>
