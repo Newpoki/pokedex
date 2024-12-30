@@ -98,7 +98,7 @@ type PokemonSpriteAlternate = {
   back_shiny_female?: string;
 };
 
-type PokemonSprites = {
+export type PokemonSprites = {
   /** The default depiction of this Pokémon from the front in battle. */
   front_default: string;
 
