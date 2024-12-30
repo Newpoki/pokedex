@@ -2,12 +2,13 @@ import {
   APIRessource,
   Description,
   FlavorText,
+  LanguageCode,
   Name,
   NamedAPIRessource,
 } from "@/api/api-types";
 import { PalParkEncounterArea } from "@/pal-park/pal-park-types";
 
-type PokemonSpeciesDexEntry = {
+export type PokemonSpeciesDexEntry = {
   /** The index number within the Pokédex. */
   entry_number: boolean;
 
@@ -15,12 +16,12 @@ type PokemonSpeciesDexEntry = {
   pokedex: NamedAPIRessource;
 };
 
-type PokemonSpeciesGenus = {
+export type PokemonSpeciesGenus = {
   /** The localized genus for the referenced Pokémon species */
   genus: string;
 
   /** The language this genus is in. */
-  language: NamedAPIRessource;
+  language: NamedAPIRessource<LanguageCode>;
 };
 
 type PokemonSpeciesVariety = {
@@ -48,7 +49,7 @@ export type PokemonSpecies = {
   capture_rate: number;
 
   /** The happiness when caught by a normal Pokéball; up to 255. The higher the number, the happier the Pokémon. */
-  base_hapiness: number;
+  base_happiness: number;
 
   /** Whether or not this is a baby Pokémon. */
   is_baby: boolean;
@@ -80,7 +81,7 @@ export type PokemonSpecies = {
   pokedex_numbers: PokemonSpeciesDexEntry[];
 
   /** A list of egg groups this Pokémon species is a member of. */
-  egg_groups: NamedAPIRessource;
+  egg_groups: NamedAPIRessource[];
 
   /** The color of this Pokémon for Pokédex search. */
   color: NamedAPIRessource;

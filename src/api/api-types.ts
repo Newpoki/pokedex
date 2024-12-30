@@ -32,7 +32,7 @@ export type Description = {
   description: string;
 
   /** The language this name is in. */
-  language: string;
+  language: NamedAPIRessource<LanguageCode>;
 };
 
 export type Effect = {

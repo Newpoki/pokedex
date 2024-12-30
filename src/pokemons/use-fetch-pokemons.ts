@@ -6,7 +6,6 @@ import {
   PokemonsListResults,
 } from "./pokemons-types";
 import { fetchPokemonAPI } from "@/api/api";
-import { Pokemon } from "@/pokemon/pokemon-types";
 import { getSortedPokemonsList } from "./utils/get-sorted-pokemons-list";
 import { useMemo } from "react";
 import { getFilteredPokemonsList } from "./utils/get-filtered-pokemons-list";
@@ -41,7 +40,7 @@ export const useFetchPokemons = ({ filters, sort }: UseFetchPokemonsParams) => {
         `/pokemon/?offset=${offset}&limit=${limit}`,
       );
 
-      const pokemonsData = response.results.map<Promise<Pokemon>>((pokemon) => {
+      const pokemonsData = response.results.map((pokemon) => {
         const cachedPokemonData = queryClient.ensureQueryData(
           pokemonQueryOptions(pokemon.name),
         );

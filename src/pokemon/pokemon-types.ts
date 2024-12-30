@@ -2,7 +2,7 @@ import { NamedAPIRessource, VersionGameIndex } from "@/api/api-types";
 import { PokemonSpecies } from "@/pokemon-species/pokemon-species.types";
 import { TypeName } from "@/type/type-types";
 
-type PokemonAbility = {
+export type PokemonAbility = {
   /** Whether or not this is a hidden ability. */
   is_hidden: boolean;
 
@@ -131,7 +131,7 @@ export type PokemonSprites = {
   };
 };
 
-type PokemonStat = {
+export type PokemonStat = {
   /** The stat the Pokémon has. */
   stat: NamedAPIRessource;
 
@@ -146,6 +146,7 @@ export type PokemonAPIResponse = {
   /** The identifier for this resource. */
   id: number;
 
+  // TODO: Use branded type for pokemon name
   /** The name for this resource. */
   name: string;
 
