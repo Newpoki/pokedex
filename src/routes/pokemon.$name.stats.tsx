@@ -39,7 +39,7 @@ const RouteComponent = () => {
               </PokemonDataValue>
               <div>
                 <div
-                  className="animate-horizontal-collapse h-1 rounded-[2px]"
+                  className="h-1 animate-horizontal-collapse rounded-[2px]"
                   style={{
                     backgroundColor: `hsl(var(--color-${firstTypeName}))`,
                     // For some rare exception such as Blissey hp, percent can exceed 100
@@ -62,8 +62,8 @@ const RouteComponent = () => {
           {baseStatsSum}
         </PokemonDataValue>
         <div />
-        <PokemonDataTitle>Min</PokemonDataTitle>
-        <PokemonDataTitle>Max</PokemonDataTitle>
+        <PokemonDataTitle className="text-right">Min</PokemonDataTitle>
+        <PokemonDataTitle className="text-right">Max</PokemonDataTitle>
       </div>
 
       <p className="text-xs font-medium text-grey">
