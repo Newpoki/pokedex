@@ -109,6 +109,15 @@ export default {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      keyframes: {
+        "horizontal-collapse": {
+          "0%": { width: 0 },
+          "100%": { width: "100%" },
+        },
+      },
+      animation: {
+        "horizontal-collapse": "horizontal-collapse 0.2s ease-in-out forwards",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
